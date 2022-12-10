@@ -93,6 +93,3 @@
 (meow-global-mode 1)
 
 
-(meow-leader-define-key
- '("d" . dired)
- '("f" . find-file))
