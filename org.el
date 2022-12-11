@@ -43,21 +43,10 @@
 
 (org-indent-mode t)
 
-
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-;; turn off line display in org-mode markdown-mode text-mode
-
-
 ;;; org-modern
 (global-org-modern-mode)
 ;; apperance
 (setq org-modern-table nil)
-
-
-
 
 ;; Improve org mode looks
 (setq org-startup-indented t

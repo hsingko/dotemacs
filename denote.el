@@ -44,6 +44,7 @@ Delete the original subtree."
                                    (thread-last denote-directory (expand-file-name "movies"))
                                    (thread-last denote-directory (expand-file-name "books"))
                                    (thread-last denote-directory (expand-file-name "dailies"))
+				   (thread-last denote-directory (expand-file-name "courses"))
                                    (thread-last denote-directory (expand-file-name "posts"))
                                    (thread-last denote-directory (expand-file-name "logs"))
                                    (thread-last denote-directory (expand-file-name "attachments"))
