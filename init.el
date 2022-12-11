@@ -8,7 +8,6 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-
 					;meow mode
 (load-file "~/.config/emacs/ui.el")
 (load-file "~/.config/emacs/meow.el")
@@ -24,9 +23,12 @@
 (load-file "~/.config/emacs/backup.el")
 (load-file "~/.config/emacs/lang.el")
 (load-file "~/.config/emacs/tools.el")
-(load-file "~/.config/emacs/general.el")
 (load-file "~/.config/emacs/elfeed.el")
 (load-file "~/.config/emacs/journal.el")
+(load-file "~/.config/emacs/window.el")
+(load-file "~/.config/emacs/yasnippet.el")
+(load-file "~/.config/emacs/hugo.el")
+(load-file "~/.config/emacs/undo.el")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -36,7 +38,7 @@
  '(custom-safe-themes
    '("05626f77b0c8c197c7e4a31d9783c4ec6e351d9624aa28bc15e7f6d6a6ebd926" default))
  '(package-selected-packages
-   '(org-journal general which-key yaml-mode magit org-superstar markdown-mode all-the-icons-completion org-modern doom-modeline consult meow dracula-theme orderless vertico-posframe)))
+   '(undo-fu ox-hugo yasnippet-snippets yasnippet ace-window rg projectile org-journal general which-key yaml-mode magit org-superstar all-the-icons-completion org-modern doom-modeline consult meow dracula-theme orderless vertico-posframe)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

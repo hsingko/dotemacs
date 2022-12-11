@@ -10,7 +10,8 @@
 
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
-
+  (setq embark-verbose-indicator-display-action '(display-buffer-at-bottom))
+  (setq prefix-help-command 'embark-prefix-help-command)
   :config
 
   ;; Hide the mode line of the Embark live/completions buffers

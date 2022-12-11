@@ -6,10 +6,17 @@
 (tooltip-mode -1)    ;disable tooltip
 (set-fringe-mode 8)
 (menu-bar-mode -1)
-(add-to-list 'default-frame-alist '(alpha-background . 90))
+;(add-to-list 'default-frame-alist '(alpha-background . 90))
 (pixel-scroll-precision-mode 1)
 (recentf-mode 1)
-
+;port from nano-theme
+(setq frame-title-format nil)
+(setq initial-major-mode 'text-mode)
+(setq default-major-mode 'text-mode)
+(setq font-lock-maximum-decoration t)
+;; (setq cursor-type 'bar)
+(setq cursor-type '(bar . 4)) 
+(setq line-spacing 0)
 ;; font family
 (set-face-attribute 'default nil :font (font-spec :family "Lekton" :size 18))
 (set-fontset-font t 'symbol (font-spec :family "Symbola" :size 18) nil 'prepend)
@@ -19,6 +26,7 @@
 (customize-set-variable 'org-blank-before-new-entry'((heading . nil)(plain-list-item . nil)))(setq org-cycle-separator-lines 1)
 
 ;; theme
+(setq modus-themes-links (quote (neutral-underline background)))
 (setq modus-themes-mode-line '(borderless accented))
 (setq modus-themes-region '(bg-only accented))
 ;; (setq modus-themes-completions 'opinionated)

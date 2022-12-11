@@ -1,8 +1,7 @@
-;; (defun my/denote-dired-mode-hook()
-;;   (denote-dired-mode-in-directories)
-;;   (if denote-dired-mode
-;;       (dired-hide-details-mode +1)
-;;     (diredfl-mode +1)))
+(defun my/denote-dired-mode-hook()
+  (denote-dired-mode-in-directories)
+  (when denote-dired-mode
+      (dired-hide-details-mode +1)))
 
 (defun my/denote-create-new-note-from-region (beg end)
   "Create note whose contents include the text between BEG and END.
@@ -50,8 +49,7 @@ Delete the original subtree."
                                    (thread-last denote-directory (expand-file-name "attachments"))
                                    ))
   ;; :config
-  (add-hook 'dired-mode-hook #'denote-dired-mode)
-  )
+  (add-hook 'dired-mode-hook #'my/denote-dired-mode-hook))
 
 
 
