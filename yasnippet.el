@@ -1,5 +1,7 @@
 (use-package yasnippet)
-(use-package yasnippet-snippets)
+(use-package yasnippet-snippets
+  :after yasnippet
+  )
 
 (require 'yasnippet)
 (yas-reload-all)

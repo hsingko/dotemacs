@@ -25,10 +25,19 @@ tags of the heading are used as note keywords.
 Delete the original subtree."
   (interactive)
   (if-let ((text (org-get-entry))
-           (heading (org-get-heading :no-tags :no-todo :no-priority :no-comment)))
+           (heading-text (org-get-heading :no-tags :no-todo :no-priority :no-comment))
+	   (heading (org-get-heading :no-tags))
+	   )
       (progn
+	; code blog contains bug, sometimes can't delete sub-subtree
         (delete-region (org-entry-beginning-position) (org-entry-end-position))
-        (denote heading (org-get-tags) 'org)
+        (denote heading-text (org-get-tags) 'org
+		(thread-last denote-directory (expand-file-name "posts"))
+		)
+	;; (insert "* ")
+	;; (insert heading)
+	;; (insert "\n")
+	(insert (format "* %s \n" heading))
         (insert text))
     (user-error "No subtree to extract; aborting")))
 
@@ -43,11 +52,9 @@ Delete the original subtree."
                                    denote-directory
                                    (thread-last denote-directory (expand-file-name "movies"))
                                    (thread-last denote-directory (expand-file-name "books"))
-                                   (thread-last denote-directory (expand-file-name "dailies"))
 				   (thread-last denote-directory (expand-file-name "courses"))
                                    (thread-last denote-directory (expand-file-name "posts"))
                                    (thread-last denote-directory (expand-file-name "logs"))
-                                   (thread-last denote-directory (expand-file-name "attachments"))
                                    ))
   ;; :config
   (add-hook 'dired-mode-hook #'my/denote-dired-mode-hook))
@@ -61,7 +68,11 @@ Delete the original subtree."
   :init
   ;; :config
   (setq consult-notes-sources '(
-                                ("Nosleep"  ?s  "~/Documents/org/nosleep")
+                                ("Casts"  ?c  "~/Documents/org/casts")
+				("Posts" ?p "~/Documents/org/notes/posts")
+				("Books" ?b "~/Documents/org/notes/books")
+				("Movies" ?m "~/Documents/org/notes/movies")
+				("Logs" ?l "~/Documents/org/notes/logs")
                                 )) ;; Set notes dir(s), see below
   ;; Set org-roam integration OR denote integration
   (when (locate-library "denote")

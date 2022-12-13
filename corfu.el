@@ -9,17 +9,20 @@
   (corfu-quit-no-match 'separator)
   (corfu-preselect-first nil)
   (corfu-echo-mode t)
-  (corfu-popupinfo-mode t)
+  ;; (corfu-popupinfo-mode t)
   (corfu-popupinfo-delay 0.5)
   :hook
-  ;; (doom-fir-buffer . (lambda ()
-  ;;                        (global-corfu-mode)
-  ;;                        (corfu-popupinfo-mode)
-  ;;                        ))
-  ((prog-mode . (lambda ()
+  (
+   (emacs-lisp-mode . (lambda ()
+			(global-corfu-mode)
+			(corfu-popupinfo-mode)
+			))
+   (python-mode . (lambda ()
                     (global-corfu-mode)
                     (corfu-popupinfo-mode)
-                    )))
+                    ))
+
+   )
   ;; :init
   ;; (global-corfu-mode)
   :bind (:map corfu-map
@@ -49,10 +52,3 @@
   (add-to-list 'completion-at-point-functions #'cape-keyword)
   ;; (add-to-list 'completion-at-point-functions #'cape-ispell)
   )
-
-
-
-;;eglot
-;; (with-eval-after-load 'eglot
-;;    (setq completion-category-defaults nil))
-;; (add-hook! 'python-mode 'eglot-ensure)

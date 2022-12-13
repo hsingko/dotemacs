@@ -40,13 +40,16 @@
 (use-package "org-modern")
 (add-hook 'org-mode-hook #'org-modern-mode)
 (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
-
-(org-indent-mode t)
-
+;; long line wrap
+;; see: https://stackoverflow.com/questions/950340/how-do-you-activate-line-wrapping-in-emacs/950406#950406
+(global-visual-line-mode)
 ;;; org-modern
 (global-org-modern-mode)
 ;; apperance
 (setq org-modern-table nil)
+(setq org-modern-checkbox nil)
+(setq org-fontify-quote-and-verse-blocks t)
+
 
 ;; Improve org mode looks
 (setq org-startup-indented t
@@ -55,8 +58,29 @@
       org-startup-with-inline-images t
       org-image-actual-width '(300))
 
-  (use-package org-superstar
-      :config
-      (setq org-superstar-special-todo-items t)
-      (add-hook 'org-mode-hook (lambda ()
-                                 (org-superstar-mode 1))))
+(use-package org-superstar
+  :config
+  (setq org-superstar-special-todo-items t)
+  (add-hook 'org-mode-hook (lambda ()
+                             (org-superstar-mode 1))))
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp .t)
+   (python . t)))
+(setq org-confirm-babel-evaluate nil)
+
+
+;; ;; org-capture
+;; (defun org-journal-find-location ()
+;;   ;; Open today's journal, but specify a non-nil prefix argument in order to
+;;   ;; inhibit inserting the heading; org-capture will insert the heading.
+;;   (org-journal-new-entry t)
+;;   (unless (eq org-journal-file-type 'daily)
+;;     (org-narrow-to-subtree))
+;;   (goto-char (point-max)))
+
+;; (setq org-capture-templates '(("j" "Journal entry" plain (function org-journal-find-location)
+;;                                "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
+;;                                :jump-to-captured nil :immediate-finish t)))
+

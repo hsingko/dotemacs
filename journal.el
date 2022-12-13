@@ -1,4 +1,5 @@
-(use-package org-journal)
+(use-package org-journal
+  :commands (org-journal-new-entry))
 
 (setq org-journal-file-type 'yearly
       org-journal-file-format "%Y.org"
