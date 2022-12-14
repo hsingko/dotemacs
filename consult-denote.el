@@ -19,14 +19,30 @@
       :category 'consult-denote
       ;; :face     consult-file
       ;; :annotate ,(apply-partially consult-notes-annotate-note-function name)
-      :items    ,(lambda () (mapcar (lambda (f) (concat idir f))
+      :items    ,(lambda () (mapcar (lambda (f) (propertize f 'path (expand-file-name f dir)))
 	        		    ;; filter files that glob *.*
 	        		    (directory-files dir nil consult-denote-file-match)))
-      :state    ,#'consult--file-state
+      
+      :state    ,#'consult-denote--state
       ;; :action   ,(lambda (f) (find-file f) consult-notes-default-format)
       :new  ,(lambda (cand)
 	       (consult-denote--new-note cand dir)) ;; maybe better use narrow key?
       )))
+
+
+(defun consult-denote--file (cand)
+  (format "%s" (get-text-property 0 'path cand)))
+
+(defun consult-denote--state ()
+  "File preview for denote files."
+  (let ((open (consult--temporary-files))
+	(state (consult--file-state)))
+    (lambda (action cand)
+      (unless cand
+	(funcall open))
+      (funcall state action (and cand
+	                         (consult-denote--file cand))))))
+
 
 (defun consult-denote ()
   (interactive)

@@ -1,3 +1,6 @@
+(use-package ace-pinyin
+  :init (ace-pinyin-global-mode +1))
+
 (use-package which-key
   :init (which-key-mode)
   :diminish which-key-mode

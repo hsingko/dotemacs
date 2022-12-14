@@ -5,6 +5,26 @@
 
 ;; embrace the power of avy!
 (global-set-key (kbd "M-j") #'avy-goto-char-timer)
+(global-set-key (kbd "M-c") #'avy-goto-char-2)
+
+
+;; window
+(winner-mode)
+(use-package ace-window)
+(global-set-key (kbd "C-c w h") #'split-window-horizontally)
+(global-set-key (kbd "C-c w v") #'split-window-vertically)
+(global-set-key (kbd "C-c w c") #'delete-window)
+(global-set-key (kbd "C-c w C") #'delete-other-windows)
+(global-set-key (kbd "M-o") 'ace-window) 
+;; winner mode
+(global-set-key (kbd "C-c w u") #'winner-undo)
+(global-set-key (kbd "C-c w r") #'winner-redo)
+;; wrap words
+;; see: https://stackoverflow.com/questions/2951797/wrapping-selecting-text-in-enclosing-characters-in-emacs
+(global-set-key (kbd "M-[") 'insert-pair)
+(global-set-key (kbd "M-{") 'insert-pair)
+(global-set-key (kbd "M-\"") 'insert-pair)
+(global-set-key (kbd "M-(") 'insert-pair)
 
 
 ;; mark
@@ -26,7 +46,7 @@
 (global-set-key (kbd "C-c n d") #'denote)
 (global-set-key (kbd "C-c n D") #'denote-subdirectory)
 (global-set-key (kbd "C-c n l") #'denote-link)
-(global-set-key (kbd "C-c n t") #'denote-keywords-add)
+(global-set-key (bd "C-c n t") #'denote-keywords-add)
 (global-set-key (kbd "C-c n T") #'denote-keywords-remove)
 (global-set-key (kbd "C-c n j") #'org-journal-new-entry)
 ;; buffer

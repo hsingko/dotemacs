@@ -37,22 +37,18 @@
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; theme
-(setq modus-themes-links (quote (neutral-underline background)))
-(setq modus-themes-mode-line '(borderless accented))
-(setq modus-themes-region '(bg-only accented))
-;; (setq modus-themes-completions 'opinionated)
-(setq modus-themes-italic-constructs t)
-(setq modus-themes-paren-match '(bold intense))
-(setq modus-themes-headings
-      '((t . (rainbow light))))
-(setq modus-themes-org-blocks 'tinted-background)
-(load-theme 'modus-operandi t)
 ;; modeline
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1))
 (use-package markdown-mode)
 
-;;window
-(winner-mode)
-(use-package ace-window)
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-dracula t)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
