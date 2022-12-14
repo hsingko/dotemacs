@@ -61,20 +61,17 @@ Delete the original subtree."
 
 
 
-(use-package consult-notes
-  :after denote
-  :commands (consult-notes
-         consult-notes-search-in-all-notes)
-  :init
-  ;; :config
-  (setq consult-notes-sources '(
-                                ("Casts"  ?c  "~/Documents/org/casts")
-				("Posts" ?p "~/Documents/org/notes/posts")
-				("Books" ?b "~/Documents/org/notes/books")
-				("Movies" ?m "~/Documents/org/notes/movies")
-				("Logs" ?l "~/Documents/org/notes/logs")
-                                )) ;; Set notes dir(s), see below
-  ;; Set org-roam integration OR denote integration
-  (when (locate-library "denote")
-    (consult-notes-denote-mode))
-  )
+;; (use-package consult-notes
+;;   :after denote
+;;   :commands (consult-notes
+;;          consult-notes-search-in-all-notes)
+;;   :init
+;;   ;; :config
+;;   (setq consult-notes-sources '(
+;;                                 ("Casts"  ?c  "~/Documents/org/casts")
+;;                                 )) ;; Set notes dir(s), see below
+;;   ;; Set org-roam integration OR denote integration
+;;   (when (locate-library "denote")
+;;     (consult-notes-denote-mode))
+;;   )
+

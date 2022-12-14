@@ -67,7 +67,9 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp .t)
-   (python . t)))
+   (python . t)
+   ;; (javascript . t)
+   ))
 (setq org-confirm-babel-evaluate nil)
 
 

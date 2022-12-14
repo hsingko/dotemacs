@@ -1,18 +1,14 @@
-;; window
-(global-set-key (kbd "C-c w h") #'split-window-horizontally)
-(global-set-key (kbd "C-c w v") #'split-window-vertically)
-(global-set-key (kbd "C-c w c") #'delete-window)
-(global-set-key (kbd "C-c w C") #'delete-other-windows)
-(global-set-key (kbd "M-o") 'ace-window) 
-;; winner mode
-(global-set-key (kbd "C-c w u") #'winner-undo)
-(global-set-key (kbd "C-c w r") #'winner-redo)
-;; wrap words
-;; see: https://stackoverflow.com/questions/2951797/wrapping-selecting-text-in-enclosing-characters-in-emacs
-(global-set-key (kbd "M-[") 'insert-pair)
-(global-set-key (kbd "M-{") 'insert-pair)
-(global-set-key (kbd "M-\"") 'insert-pair)
-(global-set-key (kbd "M-(") 'insert-pair)
+;; unmap default
+(global-unset-key (kbd "M-j")) ;; default-indent-new-line
+(global-unset-key (kbd "M-k")) ;; forward-word
+
+
+;; embrace the power of avy!
+(global-set-key (kbd "M-j") #'avy-goto-char-timer)
+
+
+;; mark
+(global-set-key (kbd "M-k") #'pop-global-mark)
 
 ;;helpful
 (use-package helpful)
@@ -26,7 +22,7 @@
 
 ;; key bindings
 ;; notes
-(global-set-key (kbd "C-c n f") #'consult-notes)
+(global-set-key (kbd "C-c n f") #'consult-denote)
 (global-set-key (kbd "C-c n d") #'denote)
 (global-set-key (kbd "C-c n D") #'denote-subdirectory)
 (global-set-key (kbd "C-c n l") #'denote-link)

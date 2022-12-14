@@ -10,7 +10,7 @@
   (setq vertico-count 20)
 
   ;; Grow and shrink the Vertico minibuffer
-  (setq vertico-resize t)
+  ;; (setq vertico-resize t)
 
   ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
   (setq vertico-cycle t)
@@ -62,12 +62,12 @@
 
 
 (use-package posframe)
-(use-package vertico-posframe)
-(require 'vertico-posframe)
-(vertico-posframe-mode 1)
-(setq vertico-posframe-parameters
-      '((left-fringe . 8)
-        (right-fringe . 8)))
+;; (use-package vertico-posframe)
+;; (require 'vertico-posframe)
+;; (vertico-posframe-mode 1)
+;; (setq vertico-posframe-parameters
+;;       '((left-fringe . 8)
+;;         (right-fringe . 8)))
 
 
 (use-package all-the-icons-completion
