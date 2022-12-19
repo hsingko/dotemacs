@@ -7,6 +7,8 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+
+(setq custom-file "~/.config/emacs/custom.el")
 (load-file "~/.config/emacs/ui.el")
 (load-file "~/.config/emacs/backup.el")
 (load-file "~/.config/emacs/keymap.el")
@@ -27,18 +29,7 @@
 (load-file "~/.config/emacs/journal.el")
 (load-file "~/.config/emacs/yasnippet.el")
 (load-file "~/.config/emacs/hugo.el")
+(load-file "~/.config/emacs/nov.el")
 
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(consult-dir org-modern-indent helpful ox-hugo yasnippet-snippets yasnippet ace-window org-journal which-key yaml-mode magit org-superstar all-the-icons-completion org-modern doom-modeline meow orderless vertico-posframe)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(require 'treesit)

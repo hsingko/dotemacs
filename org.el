@@ -9,7 +9,8 @@
 (use-package "org-download")
 (require 'org-download)
 (setq-default org-download-heading-lvl nil)
-(setq-default org-download-image-dir "./images")
+(setq-default org-download-image-dir "~/Documents/org/images")
+(setq org-download-backend "wget")
 (defun dummy-org-download-annotate-function (link)
   "")
 (setq org-download-annotate-function
@@ -21,13 +22,21 @@
   )
 
 
-(setq org-agenda-files '("~/Documents/org"))
+(setq org-agenda-files `(
+			 ,(expand-file-name "gtd.org" org-directory)
+			 ,(expand-file-name "readlog.org" org-directory)
+			 ))
 
-(add-to-list
- 'org-file-apps
-     '(
-     ("\\.pdf\\'" . system)
-   ))
+(setq org-file-apps-gnu '((remote . emacs)
+                            (system . "open %s")
+                            ("ps.gz" . "gv %s")
+                            ("eps.gz" . "gv %s")
+                            ("dvi" . "xdvi %s")
+                            ("fig" . "xfig %s")
+			    ("webm" . "mpv %s")
+                            (t . "open %s")
+                            (".png" . "open %s")
+			    ))
 
 
 (org-link-set-parameters "zotero" :follow
@@ -72,17 +81,23 @@
    ))
 (setq org-confirm-babel-evaluate nil)
 
+; hide drawers when cycle headline visibility
+(add-hook 'org-cycle-hook #'org-cycle-hide-drawers)
 
-;; ;; org-capture
-;; (defun org-journal-find-location ()
-;;   ;; Open today's journal, but specify a non-nil prefix argument in order to
-;;   ;; inhibit inserting the heading; org-capture will insert the heading.
-;;   (org-journal-new-entry t)
-;;   (unless (eq org-journal-file-type 'daily)
-;;     (org-narrow-to-subtree))
-;;   (goto-char (point-max)))
 
-;; (setq org-capture-templates '(("j" "Journal entry" plain (function org-journal-find-location)
-;;                                "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
-;;                                :jump-to-captured nil :immediate-finish t)))
+(setq org-capture-templates
+      '((
+	"g" "Glossary" entry (file "glossary.org")
+	"* %^{word}\n%a\n%t\n + %^{sentence}")))
 
+(add-to-list 'org-capture-templates
+	     '("l" "Leetcode" entry (file+headline
+				     "~/Documents/org/leetcode/index.org" "Daily")
+	       "* TODO %^{NO}. %^{Name} \n#+include: %\\1.py src python\n%?"))
+
+
+(add-hook 'org-mode-hook (lambda ()
+			   (toggle-input-method)
+			   ))
+
+(use-package org-pomodoro)

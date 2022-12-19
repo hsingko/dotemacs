@@ -22,7 +22,6 @@
       :items    ,(lambda () (mapcar (lambda (f) (propertize f 'path (expand-file-name f dir)))
 	        		    ;; filter files that glob *.*
 	        		    (directory-files dir nil consult-denote-file-match)))
-      
       :state    ,#'consult-denote--state
       ;; :action   ,(lambda (f) (find-file f) consult-notes-default-format)
       :new  ,(lambda (cand)
@@ -80,7 +79,6 @@
 
 (defun consult-denote--new-note (cand directory)
   "Create new note with Denote with title CAND.
-	
 	Input \"foo\", then create \"id-foo\", file type is determined by
 	`denote-file-type', choose manually when `denote-prompts' includes
 	'file-type, or simply include the extension; \"foo.txt\", creates
@@ -88,7 +86,7 @@
   (let* ((f (expand-file-name cand denote-directory))
 	 (f-dir (file-name-directory f))
 	 (f-name-base (file-name-base f))
-	 (file-type (consult-notes-denote--extension-file-type f))
+	 (file-type (consult-denote--extension-file-type f))
 	 keywords date template)
     (dolist (prompt denote-prompts)
       (pcase prompt
@@ -107,3 +105,9 @@
     ("md" "markdown-toml")
     ("txt" "text")))
 
+
+;; see: https://github.com/mclear-tools/consult-notes/issues/16#issuecomment-1308852518
+(vertico--define-sort (alpha-desc) 32 (if (equal % "") 0 (/ (aref % 0) 4)) string> string>)
+(vertico-multiform-mode)
+(setq vertico-multiform-commands
+      '((consult-denote (vertico-sort-function . vertico-sort-alpha-desc))))

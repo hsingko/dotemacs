@@ -9,11 +9,6 @@
 
 (setq dired-deletion-confirmer #'y-or-n-p)
 
-(defun +find-file-in-config()
-  (interactive)
-  (cd "~/.config/emacs/")
-  (call-interactively #'find-file))
-
 ;; display start up performance
 (defun +display-startup-time ()
   (message "emacs loaded in %s with %d garbage collections."
@@ -24,13 +19,46 @@
 
 (add-hook 'emacs-startup-hook #'+display-startup-time)
 
-(defun +delete-this-file()
-  "kill this file and buffer with no confirm"
-  (interactive)
-  (delete-file (buffer-file-name))
-  (kill-this-buffer))
 
-(defun +rename-this-file()
-  "TODO"
+(load "~/.config/emacs/file.el")
+
+(defun cnfonts-insert-fontname ()
+  "Select a valid font name, and insert at point."
   (interactive)
-  (rename-file (buffer-file-name)))
+  (let ((all-fonts (font-family-list))
+        fonts choose)
+    (dolist (font all-fonts)
+      (push (substring-no-properties
+             (decode-coding-string font 'gbk))
+            fonts)
+      (push (substring-no-properties
+             (decode-coding-string font 'utf-8))
+            fonts))
+    (setq fonts (delete-dups fonts))
+    (setq choose (completing-read
+                  "Which font name do you want to insert? "
+                  (if (yes-or-no-p "Only show font names with Chinese? ")
+                      (cl-remove-if
+                       #'(lambda (x)
+                           (not (string-match-p "\\cc" x)))
+                       fonts)
+                    fonts)))
+    (when choose
+      (insert (format "\"%s\"" choose)))))
+
+
+(defun +avy-capture-glossary (pt)
+  (save-excursion
+    (goto-char pt)
+    (let* ((word (word-at-point t))
+	   (raw (sentence-at-point t))
+	   (sentence (replace-regexp-in-string word (format "/%s/" word)
+					       (replace-regexp-in-string
+						"\n" "" raw))))
+      (write-region
+       (format "* %s\n + %s\n" word sentence)
+       nil
+       (expand-file-name "glossary.org" org-directory)
+       'append))))
+
+(setf (alist-get ?b avy-dispatch-alist) '+avy-capture-glossary)

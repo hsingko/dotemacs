@@ -14,11 +14,11 @@
   :hook
   (
    (emacs-lisp-mode . (lambda ()
-			(global-corfu-mode)
+			(corfu-mode)
 			(corfu-popupinfo-mode)
 			))
    (python-mode . (lambda ()
-                    (global-corfu-mode)
+		    (corfu-mode)
                     (corfu-popupinfo-mode)
                     ))
 
@@ -52,3 +52,10 @@
   (add-to-list 'completion-at-point-functions #'cape-keyword)
   ;; (add-to-list 'completion-at-point-functions #'cape-ispell)
   )
+
+
+(use-package eglot
+  :ensure nil
+  :defer t
+  :hook
+  (python-mode . eglot-ensure))

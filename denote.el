@@ -61,17 +61,22 @@ Delete the original subtree."
 
 
 
-;; (use-package consult-notes
-;;   :after denote
-;;   :commands (consult-notes
-;;          consult-notes-search-in-all-notes)
-;;   :init
-;;   ;; :config
-;;   (setq consult-notes-sources '(
-;;                                 ("Casts"  ?c  "~/Documents/org/casts")
-;;                                 )) ;; Set notes dir(s), see below
-;;   ;; Set org-roam integration OR denote integration
-;;   (when (locate-library "denote")
-;;     (consult-notes-denote-mode))
-;;   )
+(defun +create-free-writing (title)
+  (interactive "sWhat's in your mind? ")
+  (denote
+   title nil nil (expand-file-name "freewriting" denote-directory)))
+   
 
+;; (use-package consult-notes
+;;   :commands (consult-notes
+;;              consult-notes-search-in-all-notes
+;;              ;; if using org-roam 
+;;              ;; consult-notes-org-roam-find-node
+;;              ;; consult-notes-org-roam-find-node-relation
+;; 	     )
+;;   :config
+;;   (setq consult-notes-file-dir-sources '(("Nosleep"  ?s  "~/Documents/org/nosleep/"))) ;; Set notes dir(s), see below
+;;   ;; Set org-roam integration OR denote integration, e.g.:
+;;     ;; (when (locate-library "denote")
+;;     ;;   (consult-notes-denote-mode))
+;;     )

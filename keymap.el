@@ -46,7 +46,7 @@
 (global-set-key (kbd "C-c n d") #'denote)
 (global-set-key (kbd "C-c n D") #'denote-subdirectory)
 (global-set-key (kbd "C-c n l") #'denote-link)
-(global-set-key (bd "C-c n t") #'denote-keywords-add)
+(global-set-key (kbd "C-c n t") #'denote-keywords-add)
 (global-set-key (kbd "C-c n T") #'denote-keywords-remove)
 (global-set-key (kbd "C-c n j") #'org-journal-new-entry)
 ;; buffer
@@ -66,9 +66,14 @@
 (global-set-key (kbd "C-c f r") #'consult-recent-file)
 (global-unset-key (kbd "C-x C-f"))
 (global-set-key (kbd "C-c f f") #'find-file)
+(global-set-key (kbd "C-c f w") #'+create-free-writing)
 (global-set-key (kbd "C-c f p") #'+find-file-in-config)
 (global-set-key (kbd "C-c f D") #'+delete-this-file)
 (global-set-key (kbd "C-c f F") #'find-file-other-window)
+(global-set-key (kbd "C-c f R") #'doom/move-this-file)
+(global-set-key (kbd "C-c f U") #'doom/sudo-this-file)
+(global-set-key (kbd "C-c f c") #'doom/copy-this-file)
+
 
 ;; agenda
 (global-set-key (kbd "C-c o") #'org-agenda)

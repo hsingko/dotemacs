@@ -16,8 +16,9 @@
   (and (fboundp 'meow-mode)
        (or (meow-normal-mode-p)
            (meow-motion-mode-p)
-           ))
-  )
+	   (meow-beacon-mode-p)
+	   (meow-keypad-mode-p)
+           )))
 
 (defun +rime-predicates-basic ()
   "The basic necessary predicates combination."

@@ -14,7 +14,8 @@
 
   ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
   (setq vertico-cycle t)
-  :bind (("<backspace>" . 'vertico-directory-delete-char))
+  ;; :bind (("<backspace>" . 'vertico-directory-delete-char))
+  (define-key minibuffer-local-map (kbd "<backspace>") #'vertico-directory-delete-char)
   )
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
@@ -75,3 +76,8 @@
   :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
   :init
   (all-the-icons-completion-mode))
+
+
+(use-package eldoc-box
+  :init
+  (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t))
