@@ -12,6 +12,7 @@
 (add-to-list 'load-path "~/Repos/emacs-obsidian-excalidraw/")
 (require 'emacs-obsidian-excalidraw)
 (setq emacs-obsidian-excalidraw-vault-dir "~/Documents/org/excalidraw")
+(setq emacs-obsidian-excalidraw-image-format "png")
 
 (load-file "~/.config/emacs/ui.el")
 (load-file "~/.config/emacs/backup.el")
