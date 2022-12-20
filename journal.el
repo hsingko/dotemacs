@@ -18,4 +18,4 @@
     (org-narrow-to-subtree))
   (goto-char (point-max)))
 
-(setq org-journal-dir "~/Documents/org/journal/")
+(setq org-journal-dir (expand-file-name "journal" org-directory))

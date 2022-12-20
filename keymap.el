@@ -49,6 +49,7 @@
 (global-set-key (kbd "C-c n t") #'denote-keywords-add)
 (global-set-key (kbd "C-c n T") #'denote-keywords-remove)
 (global-set-key (kbd "C-c n j") #'org-journal-new-entry)
+(global-set-key (kbd "C-c n c") #'org-capture)
 ;; buffer
 (global-set-key (kbd "C-c b p") #'previous-buffer)
 (global-set-key (kbd "C-c b n") #'next-buffer)

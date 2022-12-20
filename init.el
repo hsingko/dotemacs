@@ -7,8 +7,12 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-
 (setq custom-file "~/.config/emacs/custom.el")
+
+(add-to-list 'load-path "~/Repos/emacs-obsidian-excalidraw/")
+(require 'emacs-obsidian-excalidraw)
+(setq emacs-obsidian-excalidraw-vault-dir "~/Documents/org/excalidraw")
+
 (load-file "~/.config/emacs/ui.el")
 (load-file "~/.config/emacs/backup.el")
 (load-file "~/.config/emacs/keymap.el")
@@ -30,6 +34,3 @@
 (load-file "~/.config/emacs/yasnippet.el")
 (load-file "~/.config/emacs/hugo.el")
 (load-file "~/.config/emacs/nov.el")
-
-
-(require 'treesit)

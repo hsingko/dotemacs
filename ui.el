@@ -64,23 +64,10 @@
   )
 
 
-
 (use-package markdown-mode)
-(use-package writeroom-mode)
-
-;; (use-package doom-themes
-;;   :ensure t
-;;   :config
-;;   ;; Global settings (defaults)
-;;   (setq doom-themes-enable-bold nil    ; if nil, bold is universally disabled
-;;         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-;;   (load-theme 'doom-gruvbox-light t)
-;;   (setq doom-gruvbox-light-variant "medium"
-;; 	doom-gruvbox-light-padded-modeline t
-;; 	doom-gruvbox-light-brighter-modeline t
-;; 	)
-;;   ;; Corrects (and improves) org-mode's native fontification.
-;;   (doom-themes-org-config))
+(use-package writeroom-mode
+  :commands writeroom-mode
+  )
 
 (setq modus-themes-links (quote (neutral-underline background)))
 (setq modus-themes-mode-line '(borderless accented))
@@ -92,4 +79,15 @@
       '((t . (rainbow light))))
 (setq modus-themes-org-blocks 'tinted-background)
 (load-theme 'modus-operandi)
+
+(vertico-posframe-mode 1)
+(setq vertico-posframe-border-width 1)
+
+(use-package org-modern
+  :ensure t
+  :custom
+  (org-modern-hide-stars nil) ; adds extra indentation
+  :hook
+  (org-mode . org-modern-mode)
+  (org-agenda-finalize . org-modern-agenda))
 

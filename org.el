@@ -6,21 +6,22 @@
 ;; log time after DONE, necessory ox-hugo
 (setq org-log-done 'time)
 ;; org-download configuration
-(use-package "org-download")
-(require 'org-download)
-(setq-default org-download-heading-lvl nil)
-(setq-default org-download-image-dir "~/Documents/org/images")
-(setq org-download-backend "wget")
-(defun dummy-org-download-annotate-function (link)
-  "")
-(setq org-download-annotate-function
-      #'dummy-org-download-annotate-function)
-(defun my/org-download-file-path ()
-  (interactive)
-  (org-download-image
-   (concat "file://" (current-kill 0)))
-  )
 
+(use-package org-download
+  :config
+  (setq-default org-download-heading-lvl nil)
+  (setq-default org-download-image-dir (expand-file-name "image" org-directory))
+  (setq org-download-backend "wget")
+  (defun dummy-org-download-annotate-function (link)
+    "")
+  (defun my/org-download-file-path ()
+    (interactive)
+    (org-download-image
+     (concat "file://" (current-kill 0)))
+    )
+  (setq org-download-annotate-function
+      #'dummy-org-download-annotate-function)
+  )
 
 (setq org-agenda-files `(
 			 ,(expand-file-name "gtd.org" org-directory)
@@ -44,11 +45,13 @@
                            (browse-url
                             ;; we get the "zotero:"-less url, so we put it back.
                             (format "zotero:%s" zpath))))
+(org-link-set-parameters "excalidraw" :follow
+                         (lambda (zpath)
+                           (browse-url
+                            ;; we get the "zotero:"-less url, so we put it back.
+                            (format "excalidraw:%s" zpath))))
 
 
-(use-package "org-modern")
-(add-hook 'org-mode-hook #'org-modern-mode)
-(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
 ;; long line wrap
 ;; see: https://stackoverflow.com/questions/950340/how-do-you-activate-line-wrapping-in-emacs/950406#950406
 (global-visual-line-mode)
@@ -65,13 +68,15 @@
       org-pretty-entities t
       org-hide-emphasis-markers t
       org-startup-with-inline-images t
-      org-image-actual-width '(300))
+      org-image-actual-width '(400))
 
 (use-package org-superstar
+  :hook
+  (org-mode-hook . (lambda ()
+		     (org-superstar-mode 1)))
   :config
   (setq org-superstar-special-todo-items t)
-  (add-hook 'org-mode-hook (lambda ()
-                             (org-superstar-mode 1))))
+  )
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -100,4 +105,30 @@
 			   (toggle-input-method)
 			   ))
 
-(use-package org-pomodoro)
+(use-package org-pomodoro
+  :after org-mode)
+
+(defun ar/org-insert-link-dwim ()
+  "Like `org-insert-link' but with personal dwim preferences."
+  (interactive)
+  (let* ((point-in-link (org-in-regexp org-link-any-re 1))
+         (clipboard-url (when (string-match-p "^http" (current-kill 0))
+                          (current-kill 0)))
+         (region-content (when (region-active-p)
+                           (buffer-substring-no-properties (region-beginning)
+                                                           (region-end)))))
+    (cond ((and region-content clipboard-url (not point-in-link))
+           (delete-region (region-beginning) (region-end))
+           (insert (org-make-link-string clipboard-url region-content)))
+          ((and clipboard-url (not point-in-link))
+           (insert (org-make-link-string
+                    clipboard-url
+                    (read-string "title: "
+                                 (with-current-buffer (url-retrieve-synchronously clipboard-url)
+                                   (dom-text (car
+                                              (dom-by-tag (libxml-parse-html-region
+                                                           (point-min)
+                                                           (point-max))
+                                                          'title))))))))
+          (t
+           (call-interactively 'org-insert-link)))))

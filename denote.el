@@ -46,7 +46,7 @@ Delete the original subtree."
 
 (use-package denote
   :init
-  (setq denote-directory "~/Documents/org/notes"
+  (setq denote-directory (expand-file-name "notes" org-directory)
         denote-file-type nil
         denote-dired-directories (list
                                    denote-directory
