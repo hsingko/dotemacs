@@ -111,3 +111,17 @@
 (vertico-multiform-mode)
 (setq vertico-multiform-commands
       '((consult-denote (vertico-sort-function . vertico-sort-alpha-desc))))
+
+
+;; 支持拼音首字母检索，并只在该命令下启用，非常方便，不会影响其他应用的补全
+(defun completion--regex-pinyin (str)
+  (orderless-regexp (pinyinlib-build-regexp-string str)))
+(defun advice--regexp-pinyin (func &rest args)
+  (add-to-list 'orderless-matching-styles #'completion--regex-pinyin)
+  (let ((result (apply func args)))
+    (setq orderless-matching-styles
+      (delete 'completion--regex-pinyin orderless-matching-styles))
+    result))
+
+(advice-add 'consult-denote :around #'advice--regexp-pinyin)
+(advice-add 'consult-line :around #'advice--regexp-pinyin)
