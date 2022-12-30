@@ -68,9 +68,8 @@
 
 (setq rime-show-candidate 'posframe)
 (setq rime-posframe-properties nil)
-
-;; 下面这行会导致 rime 无法启动，以前还好好的，最近突然不行了 2021/08/19
-;; (bind-key* "M-j" 'rime-force-enable)
+(setq rime-posframe-style 'horizontal)
+(setq rime-show-preedit 'inline)
 (use-package rime
   :custom
   (default-input-method "rime")

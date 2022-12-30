@@ -1,4 +1,3 @@
-
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
   (meow-motion-overwrite-define-key
@@ -91,3 +90,5 @@
   (meow-setup))
 (require 'meow)
 (meow-global-mode 1)
+
+

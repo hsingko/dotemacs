@@ -31,7 +31,6 @@
 (load-file "~/.config/emacs/magit.el")
 (load-file "~/.config/emacs/lang.el")
 (load-file "~/.config/emacs/tools.el")
-(load-file "~/.config/emacs/journal.el")
 (load-file "~/.config/emacs/yasnippet.el")
 (load-file "~/.config/emacs/hugo.el")
 (load-file "~/.config/emacs/nov.el")

@@ -1,8 +1,10 @@
 ;; unmap default
 (global-unset-key (kbd "M-j")) ;; default-indent-new-line
 (global-unset-key (kbd "M-k")) ;; forward-word
+(global-unset-key (kbd "C-SPC"))
 
-
+(global-set-key (kbd "M-SPC") #'set-mark-command)
+(global-set-key (kbd "M-p") #'pop-global-mark)
 ;; embrace the power of avy!
 (global-set-key (kbd "M-j") #'avy-goto-char-timer)
 (global-set-key (kbd "M-c") #'avy-goto-char-2)
@@ -50,6 +52,7 @@
 (global-set-key (kbd "C-c n T") #'denote-keywords-remove)
 (global-set-key (kbd "C-c n j") #'org-journal-new-entry)
 (global-set-key (kbd "C-c n c") #'org-capture)
+(global-set-key (kbd "C-c n z") #'olivetti-mode)
 ;; buffer
 (global-set-key (kbd "C-c b p") #'previous-buffer)
 (global-set-key (kbd "C-c b n") #'next-buffer)
@@ -78,3 +81,10 @@
 
 ;; agenda
 (global-set-key (kbd "C-c o") #'org-agenda)
+
+
+;; dired
+(use-package dired
+    :ensure nil
+    :config
+)

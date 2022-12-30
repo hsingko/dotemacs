@@ -7,11 +7,31 @@
 (setq org-log-done 'time)
 ;; org-download configuration
 
+
+(setq org-edit-src-content-indentation 0)
+(setq org-M-RET-may-split-line nil)
+
+(use-package org-journal
+  :commands (org-journal-new-entry)
+  :config
+  (setq org-journal-file-type 'yearly
+      org-journal-file-format "%Y.org"
+      org-journal-file-header "#+TITLE: Year %Y Journal"
+      org-journal-date-prefix "* "
+      org-journal-date-format "%a, %Y-%m-%d"
+      org-journal-time-prefix "** "
+      ;; org-journal-encrypt-journal t
+      org-journal-dir (expand-file-name "journal" org-directory)
+      )
+  )
+
 (use-package org-download
   :config
   (setq-default org-download-heading-lvl nil)
-  (setq-default org-download-image-dir (expand-file-name "image" org-directory))
+  (setq-default org-download-image-dir (expand-file-name "images" org-directory))
   (setq org-download-backend "wget")
+  (setq org-download-abbreviate-filename-function (lambda (fn) fn)) ; use original filename
+  (setq org-download-timestamp "%Y%m%dT%H%M%S-")
   (defun dummy-org-download-annotate-function (link)
     "")
   (defun my/org-download-file-path ()
@@ -45,11 +65,6 @@
                            (browse-url
                             ;; we get the "zotero:"-less url, so we put it back.
                             (format "zotero:%s" zpath))))
-(org-link-set-parameters "excalidraw" :follow
-                         (lambda (zpath)
-                           (browse-url
-                            ;; we get the "zotero:"-less url, so we put it back.
-                            (format "excalidraw:%s" zpath))))
 
 
 ;; long line wrap
@@ -73,7 +88,8 @@
 (use-package org-superstar
   :hook
   (org-mode-hook . (lambda ()
-		     (org-superstar-mode 1)))
+		     (org-superstar-mode 1)
+		     ))
   :config
   (setq org-superstar-special-todo-items t)
   )
@@ -99,6 +115,7 @@
 	     '("l" "Leetcode" entry (file+headline
 				     "~/Documents/org/leetcode/index.org" "Daily")
 	       "* TODO %^{NO}. %^{Name} \n#+include: %\\1.py src python\n%?"))
+
 
 
 (add-hook 'org-mode-hook (lambda ()
@@ -132,3 +149,4 @@
                                                           'title))))))))
           (t
            (call-interactively 'org-insert-link)))))
+

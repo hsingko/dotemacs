@@ -1,3 +1,4 @@
+(require 'denote-org-dblock)
 (defun my/denote-dired-mode-hook()
   (denote-dired-mode-in-directories)
   (when denote-dired-mode
@@ -29,7 +30,7 @@ Delete the original subtree."
 	   (heading (org-get-heading :no-tags))
 	   )
       (progn
-	; code blog contains bug, sometimes can't delete sub-subtree
+					; code blog contains bug, sometimes can't delete sub-subtree
         (delete-region (org-entry-beginning-position) (org-entry-end-position))
         (denote heading-text (org-get-tags) 'org
 		(thread-last denote-directory (expand-file-name "posts"))
@@ -49,13 +50,22 @@ Delete the original subtree."
   (setq denote-directory (expand-file-name "notes" org-directory)
         denote-file-type nil
         denote-dired-directories (list
-                                   denote-directory
-                                   (thread-last denote-directory (expand-file-name "movies"))
-                                   (thread-last denote-directory (expand-file-name "books"))
-				   (thread-last denote-directory (expand-file-name "courses"))
-                                   (thread-last denote-directory (expand-file-name "posts"))
-                                   (thread-last denote-directory (expand-file-name "logs"))
-                                   ))
+                                  denote-directory
+                                  (thread-last denote-directory (expand-file-name "movies"))
+                                  (thread-last denote-directory (expand-file-name "books"))
+				  (thread-last denote-directory (expand-file-name "courses"))
+                                  (thread-last denote-directory (expand-file-name "posts"))
+                                  (thread-last denote-directory (expand-file-name "logs"))
+                                  )
+	denote-templates '(
+			   (post . "#+HUGO_BASE_DIR: ~/Documents/Blog/
+#+hugo_front_matter_format: yaml
+#+EXPORT_FILE_NAME: index
+#+HUGO_BUNDLE: 
+#+DESCRIPTION: 
+#+HUGO_SECTION: post
+")))
+  
   ;; :config
   (add-hook 'dired-mode-hook #'my/denote-dired-mode-hook))
 
@@ -65,18 +75,9 @@ Delete the original subtree."
   (interactive "sWhat's in your mind? ")
   (denote
    title nil nil (expand-file-name "freewriting" denote-directory)))
-   
 
-;; (use-package consult-notes
-;;   :commands (consult-notes
-;;              consult-notes-search-in-all-notes
-;;              ;; if using org-roam 
-;;              ;; consult-notes-org-roam-find-node
-;;              ;; consult-notes-org-roam-find-node-relation
-;; 	     )
-;;   :config
-;;   (setq consult-notes-file-dir-sources '(("Nosleep"  ?s  "~/Documents/org/nosleep/"))) ;; Set notes dir(s), see below
-;;   ;; Set org-roam integration OR denote integration, e.g.:
-;;     ;; (when (locate-library "denote")
-;;     ;;   (consult-notes-denote-mode))
-;;     )
+
+(defun +create-blog-post (title)
+  (interactive "sInput Your Blog Post Title: ")
+  (denote
+   title nil nil (expand-file-name "posts" denote-directory) nil 'post))

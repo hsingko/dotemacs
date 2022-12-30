@@ -114,13 +114,14 @@
 
 
 ;; 支持拼音首字母检索，并只在该命令下启用，非常方便，不会影响其他应用的补全
+;; 注意，如果通过 <escape> 之类的按键中途推出了 consult 那么 delete 的操作就不会被执行
 (defun completion--regex-pinyin (str)
   (orderless-regexp (pinyinlib-build-regexp-string str)))
 (defun advice--regexp-pinyin (func &rest args)
   (add-to-list 'orderless-matching-styles #'completion--regex-pinyin)
   (let ((result (apply func args)))
     (setq orderless-matching-styles
-      (delete 'completion--regex-pinyin orderless-matching-styles))
+	  (delete 'completion--regex-pinyin orderless-matching-styles))
     result))
 
 (advice-add 'consult-denote :around #'advice--regexp-pinyin)

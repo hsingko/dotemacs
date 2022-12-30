@@ -18,10 +18,12 @@
 ;; (setq cursor-type '(bar . 4)) 
 ;; (setq line-spacing 0)
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy Fixed" :size 18 :weight 'light))
-(set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" :size 18))
-(set-fontset-font t 'symbol (font-spec :family "Symbola" :size 18) nil 'prepend)
-(set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "LXGW WenKai Mono" :size 18 :weight 'regular))
+(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy Fixed" :size 16 :weight 'light))
+(set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" :size 16))
+(set-fontset-font t 'symbol (font-spec :family "Symbola" :size 16) nil 'prepend)
+(set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "LXGW WenKai" :weight 'regular))
+;; do not set chinese font size, use below code instead, see: https://baohaojun.github.io/perfect-emacs-chinese-font.html
+(setq face-font-rescale-alist '(("LXGW WenKai Mono" . 1.1) ))
 
 ;; (setq resize-mini-windows nil)
 ;https://www.reddit.com/r/emacs/comments/wpr2n2/comment/ikj2vn1/?utm_source=share&utm_medium=web2x&context=3
@@ -32,45 +34,12 @@
 	  (lambda ()
 	    (display-line-numbers-mode 1)))
 
-(use-package telephone-line
-  :custom
-  (telephone-line-primary-left-separator 'telephone-line-cubed-left)
-  (telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left)
-  (telephone-line-primary-right-separator 'telephone-line-cubed-right)
-  (telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
-  (telephone-line-height 24)
-  (telephone-line-evil-use-short-tag t)  
-  :config
-  (setq telephone-line-lhs
-	'((evil   . (telephone-line-meow-tag-segment))
-          (accent . (telephone-line-vc-segment
-                     telephone-line-erc-modified-channels-segment
-                     telephone-line-process-segment))
-          (nil    . (
-		     ;; telephone-line-minor-mode-segment
-                     telephone-line-buffer-segment
-		     ))))
-  (setq telephone-line-rhs
-	'((nil    . (telephone-line-misc-info-segment))
-          (accent . (telephone-line-major-mode-segment))
-          (evil   . (telephone-line-airline-position-segment))))
-  (setq telephone-line-primary-left-separator 'telephone-line-cubed-left
-	telephone-line-secondary-left-separator 'telephone-line-cubed-hollow-left
-	telephone-line-primary-right-separator 'telephone-line-cubed-right
-	telephone-line-secondary-right-separator 'telephone-line-cubed-hollow-right)
-  (setq telephone-line-height 24
-	telephone-line-evil-use-short-tag t)
-  (telephone-line-mode)
+(use-package markdown-mode
+  :mode ("\\.md\\'" . markdown-mode)
   )
 
-
-(use-package markdown-mode)
-(use-package writeroom-mode
-  :commands writeroom-mode
-  )
-
-(setq modus-themes-links (quote (neutral-underline background)))
-(setq modus-themes-mode-line '(borderless accented))
+;; (setq modus-themes-links (quote (neutral-underline background)))
+;; (setq modus-themes-mode-line '(borderless accented moody))
 (setq modus-themes-region '(bg-only accented))
 ;; (setq modus-themes-completions 'opinionated)
 (setq modus-themes-italic-constructs t)
@@ -79,7 +48,23 @@
       '((t . (rainbow light))))
 (setq modus-themes-org-blocks 'tinted-background)
 (load-theme 'modus-operandi)
+(defun +custom-modeline ()
+  (set-face-attribute 'mode-line nil
+		      :box nil
+		      :overline "blue"
+		      :background nil
+		      :font "UbuntuMono Nerd Font Mono-12"
+		      )
+  (set-face-attribute 'mode-line-inactive nil
+		      :box nil
+		      :overline "gray"
+		      :background nil
+		      :font "UbuntuMono Nerd Font Mono-12"
+		      )
+  )
 
+(+custom-modeline)
+(add-hook 'modus-themes-after-load-theme-hook #'+custom-modeline)
 (vertico-posframe-mode 1)
 (setq vertico-posframe-border-width 1)
 
@@ -91,3 +76,11 @@
   (org-mode . org-modern-mode)
   (org-agenda-finalize . org-modern-agenda))
 
+(use-package olivetti
+  :commands olivetti-mode
+  :hook
+  (org-mode . olivetti-mode)
+  :config
+  (add-hook 'olivetti-mode-hook #'(lambda ()
+				    (text-scale-increase 1)))
+  (setq-default olivetti-body-width 80))
