@@ -51,7 +51,7 @@
 (defun +custom-modeline ()
   (set-face-attribute 'mode-line nil
 		      :box nil
-		      :overline "blue"
+		      :overline "purple"
 		      :background nil
 		      :font "UbuntuMono Nerd Font Mono-12"
 		      )
@@ -83,4 +83,4 @@
   :config
   (add-hook 'olivetti-mode-hook #'(lambda ()
 				    (text-scale-increase 1)))
-  (setq-default olivetti-body-width 80))
+  (setq-default olivetti-body-width 84))
