@@ -85,6 +85,9 @@
   (org-mode . org-modern-mode)
   (org-agenda-finalize . org-modern-agenda))
 
+(setq display-time-24hr-format t)
+(setq display-time-default-load-average nil)
+
 (use-package olivetti
   :commands olivetti-mode
   :diminish

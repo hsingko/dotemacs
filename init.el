@@ -6,6 +6,7 @@
   (package-refresh-contents))
 (require 'use-package)
 (setq use-package-always-ensure t)
+(setq use-package-compute-statistics t)
 
 (setq custom-file "~/.config/emacs/custom.el")
 
@@ -28,9 +29,7 @@
 (load-file "~/.config/emacs/denote.el")
 (load-file "~/.config/emacs/consult-denote.el")
 (load-file "~/.config/emacs/corfu.el")
-(load-file "~/.config/emacs/magit.el")
 (load-file "~/.config/emacs/lang.el")
 (load-file "~/.config/emacs/tools.el")
-(load-file "~/.config/emacs/yasnippet.el")
-(load-file "~/.config/emacs/hugo.el")
-(load-file "~/.config/emacs/nov.el")
+;(load-file "~/.config/emacs/hugo.el")
+;(load-file "~/.config/emacs/nov.el")

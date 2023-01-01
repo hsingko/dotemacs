@@ -46,6 +46,7 @@ Delete the original subtree."
 ;; (require 'denote-org-dblock)
 
 (use-package denote
+  :commands denote
   :init
   (setq denote-directory (expand-file-name "notes" org-directory)
         denote-file-type nil
@@ -56,28 +57,11 @@ Delete the original subtree."
 				  (thread-last denote-directory (expand-file-name "courses"))
                                   (thread-last denote-directory (expand-file-name "posts"))
                                   (thread-last denote-directory (expand-file-name "logs"))
-                                  )
-	denote-templates '(
-			   (post . "#+HUGO_BASE_DIR: ~/Documents/Blog/
-#+hugo_front_matter_format: yaml
-#+EXPORT_FILE_NAME: index
-#+HUGO_BUNDLE: 
-#+DESCRIPTION: 
-#+HUGO_SECTION: post
-")))
-  
+                                  ))
   ;; :config
   (add-hook 'dired-mode-hook #'my/denote-dired-mode-hook))
-
-
 
 (defun +create-free-writing (title)
   (interactive "sWhat's in your mind? ")
   (denote
    title nil nil (expand-file-name "freewriting" denote-directory)))
-
-
-(defun +create-blog-post (title)
-  (interactive "sInput Your Blog Post Title: ")
-  (denote
-   title nil nil (expand-file-name "posts" denote-directory) nil 'post))

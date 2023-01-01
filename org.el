@@ -12,6 +12,7 @@
 (setq org-M-RET-may-split-line nil)
 
 (use-package org-indent
+  :after org
   :ensure nil
   :diminish)
 
@@ -30,6 +31,7 @@
   )
 
 (use-package org-download
+  :commands org-download-clipboard
   :config
   (setq-default org-download-heading-lvl nil)
   (setq-default org-download-image-dir (expand-file-name "images" org-directory))
@@ -64,12 +66,6 @@
 			    ))
 
 
-(org-link-set-parameters "zotero" :follow
-                         (lambda (zpath)
-                           (browse-url
-                            ;; we get the "zotero:"-less url, so we put it back.
-                            (format "zotero:%s" zpath))))
-
 
 ;; long line wrap
 ;; see: https://stackoverflow.com/questions/950340/how-do-you-activate-line-wrapping-in-emacs/950406#950406
@@ -90,10 +86,7 @@
       org-image-actual-width '(400))
 
 (use-package org-superstar
-  :hook
-  (org-mode-hook . (lambda ()
-		     (org-superstar-mode 1)
-		     ))
+  :hook (org-mode . org-superstar-mode)
   :config
   (setq org-superstar-special-todo-items t)
   )

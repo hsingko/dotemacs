@@ -1,4 +1,5 @@
 (use-package ace-pinyin
+  :commands avy-goto-char2
   :diminish
   :init (ace-pinyin-global-mode +1))
 
@@ -121,3 +122,28 @@
 
 
 (setq delete-by-moving-to-trash t)
+
+
+(use-package rg
+  :commands rg
+  :config
+  (rg-enable-default-bindings))
+
+(use-package magit
+  :commands magit)
+
+
+(use-package yasnippet
+  :diminish yas-minor-mode
+  :hook ((org-mode . yas-minor-mode)
+	 (markdown-mode . yas-minor-mode)
+	 (html-mode . yas-minor-mode))
+  :config
+  (yas-reload-all)
+  (use-package yasnippet-snippets
+    :after yasnippet
+    )
+  )
+
+(use-package yaml-mode)
+

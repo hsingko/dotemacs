@@ -55,8 +55,16 @@
 
 
 (use-package eglot
-  :diminish eldoc-mode
   :ensure nil
-  :defer t
   :hook
   (python-mode . eglot-ensure))
+
+(use-package eldoc
+  :after eglot
+  :diminish
+  :config
+  (use-package eldoc-box
+  :after eldoc
+  :init
+  (add-hook 'eglot-managed-mode-hook #'eldoc-box-hover-mode t))
+  )

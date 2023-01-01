@@ -33,7 +33,10 @@
 (global-set-key (kbd "M-k") #'pop-global-mark)
 
 ;;helpful
-(use-package helpful)
+(use-package helpful
+  :commands describe-function
+  )
+
 (global-unset-key (kbd "C-h C-f")) ;unbind emacs-faq, good for meow keypad
 (global-set-key (kbd "C-h f") #'helpful-callable)
 (global-set-key (kbd "C-h v") #'helpful-variable)
