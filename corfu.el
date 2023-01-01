@@ -55,6 +55,7 @@
 
 
 (use-package eglot
+  :diminish eldoc-mode
   :ensure nil
   :defer t
   :hook

@@ -19,6 +19,8 @@
 ;; (setq line-spacing 0)
 ;; font family
 (set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy Fixed" :size 16 :weight 'light))
+(set-face-attribute 'fixed-pitch nil :font (font-spec :family "Iosevka Comfy Fixed" :size 16 :weight 'light))
+(set-face-attribute 'variable-pitch nil :font (font-spec :family "Noto Sans" :size 16 :weight 'light))
 (set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" :size 16))
 (set-fontset-font t 'symbol (font-spec :family "Symbola" :size 16) nil 'prepend)
 (set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "LXGW WenKai" :weight 'regular))
@@ -51,14 +53,14 @@
 (defun +custom-modeline ()
   (set-face-attribute 'mode-line nil
 		      :box nil
-		      :overline "purple"
-		      :background nil
+		      :overline (face-attribute 'default :foreground)
+		      :background (face-attribute 'default :background)
 		      :font "UbuntuMono Nerd Font Mono-12"
 		      )
   (set-face-attribute 'mode-line-inactive nil
 		      :box nil
-		      :overline "gray"
-		      :background nil
+		      :overline nil
+		      :background (face-attribute 'default :background)
 		      :font "UbuntuMono Nerd Font Mono-12"
 		      )
   )
@@ -67,6 +69,13 @@
 (add-hook 'modus-themes-after-load-theme-hook #'+custom-modeline)
 (vertico-posframe-mode 1)
 (setq vertico-posframe-border-width 1)
+
+(use-package diminish)
+(diminish 'visual-line-mode)
+
+(use-package autorevert
+  :ensure nil
+  :diminish auto-revert-mode)
 
 (use-package org-modern
   :ensure t
@@ -78,9 +87,12 @@
 
 (use-package olivetti
   :commands olivetti-mode
+  :diminish
   :hook
   (org-mode . olivetti-mode)
   :config
   (add-hook 'olivetti-mode-hook #'(lambda ()
 				    (text-scale-increase 1)))
-  (setq-default olivetti-body-width 84))
+  (setq-default olivetti-body-width 0.55)
+  ;; (setq-default olivetti-minimum-body-width 78)
+  )

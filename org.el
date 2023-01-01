@@ -11,6 +11,10 @@
 (setq org-edit-src-content-indentation 0)
 (setq org-M-RET-may-split-line nil)
 
+(use-package org-indent
+  :ensure nil
+  :diminish)
+
 (use-package org-journal
   :commands (org-journal-new-entry)
   :config
@@ -115,6 +119,11 @@
 	     '("l" "Leetcode" entry (file+headline
 				     "~/Documents/org/leetcode/index.org" "Daily")
 	       "* TODO %^{NO}. %^{Name} \n#+include: %\\1.py src python\n%?"))
+
+(add-to-list 'org-capture-templates
+	     '("t" "todo" entry (file+headline
+				 "~/Documents/org/todo.org" "Inbox")
+	       "* TODO %?\n%u\n%f"))
 
 
 

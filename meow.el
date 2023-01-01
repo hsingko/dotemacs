@@ -84,11 +84,17 @@
    '("'" . repeat)
    '("<escape>" . ignore)))
 (use-package meow
+  :diminish meow-keypad-mode
+  :diminish meow-insert-mode
+  :diminish meow-motion-mode
+  :diminish meow-beacon-mode
+  :diminish meow-normal-mode
   :config
   (meow-setup-line-number)
   (setq meow-use-clipboard t)
-  (meow-setup))
+  (meow-setup-indicator) ;; custom meow modeline mode helper
+  (meow-setup)
+  (add-to-list 'meow-mode-state-list '(calibredb-search-mode . motion))
+  )
 (require 'meow)
 (meow-global-mode 1)
-
-
