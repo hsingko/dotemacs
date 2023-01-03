@@ -1,3 +1,4 @@
+;;; ace-pinyin
 (use-package ace-pinyin
   :commands avy-goto-char2
   :diminish
@@ -73,6 +74,7 @@
   (define-key dired-mode-map (kbd "C-c C-w") #'wdired-change-to-wdired-mode)
   (define-key dired-mode-map (kbd "h") #'dired-up-directory)
   (use-package all-the-icons-dired
+    :diminish
     :ensure t
     :hook (dired-mode . all-the-icons-dired-mode))
   )
@@ -146,4 +148,25 @@
   )
 
 (use-package yaml-mode)
+
+(use-package calibredb
+  :commands calibredb
+  :config
+  (setq calibredb-root-dir "/data/Calibre Library/")
+  (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
+  (setq calibredb-id-width 6)
+  (advice-add 'calibredb :after #'+disable-line-wrap-and-number)
+  )
+
+(defun +disable-line-wrap-and-number ()
+  (visual-line-mode -1))
+
+
+(use-package emacs-obsidian-excalidraw
+  :load-path "git/emacs-obsidian-excalidraw"
+  :config
+  (setq emacs-obsidian-excalidraw-vault-dir "~/Documents/org/excalidraw/"
+	emacs-obsidian-excalidraw-image-format "png")
+  )
+
 

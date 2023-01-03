@@ -58,8 +58,15 @@
   ;;       orderless-component-separator #'orderless-escapable-split-on-space)
   (setq completion-styles '(orderless basic)
         completion-category-defaults nil
-        completion-category-overrides '((file (styles partial-completion)))))
-
+        completion-category-overrides '((file (styles partial-completion))))
+  :config
+  (defun without-if-bang (pattern _index _total)
+    (cond
+     ((equal "!" pattern)
+      '(orderless-literal . ""))
+     ((string-prefix-p "!" pattern)
+      `(orderless-without-literal . ,(substring pattern 1)))))
+  (add-to-list 'orderless-style-dispatchers #'without-if-bang))
 
 
 (use-package posframe)

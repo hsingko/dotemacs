@@ -8,7 +8,8 @@
 ;; org-download configuration
 
 
-(setq org-edit-src-content-indentation 0)
+(setq org-src-preserve-indentation nil 
+      org-edit-src-content-indentation 0)
 (setq org-M-RET-may-split-line nil)
 
 (use-package org-indent
@@ -152,3 +153,11 @@
           (t
            (call-interactively 'org-insert-link)))))
 
+
+(use-package ox-hugo
+  :after ox
+  :config
+;;; this seems fix ox-hugo exports freeze problem
+;;; see: https://github.com/kaushalmodi/ox-hugo/discussions/651
+  (setq org-element-use-cache nil)  
+  )

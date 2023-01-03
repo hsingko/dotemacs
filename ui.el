@@ -6,23 +6,20 @@
 (tooltip-mode -1)    ;disable tooltip
 (set-fringe-mode 8)
 (menu-bar-mode -1)
-;; (add-to-list 'default-frame-alist '(alpha-background . 95))
 (pixel-scroll-precision-mode 1)
 (recentf-mode 1)
 ;port from nano-theme
-(setq frame-title-format nil)
+(setq frame-title-format "Emacs")
 (setq initial-major-mode 'text-mode)
 (setq default-major-mode 'text-mode)
 (setq font-lock-maximum-decoration t)
-;; (setq cursor-type 'bar)
-;; (setq cursor-type '(bar . 4)) 
-;; (setq line-spacing 0)
+
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy Fixed" :size 16 :weight 'light))
-(set-face-attribute 'fixed-pitch nil :font (font-spec :family "Iosevka Comfy Fixed" :size 16 :weight 'light))
-(set-face-attribute 'variable-pitch nil :font (font-spec :family "Noto Sans" :size 16 :weight 'light))
-(set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" :size 16))
-(set-fontset-font t 'symbol (font-spec :family "Symbola" :size 16) nil 'prepend)
+(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy Fixed" :size 18 :weight 'light))
+(set-face-attribute 'fixed-pitch nil :font (font-spec :family "Iosevka Comfy Fixed" :size 18 :weight 'light))
+(set-face-attribute 'variable-pitch nil :font (font-spec :family "Noto Sans" :size 18 :weight 'light))
+(set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" :size 18))
+(set-fontset-font t 'symbol (font-spec :family "Symbola" :size 18) nil 'prepend)
 (set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "LXGW WenKai" :weight 'regular))
 ;; do not set chinese font size, use below code instead, see: https://baohaojun.github.io/perfect-emacs-chinese-font.html
 (setq face-font-rescale-alist '(("LXGW WenKai Mono" . 1.1) ))
@@ -47,9 +44,13 @@
 (setq modus-themes-italic-constructs t)
 (setq modus-themes-paren-match '(bold intense))
 (setq modus-themes-headings
-      '((t . (rainbow light))))
+      '(
+	(1 . (1.1 light))
+	(2 . (1.07 light))
+	(3.  (1.05 light))
+	(t . (light))))
 (setq modus-themes-org-blocks 'tinted-background)
-(load-theme 'modus-operandi)
+(load-theme 'modus-operandi-tinted)
 (defun +custom-modeline ()
   (set-face-attribute 'mode-line nil
 		      :box nil
@@ -68,7 +69,7 @@
 (+custom-modeline)
 (add-hook 'modus-themes-after-load-theme-hook #'+custom-modeline)
 (vertico-posframe-mode 1)
-(setq vertico-posframe-border-width 1)
+(setq vertico-posframe-border-width 2)
 
 (use-package diminish)
 (diminish 'visual-line-mode)
@@ -91,11 +92,22 @@
 (use-package olivetti
   :commands olivetti-mode
   :diminish
-  :hook
-  (org-mode . olivetti-mode)
+  ;; :hook
+  ;; (org-mode . olivetti-mode)
   :config
-  (add-hook 'olivetti-mode-hook #'(lambda ()
+  (add-hook 'olivetti-mode-on-hook #'(lambda ()
 				    (text-scale-increase 1)))
-  (setq-default olivetti-body-width 0.55)
+  (add-hook 'olivetti-mode-off-hook #'(lambda ()
+				    (text-scale-decrease 1)))
+  (setq-default olivetti-body-width 0.4)
   ;; (setq-default olivetti-minimum-body-width 78)
   )
+
+(use-package re-builder
+  :config
+  (setq reb-re-syntax 'string))
+
+(use-package org-modern-indent
+  :load-path "git/org-modern-indent"
+  :hook
+  (org-indent-mode . org-modern-indent-mode))

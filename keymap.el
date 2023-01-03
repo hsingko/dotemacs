@@ -2,7 +2,7 @@
 (global-unset-key (kbd "M-j")) ;; default-indent-new-line
 (global-unset-key (kbd "M-k")) ;; forward-word
 (global-unset-key (kbd "C-SPC"))
-
+(global-unset-key (kbd "S-<delete>"))
 (global-set-key (kbd "M-SPC") #'set-mark-command)
 (global-set-key (kbd "M-p") #'pop-global-mark)
 ;; embrace the power of avy!
@@ -68,7 +68,7 @@
 (global-set-key (kbd "C-c b r") #'revert-buffer)
 (global-set-key (kbd "C-c b b") #'consult-buffer)
 (global-set-key (kbd "C-c b x") #'scratch-buffer)
-(global-set-key (kbd "C-c b S") #'org-save-all-org-buffers)
+(global-set-key (kbd "C-c b S") #'save-some-buffers)
 
 ;; bookmark
 (global-set-key (kbd "C-c <RET>") #'consult-bookmark)

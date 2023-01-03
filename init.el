@@ -10,10 +10,6 @@
 
 (setq custom-file "~/.config/emacs/custom.el")
 
-(add-to-list 'load-path "~/Repos/emacs-obsidian-excalidraw/")
-(require 'emacs-obsidian-excalidraw)
-(setq emacs-obsidian-excalidraw-vault-dir "~/Documents/org/excalidraw")
-(setq emacs-obsidian-excalidraw-image-format "png")
 
 (load-file "~/.config/emacs/ui.el")
 (load-file "~/.config/emacs/backup.el")
@@ -29,7 +25,6 @@
 (load-file "~/.config/emacs/denote.el")
 (load-file "~/.config/emacs/consult-denote.el")
 (load-file "~/.config/emacs/corfu.el")
-(load-file "~/.config/emacs/lang.el")
 (load-file "~/.config/emacs/tools.el")
 ;(load-file "~/.config/emacs/hugo.el")
 ;(load-file "~/.config/emacs/nov.el")
