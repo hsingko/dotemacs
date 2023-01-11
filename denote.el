@@ -65,3 +65,14 @@ Delete the original subtree."
   (interactive "sWhat's in your mind? ")
   (denote
    title nil nil (expand-file-name "freewriting" denote-directory)))
+
+
+(use-package denote-menu
+  :after denote
+  :load-path "git/denote-menu"
+  :config
+  (define-key denote-menu-mode-map (kbd "c") #'denote-menu-clear-filters)
+  (define-key denote-menu-mode-map (kbd "/ r") #'denote-menu-filter)
+  (define-key denote-menu-mode-map (kbd "/ k") #'denote-menu-filter-by-keyword)
+  (define-key denote-menu-mode-map (kbd "e") #'denote-menu-export-to-dired)
+  )

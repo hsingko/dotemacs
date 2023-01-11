@@ -161,3 +161,5 @@
 ;;; see: https://github.com/kaushalmodi/ox-hugo/discussions/651
   (setq org-element-use-cache nil)  
   )
+
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))

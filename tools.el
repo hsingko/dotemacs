@@ -169,4 +169,3 @@
 	emacs-obsidian-excalidraw-image-format "png")
   )
 
-

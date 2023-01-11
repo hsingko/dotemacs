@@ -15,11 +15,12 @@
 (setq font-lock-maximum-decoration t)
 
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy Fixed" :size 18 :weight 'light))
-(set-face-attribute 'fixed-pitch nil :font (font-spec :family "Iosevka Comfy Fixed" :size 18 :weight 'light))
-(set-face-attribute 'variable-pitch nil :font (font-spec :family "Noto Sans" :size 18 :weight 'light))
-(set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" :size 18))
-(set-fontset-font t 'symbol (font-spec :family "Symbola" :size 18) nil 'prepend)
+(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy Fixed" :size 17 :weight 'light))
+;; (set-face-attribute 'default nil :font (font-spec :family "Lekton" :size 17 :weight 'light))
+(set-face-attribute 'fixed-pitch nil :font (font-spec :family "Noto Serif CJK SC" :size 17 :weight 'light))
+;; (set-face-attribute 'variable-pitch nil :font (font-spec :family "Noto Sans" :size 17 :weight 'light))
+(set-fontset-font t 'unicode (font-spec :family "Noto Color Emoji" :size 17))
+(set-fontset-font t 'symbol (font-spec :family "Symbola" :size 17) nil 'prepend)
 (set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "LXGW WenKai" :weight 'regular))
 ;; do not set chinese font size, use below code instead, see: https://baohaojun.github.io/perfect-emacs-chinese-font.html
 (setq face-font-rescale-alist '(("LXGW WenKai Mono" . 1.1) ))
@@ -50,7 +51,7 @@
 	(3.  (1.05 light))
 	(t . (light))))
 (setq modus-themes-org-blocks 'tinted-background)
-(load-theme 'modus-operandi-tinted)
+(load-theme 'modus-operandi-deuteranopia)
 (defun +custom-modeline ()
   (set-face-attribute 'mode-line nil
 		      :box nil
@@ -65,11 +66,12 @@
 		      :font "UbuntuMono Nerd Font Mono-12"
 		      )
   )
+(setq modus-themes-to-toggle '(modus-vivendi-deuteranopia modus-operandi-deuteranopia))
 
 (+custom-modeline)
 (add-hook 'modus-themes-after-load-theme-hook #'+custom-modeline)
 (vertico-posframe-mode 1)
-(setq vertico-posframe-border-width 2)
+(setq vertico-posframe-border-width 1)
 
 (use-package diminish)
 (diminish 'visual-line-mode)
@@ -99,7 +101,7 @@
 				    (text-scale-increase 1)))
   (add-hook 'olivetti-mode-off-hook #'(lambda ()
 				    (text-scale-decrease 1)))
-  (setq-default olivetti-body-width 0.4)
+  (setq-default olivetti-body-width 0.39)
   ;; (setq-default olivetti-minimum-body-width 78)
   )
 
@@ -111,3 +113,5 @@
   :load-path "git/org-modern-indent"
   :hook
   (org-indent-mode . org-modern-indent-mode))
+
+(set-frame-parameter nil 'alpha '(95 . 100))

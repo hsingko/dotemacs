@@ -11,8 +11,9 @@
 (setq undo-outer-limit 1006632960) ;; 960mb.
 
 (use-package undo-fu-session
+  :hook
+  (prog-mode . undo-fu-session-mode)
   :config
   (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
-  (global-undo-fu-session-mode)
   )
 

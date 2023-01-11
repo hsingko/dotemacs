@@ -56,6 +56,9 @@
 (global-set-key (kbd "C-c n j") #'org-journal-new-entry)
 (global-set-key (kbd "C-c n c") #'org-capture)
 (global-set-key (kbd "C-c n z") #'olivetti-mode)
+(global-set-key (kbd "C-c n p") #'org-download-clipboard)
+(global-set-key (kbd "C-c n q") #'calibredb)
+(global-set-key (kbd "C-c n m") #'list-denotes)
 ;; buffer
 (global-set-key (kbd "C-c b p") #'previous-buffer)
 (global-set-key (kbd "C-c b n") #'next-buffer)
@@ -63,12 +66,15 @@
 (defun +close-all-buffers ()
   (interactive)
   (mapc 'kill-buffer (buffer-list)))
+(defun +save-all-buffers ()
+  (interactive)
+  (save-some-buffers t))
 (global-set-key (kbd "C-c b K") #'+close-all-buffers)
 (global-set-key (kbd "C-c b s") #'basic-save-buffer)
 (global-set-key (kbd "C-c b r") #'revert-buffer)
 (global-set-key (kbd "C-c b b") #'consult-buffer)
 (global-set-key (kbd "C-c b x") #'scratch-buffer)
-(global-set-key (kbd "C-c b S") #'save-some-buffers)
+(global-set-key (kbd "C-c b S") #'+save-all-buffers)
 
 ;; bookmark
 (global-set-key (kbd "C-c <RET>") #'consult-bookmark)
