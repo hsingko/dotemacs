@@ -67,31 +67,27 @@
 
 (set-frame-parameter nil 'alpha '(95 . 100))
 
-;; (use-package hide-mode-line
-;;   :hook
-;;   (org-mode . hide-mode-line-mode)
-;;   (markdown-mode . hide-mode-line-mode)
-;;   )
-
-;; (load-theme 'zenburn t)
 ;; dark theme emacs title bar
 ;; REF-https://emacs-china.org/t/gnome/23670/5
-(call-process-shell-command (concat "xprop -f _GTK_THEME_VARIANT 8u -set _GTK_THEME_VARIANT dark -name \""
-				    (cdr (assoc 'name (frame-parameters)))
-				    "\""))
+;; (call-process-shell-command (concat "xprop -f _GTK_THEME_VARIANT 8u -set _GTK_THEME_VARIANT dark -name \""
+;; 				    (cdr (assoc 'name (frame-parameters)))
+;; 				    "\""))
 
 
-(use-package rebecca-theme)
-(load-theme 'rebecca t)
+
 (use-package posframe)
+(use-package ef-themes
+  :config
+  (setq ef-themes-headings
+	(quote ((t . (regular))))))
+
+(load-theme 'ef-symbiosis)
 
 ;; window
 (winner-mode)
 (use-package ace-window
   :bind
   (("M-o" . ace-window)))
-
-
 
 
 (provide 'init-ui)

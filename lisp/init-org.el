@@ -7,7 +7,6 @@
 (setq org-log-done 'time)
 ;; org-download configuration
 
-
 (setq org-src-preserve-indentation nil 
       org-edit-src-content-indentation 0)
 (setq org-M-RET-may-split-line nil)
@@ -102,22 +101,6 @@
 
 ; hide drawers when cycle headline visibility
 (add-hook 'org-cycle-hook #'org-cycle-hide-drawers)
-
-
-(setq org-capture-templates
-      '((
-	"g" "Glossary" entry (file "glossary.org")
-	"* %^{word}\n%a\n%t\n + %^{sentence}")))
-
-(add-to-list 'org-capture-templates
-	     '("l" "Leetcode" entry (file+headline
-				     "~/Documents/org/leetcode/index.org" "Daily")
-	       "* TODO %^{NO}. %^{Name} \n#+include: %\\1.py src python\n%?"))
-
-(add-to-list 'org-capture-templates
-	     '("t" "todo" entry (file+headline
-				 "~/Documents/org/todo.org" "Inbox")
-	       "* TODO %?\n%u\n%f"))
 
 
 

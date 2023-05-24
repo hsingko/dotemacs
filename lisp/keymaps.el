@@ -71,7 +71,7 @@
 (global-set-key (kbd "C-c b s") #'basic-save-buffer)
 (global-set-key (kbd "C-c b r") #'revert-buffer)
 (global-set-key (kbd "C-c b b") #'consult-buffer)
-(global-set-key (kbd "C-c b x") #'scratch-buffer)
+;; (global-set-key (kbd "C-c b x") #'scratch-buffer) ; emacs-29
 (global-set-key (kbd "C-c b S") #'save-some-buffers)
 
 ;; bookmark
@@ -82,7 +82,7 @@
 (global-unset-key (kbd "C-x C-f"))
 (global-set-key (kbd "C-c f f") #'find-file)
 (global-set-key (kbd "C-c f w") #'+create-free-writing)
-(global-set-key (kbd "C-c f p") #'+find-file-in-config)
+(global-set-key (kbd "C-c f p") #'project-find-file)
 (global-set-key (kbd "C-c f D") #'+delete-this-file)
 (global-set-key (kbd "C-c f F") #'find-file-other-window)
 (global-set-key (kbd "C-c f R") #'doom/move-this-file)
