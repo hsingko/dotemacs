@@ -81,7 +81,7 @@
   (setq ef-themes-headings
 	(quote ((t . (regular))))))
 
-(load-theme 'ef-symbiosis)
+(load-theme 'ef-symbiosis t)
 
 ;; window
 (winner-mode)

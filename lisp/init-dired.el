@@ -7,6 +7,9 @@
 	)
   :config
   (setq dired-deletion-confirmer #'y-or-n-p)
-  (setq delete-by-moving-to-trash t))
+  (setq dired-ls-sorting-switches "-alh")
+  (setq delete-by-moving-to-trash t)
+  :hook
+  (dired-mode . dired-omit-mode))
 
 (provide 'init-dired)

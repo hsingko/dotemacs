@@ -35,7 +35,7 @@
 (require 'init-dired)
 (require 'init-rg)
 (require 'init-embark)
-(require 'init-save)
+(require 'init-builtin)
 (require 'init-magit)
 
 
@@ -59,4 +59,11 @@
 ;; but I still don't know how to use mark
 ;; (global-unset-key (kbd "C-@"))
 ;; (global-set-key (kbd "M-SPC") 'set-mark-command)
+
+(setq initial-scratch-message "")
+
+
+;; undo redo
+(global-unset-key (kbd "C-M-_"))
+;; (global-set-key (kbd "C-r") #'undo-redo)
 
