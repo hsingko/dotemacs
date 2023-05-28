@@ -81,4 +81,23 @@
 ;; 中文断行问题
 (setq word-wrap-by-category t)
 
+
+
+;;; ace-pin 通过首字母在文字间定位
+(use-package ace-pinyin
+  :hook
+  (org-mode . ace-pinyin-mode)
+  (markdown-mode . ace-pinyin-mode))
+
+;; 拼音搜索功能
+;; (defun completion--regex-pinyin (str)
+;;   (orderless-regexp (pinyinlib-build-regexp-string str nil t nil t)))
+;; (defun advice--regexp-pinyin (func &rest args)
+;;   (add-to-list 'orderless-matching-styles #'completion--regex-pinyin)
+;;   (let ((result (apply func args)))
+;;     (setq orderless-matching-styles
+;;       (delete 'completion--regex-pinyin orderless-matching-styles))
+;;     result))
+;; (advice-add 'consult-notes :around #'advice--regexp-pinyin)
+
 (provide 'init-cn)

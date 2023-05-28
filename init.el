@@ -19,6 +19,7 @@
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'init-ui)
+(require 'init-dashboard)
 (require 'init-meow)
 (require 'init-consult)
 (require 'init-vertico)
@@ -37,7 +38,9 @@
 (require 'init-embark)
 (require 'init-builtin)
 (require 'init-magit)
-
+(require 'init-window)
+(require 'init-helper)
+(require 'init-vterm)
 
 (setq eww-retrieve-command '("readable"))
 (put 'erase-buffer 'disabled nil)

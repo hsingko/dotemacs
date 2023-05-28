@@ -4,6 +4,7 @@
   :ensure nil
   :hook (after-init . recentf-mode)
   :custom
+  (recentf-max-saved-items 500)
   (recentf-filename-handlers '(abbreviate-file-name))
   (recentf-exclude `("/ssh:"
                      "/TAGS\\'"

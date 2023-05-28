@@ -16,6 +16,10 @@
   (setq vertico-cycle t)
   ;; :bind (("<backspace>" . 'vertico-directory-delete-char))
   (define-key minibuffer-local-map (kbd "<backspace>") #'vertico-directory-delete-char)
+  :config
+  (vertico-multiform-mode)
+  (setq vertico-multiform-commands
+	'((consult-notes (vertico-sort-function . vertico-sort-alpha))))
   )
 
 (use-package orderless

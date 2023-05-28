@@ -1,7 +1,8 @@
 (defun my/denote-dired-mode-hook()
   (denote-dired-mode-in-directories)
   (when denote-dired-mode
-      (dired-hide-details-mode +1)))
+    (dired-hide-details-mode +1)
+    (dired-omit-mode)))
 
 (use-package denote
   :commands denote
@@ -10,13 +11,14 @@
         denote-file-type "org"
         denote-dired-directories (list
                                   denote-directory
-                                  (thread-last denote-directory (expand-file-name "movies"))
-                                  (thread-last denote-directory (expand-file-name "books"))
-				  (thread-last denote-directory (expand-file-name "courses"))
-                                  (thread-last denote-directory (expand-file-name "posts"))
-                                  (thread-last denote-directory (expand-file-name "logs"))
+                                  ;; (thread-last denote-directory (expand-file-name "movies"))
+                                  ;; (thread-last denote-directory (expand-file-name "books"))
+				  ;; (thread-last denote-directory (expand-file-name "courses"))
+                                  ;; (thread-last denote-directory (expand-file-name "posts"))
+                                  ;; (thread-last denote-directory (expand-file-name "logs"))
                                   ))
   ;; :config
+  (setq denote-excluded-directories-regexp "archive")
   (add-hook 'dired-mode-hook #'my/denote-dired-mode-hook))
 
 (defun +create-free-writing (title)
@@ -41,6 +43,5 @@
   :config
   (consult-notes-denote-mode))
 
-(use-package denote-menu)
 
 (provide 'init-denote)

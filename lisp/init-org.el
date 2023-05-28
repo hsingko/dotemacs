@@ -51,7 +51,6 @@
 
 (setq org-agenda-files `(
 			 ,(expand-file-name "gtd.org" org-directory)
-			 ,(expand-file-name "read.org" org-directory)
 			 ))
 
 (setq org-file-apps-gnu '((remote . emacs)
@@ -144,10 +143,31 @@
   )
 
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+(setq org-startup-with-inline-images nil)
+(setq org-file-apps '((directory . emacs)
+                      (auto-mode . emacs)
+                      ("\\.png\\'" . "xdg-open %s")
+                      ("\\.jpg\\'" . "xdg-open %s")
+                      ;; Add more image file extensions if needed
+                      ))
 
-(setq org-preview-latex-image-directory (expand-file-name "images/" org-directory))
+(setq org-link-file-path-type 'absolute)
+
+;; (setq org-preview-latex-image-directory (expand-file-name "images/" org-directory))
 
 (setq org-log-into-drawer t) ;https://stackoverflow.com/questions/63797643/hide-org-todo-state-changes-in-drawer-or-properties
+
+
+;; org-capture
+(setq org-capture-templates nil)
+(add-to-list 'org-capture-templates
+	     '("l" "System Modfication Logs" entry
+	       (file "syslogs.org")
+	       "* %?\n%a"))
+(add-to-list 'org-capture-templates
+	     '("c" "Capture Ideas" entry
+	       (file "capture.org")
+	       "* TODO %?\n%T"))
 
 
 (provide 'init-org)

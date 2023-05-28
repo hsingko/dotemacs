@@ -114,4 +114,35 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
   :hook
   (prog-mode . electric-pair-mode))
 
+
+(defun ar/remove-from-list-variable ()
+  (interactive)
+  (let* ((var (intern
+               (completing-read "From variable: "
+                                (let (symbols)
+                                  (mapatoms
+                                   (lambda (sym)
+                                     (when (and (boundp sym)
+                                                (seqp (symbol-value sym)))
+                                       (push sym symbols))))
+                                  symbols) nil t)))
+         (values (mapcar (lambda (item)
+                           (setq item (prin1-to-string item))
+                           (concat (truncate-string-to-width
+                                    (nth 0 (split-string item "\n"))
+                                    (window-body-width))
+                                   (propertize item 'invisible t)))
+                         (symbol-value var)))
+         (index (progn
+                  (when (seq-empty-p values) (error "Already empty"))
+                  (seq-position values (completing-read "Delete: " values nil t)))))
+    (unless index (error "Eeek. Something's up."))
+    (set var (append (seq-take (symbol-value var) index)
+                     (seq-drop (symbol-value var) (1+ index))))
+    (message "Deleted: %s" (truncate-string-to-width
+                            (seq-elt values index)
+                            (- (window-body-width) 9)))))
+
+
+
 (provide 'init-utils)

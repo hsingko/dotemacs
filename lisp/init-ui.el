@@ -13,8 +13,9 @@
 (setq font-lock-maximum-decoration t)
 ;; (setq default-frame-alist '((undecorated . t))) ;;; 隐藏窗口标题栏
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "FiraCode Nerd Font Mono" :size 17 :weight 'thin))
-(set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "PingFang SC" :weight 'regular))
+;; (set-face-attribute 'default nil :font (font-spec :family "FiraCode Nerd Font Mono" :size 17 :weight 'thin))
+;; (set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "PingFang SC" :weight 'regular))
+(set-face-attribute 'default nil :font (font-spec :family "Sarasa Mono SC" :size 17 :weight 'thin))
 
 ;; (setq resize-mini-windows nil)
 ;https://www.reddit.com/r/emacs/comments/wpr2n2/comment/ikj2vn1/?utm_source=share&utm_medium=web2x&context=3
@@ -57,7 +58,7 @@
 				    (text-scale-increase 1)))
   (add-hook 'olivetti-mode-off-hook #'(lambda ()
 				    (text-scale-decrease 1)))
-  (setq-default olivetti-body-width 0.4)
+  (setq-default olivetti-body-width 0.45)
   ;; (setq-default olivetti-minimum-body-width 78)
   )
 
@@ -67,21 +68,13 @@
 
 (set-frame-parameter nil 'alpha '(95 . 100))
 
-;; dark theme emacs title bar
-;; REF-https://emacs-china.org/t/gnome/23670/5
-;; (call-process-shell-command (concat "xprop -f _GTK_THEME_VARIANT 8u -set _GTK_THEME_VARIANT dark -name \""
-;; 				    (cdr (assoc 'name (frame-parameters)))
-;; 				    "\""))
-
-
-
 (use-package posframe)
 (use-package ef-themes
   :config
   (setq ef-themes-headings
 	(quote ((t . (regular))))))
 
-(load-theme 'ef-symbiosis t)
+(load-theme 'ef-frost t)
 
 ;; window
 (winner-mode)
@@ -89,5 +82,9 @@
   :bind
   (("M-o" . ace-window)))
 
+
+;; (use-package hide-mode-line
+;;   :hook
+;;   (text-mode . hide-mode-line-mode))
 
 (provide 'init-ui)
