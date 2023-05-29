@@ -33,4 +33,9 @@
   (after-init . size-indication-mode) ;; word count
   )
 
+;; 设置备份文件夹
+(setq backup-directory-alist `(("." . ,(expand-file-name "backups" user-emacs-directory))))
+
+
+
 (provide 'init-builtin)

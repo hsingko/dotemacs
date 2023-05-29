@@ -41,6 +41,7 @@
 (require 'init-window)
 (require 'init-helper)
 (require 'init-vterm)
+(require 'init-xeft)
 
 (setq eww-retrieve-command '("readable"))
 (put 'erase-buffer 'disabled nil)
@@ -55,7 +56,9 @@
 (setq isearch-allow-motion t) ;; 通过 M-<, M-> 来跳到最初和最后的匹配项
 ;; 使用 M-s o 用当前模式开始 occur mode
 
-(server-start)
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
 ;; marks
 (setq-default set-mark-command-repeat-pop t)
@@ -70,3 +73,21 @@
 (global-unset-key (kbd "C-M-_"))
 ;; (global-set-key (kbd "C-r") #'undo-redo)
 
+
+
+(defun clear-minibuffer ()
+  "Clear the content of the minibuffer."
+  (interactive)
+  (when (active-minibuffer-window)
+    (minibuffer-delete (window-buffer (active-minibuffer-window)))))
+
+(define-key minibuffer-local-map (kbd "C-c c") 'clear-minibuffer)
+
+;; (use-package auto-insert
+;;   :ensure nil
+;;   :config
+;;   (setq auto-insert-directory (expand-file-name "templates"
+;; 						user-emacs-directory))
+;;   (setq auto-insert-query nil)
+;;   (define-auto-insert "\\.org\\'" "org-template.org")
+;;   (add-hook 'find-file-hook 'auto-insert))
