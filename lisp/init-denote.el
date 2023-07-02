@@ -28,8 +28,11 @@
 
 
 (use-package consult-notes
+  :commands consult-notes
   :config
-  (consult-notes-denote-mode))
+  (consult-notes-denote-mode)
+  (setq consult-notes-denote-dir nil
+	consult-notes-denote-display-id nil))
 
 
 (provide 'init-denote)

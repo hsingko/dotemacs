@@ -6,6 +6,7 @@
 ;; log time after DONE, necessory ox-hugo
 (setq org-log-done 'time)
 ;; org-download configuration
+(setq org-startup-folded 'overview)
 
 (setq org-src-preserve-indentation nil 
       org-edit-src-content-indentation 0)
@@ -37,7 +38,7 @@
   (setq-default org-download-image-dir (expand-file-name "images" org-directory))
   (setq org-download-backend "wget")
   (setq org-download-abbreviate-filename-function (lambda (fn) fn)) ; use original filename
-  (setq org-download-timestamp "%Y%m%dT%H%M%S-")
+  (setq org-download-timestamp "%y%m%dT%H%M%S-")
   (defun dummy-org-download-annotate-function (link)
     "")
   (setq org-download-annotate-function
@@ -80,8 +81,8 @@
 ;; Improve org mode looks
 (setq org-startup-indented t
       org-pretty-entities t
-      org-hide-emphasis-markers t
-      org-startup-with-inline-images t
+      org-hide-emphasis-markers nil
+      org-startup-with-inline-images nil
       org-image-actual-width '(400))
 
 (use-package org-superstar
@@ -94,7 +95,7 @@
  'org-babel-load-languages
  '((emacs-lisp .t)
    (python . t)
-   ;; (javascript . t)
+   (scheme . t)
    ))
 (setq org-confirm-babel-evaluate nil)
 
@@ -179,12 +180,13 @@
   "#+title:\t%s\n#+date:\t%s\n#+book_author:\t%s\n#+book_pubdate:\t%s\n#+book_publisher:\t%s\n#+book_isbn:\t%s\n"
   "default books/{title}.org header template")
 (defun hs/create-book-entry ()
-  (let* ((book-data
-	    (let ((isbn (read-string "ISBN: "))
-		  (json-object-type 'plist)
-		  (json-array-type 'list))
-	       (json-read-from-string
-		(shell-command-to-string (format DOUBAN_BOOK_API_TEMPLATE isbn)))))
+  (let* ((isbn (read-string "ISBN:"))
+	 (book-data
+	  (let (
+		(json-object-type 'plist)
+		(json-array-type 'list))
+	    (json-read-from-string
+	     (shell-command-to-string (format DOUBAN_BOOK_API_TEMPLATE isbn)))))
 	 (title (plist-get book-data :title))
 	 (pubdate (plist-get book-data :pubdate))
 	 (publisher (plist-get book-data :publisher))

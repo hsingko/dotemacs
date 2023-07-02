@@ -1,7 +1,8 @@
 (use-package yasnippet
-  :config
-  (yas-global-mode))
+  :hook
+  (org-mode . yas-minor-mode))
 
-(use-package yasnippet-snippets)
+(use-package yasnippet-snippets
+  :after yasnippet)
 
 (provide 'init-yas)

@@ -8,6 +8,6 @@
 
 (use-package vterm-toggle
   :bind
-  (("C-c C-k" . vterm-toggle)))
+  (("C-c C-k" . vterm-toggle-cd)))
 
 (provide 'init-vterm)

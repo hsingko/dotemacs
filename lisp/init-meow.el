@@ -82,6 +82,7 @@
    '("Y" . meow-sync-grab)
    '("z" . meow-pop-selection)
    '("'" . repeat)
+   '("P" . meow-pop-to-mark)
    '("<escape>" . ignore)))
 (use-package meow
   :diminish meow-keypad-mode

@@ -10,6 +10,7 @@
 (global-unset-key (kbd "C-\\"))
 (global-set-key (kbd "M-m") #'toggle-input-method)
 
+
 (global-set-key (kbd "C-c w h") #'split-window-horizontally)
 (global-set-key (kbd "C-c w v") #'split-window-vertically)
 (global-set-key (kbd "C-c w c") #'delete-window)
@@ -79,7 +80,6 @@
 (global-set-key (kbd "C-c b m") #'bookmark-set)
 ;; file
 (global-set-key (kbd "C-c f r") #'consult-recent-file)
-(global-unset-key (kbd "C-x C-f"))
 (global-set-key (kbd "C-c f f") #'find-file)
 (global-set-key (kbd "C-c f w") #'+create-free-writing)
 (global-set-key (kbd "C-c f p") #'project-find-file)
@@ -88,7 +88,7 @@
 (global-set-key (kbd "C-c f R") #'doom/move-this-file)
 (global-set-key (kbd "C-c f U") #'doom/sudo-this-file)
 (global-set-key (kbd "C-c f c") #'doom/copy-this-file)
-
+(global-set-key (kbd "C-c f m") #'format-all-region-or-buffer)
 
 ;; agenda
 (global-set-key (kbd "C-c o") #'org-agenda)

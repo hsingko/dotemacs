@@ -59,11 +59,14 @@
                  ;; rime-predicate-org-in-src-block-p
                  rime-predicate-org-latex-mode-p
                  rime-predicate-punctuation-after-space-cc-p
-                 rime-predicate-punctuation-after-ascii-p))
+                 rime-predicate-punctuation-after-ascii-p
+		 rime-predicate-after-ascii-char-p ;; 为了使用 abbrev 模式
+		 ))
 (setq-default rime-inline-predicates
               '(rime-predicate-current-uppercase-letter-p
                  rime-predicate-space-after-cc-p
-                 rime-predicate-after-ascii-char-p))
+                 ;; rime-predicate-after-ascii-char-p
+		 ))
 
 (setq rime-show-candidate 'minibuffer)
 (setq rime-posframe-properties nil)
@@ -85,6 +88,7 @@
 
 ;;; ace-pin 通过首字母在文字间定位
 (use-package ace-pinyin
+  :diminish
   :hook
   (org-mode . ace-pinyin-mode)
   (markdown-mode . ace-pinyin-mode))
@@ -99,5 +103,17 @@
 ;;       (delete 'completion--regex-pinyin orderless-matching-styles))
 ;;     result))
 ;; (advice-add 'consult-notes :around #'advice--regexp-pinyin)
+
+
+;; 基于中文分词的跳跃功能
+(use-package cns
+  :load-path "git/cns"
+  :config
+  (setq cns-prog (expand-file-name "git/cns/cnws" user-emacs-directory))
+  (setq cns-dict-directory (expand-file-name "git/cns/cppjieba/dict" user-emacs-directory))
+  :hook
+  (text-mode . cns-mode))
+
+
 
 (provide 'init-cn)

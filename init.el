@@ -1,4 +1,4 @@
-; package management
+					; package management
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 (package-initialize) ;; You might already have this line
@@ -19,13 +19,13 @@
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'init-ui)
-(require 'init-dashboard)
+;; (require 'init-dashboard)
 (require 'init-meow)
 (require 'init-consult)
 (require 'init-vertico)
 (require 'init-marginalia)
 (require 'init-utils)
-(require 'init-markdown)
+(require 'init-lang)
 (require 'init-org)
 (require 'init-denote)
 (require 'keymaps)
@@ -42,14 +42,19 @@
 (require 'init-helper)
 (require 'init-vterm)
 (require 'init-xeft)
+(require 'init-html)
+(require 'init-formater)
+(require 'init-abbrev)
+(require 'init-shellcmd)
 
-(setq eww-retrieve-command '("readable"))
 (put 'erase-buffer 'disabled nil)
 
 
 ;; isearch(incremental search)
 ;; https://www.youtube.com/watch?v=9CdbfZXsrqg
 (setq-default isearch-lazy-count t)
+(setq lazy-count-prefix-format nil)
+(setq lazy-count-suffix-format "   (%s/%s)")
 ;; make use of search ring, M-n, M-p to safari the ring
 ;; use C-w to yank word under the cursor, hit multiple time to yank more words
 ;; 在选择的时候可以直接用 M-% 对当前模式进行替换
@@ -66,28 +71,81 @@
 ;; (global-unset-key (kbd "C-@"))
 ;; (global-set-key (kbd "M-SPC") 'set-mark-command)
 
-(setq initial-scratch-message "")
 
+(use-package jinx
+  :diminish
+  :hook
+  (text-mode . jinx-mode)
+  :config
+  (add-to-list 'jinx-exclude-regexps '(t "\\cc")))
 
-;; undo redo
-(global-unset-key (kbd "C-M-_"))
-;; (global-set-key (kbd "C-r") #'undo-redo)
+(unbind-key (kbd "C-c C-k") org-mode-map)
 
+(setq scheme-program-name "guile")
 
-
-(defun clear-minibuffer ()
-  "Clear the content of the minibuffer."
+(defun my/org-narrow-forward ()
+  "Move to the next subtree at same level, and narrow to it."
   (interactive)
-  (when (active-minibuffer-window)
-    (minibuffer-delete (window-buffer (active-minibuffer-window)))))
+  (widen)
+  (forward-page 1)
+  (narrow-to-page))
+(global-set-key (kbd "C-x n f") #'my/org-narrow-forward)
 
-(define-key minibuffer-local-map (kbd "C-c c") 'clear-minibuffer)
+;;; hugo setup
+(defcustom HUGO_DIRECTORY "~/Documents/Blog"
+  "The default hugo blog directory")
+(defun extract-double-quoted-substring (string)
+  "Extracts the double-quoted substring from the given string."
+  (when (string-match "\"\\([^\"]*\\)\"" string)
+    (match-string 1 string)))
+(defun create-hugo-post ()
+  (interactive)
+  (let* ((default-directory HUGO_DIRECTORY)
+	 (title (replace-regexp-in-string
+		 "\\s-"
+		 "-"
+		 (read-string "Blog Title:")))
+	 (section (read-string "Section:"))
+	 (date (decode-time (current-time)))
+	 (year (nth 5 date))
+	 (month (nth 4 date))
+	 (day (nth 3 date))
+	 (res (shell-command-to-string
+	       (format
+		"hugo new %s/%s/%s/%s/%s/index.md" section year month day title)))
+	 (path (extract-double-quoted-substring res)))
+    (message res)
+    (org-insert-link nil path title)))
 
-;; (use-package auto-insert
-;;   :ensure nil
-;;   :config
-;;   (setq auto-insert-directory (expand-file-name "templates"
-;; 						user-emacs-directory))
-;;   (setq auto-insert-query nil)
-;;   (define-auto-insert "\\.org\\'" "org-template.org")
-;;   (add-hook 'find-file-hook 'auto-insert))
+
+(put 'narrow-to-page 'disabled nil)
+
+
+(auto-insert-mode t)
+
+(define-auto-insert "\\.org\\'" ; Match .org extension
+  '(nil ;; No condition, always match
+    "#+TITLE: " (file-name-base (buffer-file-name)) \n ; Insert title
+    "#+DATE: " (format-time-string "%Y-%m-%d") \n ; Insert date
+    \n ; Insert a blank line
+    _)) ; Place the cursor here
+
+;; (ffap-bindings)
+
+;;; minibuffer
+(setq enable-recursive-minibuffers t)
+(setq minibuffer-depth-indicate-mode t)
+
+
+
+;;; treesit
+(setq treesit-extra-load-path `(,(expand-file-name "treesit" user-emacs-directory)))
+(setq major-mode-remap-alist
+      '((yaml-mode . yaml-ts-mode)
+	(html-mode . html-ts-mode)
+	(bash-mode . bash-ts-mode)
+	(js2-mode . js-ts-mode)
+	(typescript-mode . typescript-ts-mode)
+	(json-mode . json-ts-mode)
+	(css-mode . css-ts-mode)
+	(python-mode . python-ts-mode)))

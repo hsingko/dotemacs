@@ -145,4 +145,52 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
 
 
 
+(require 'subr-x)
+
+(defun get--pinyin-first-letters (string)
+  "将给定的中文字符串转换成各自拼音首字母构成的字符串，使用外部 python 命令 pypinyin"
+  (string-trim-right
+   (shell-command-to-string (format "~/.local/bin/pypinyin -f slug -p '' -s FIRST_LETTER %s" string))))
+
+(defun get--org-headlines-under-tree (pattern)
+  "获取给定 headline 下所有子节点字符串"
+  (save-excursion
+    (org-with-point-at (org-find-exact-headline-in-buffer pattern)
+      (org-element-map (org-element-parse-buffer) 'headline
+        (lambda (headline)
+          (org-element-property :title headline))))))
+
+
+
+(defcustom DESKTOP_ENTRY_TEMPLATE
+  "[Desktop Entry]\nName=%s\nExec=%s\nType=Application\nCategories=Utility;\n"
+  " desktop entry template in ~/.local/share/applications")
+
+;; 未测试
+(defun my/install-appimage ()
+  " 将指定的 Appimage 文件自动拷贝到 Applications 目录并生成 desktop 文件"
+  (interactive)
+  (let* ((filepath (read-file-name "Select Appimage:" nil nil nil nil "Appimage"))
+	 (name (read-string "Set the application name:" nil (file-name-base filepath)))
+	 (new-name (concat name ".Appimage"))
+	 (new-path (expand-file-name new-name "~/Applications")))
+    ;; make Appimage executable
+    (set-file-modes filepath
+		    (file-modes-symbolic-to-number "+x"
+						   (file-modes filepath)))
+    ;; rename and move file
+    (rename-file filepath new-path)
+    ;; create desktop entry in ~/.local/share/applications
+    (with-temp-file (expand-file-name
+		     (concat name ".desktop")
+		     "~/.local/share/applications")
+      (insert (format DESKTOP_ENTRY_TEMPLATE
+		      name
+		      new-path)))
+    (async-shell-command "update-desktop-database")
+    (message "Appimage installation success!")))
+
+
+
+
 (provide 'init-utils)

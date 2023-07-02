@@ -5,20 +5,20 @@
 (tooltip-mode -1)    ;disable tooltip
 (set-fringe-mode 8)
 (menu-bar-mode -1)
-;(pixel-scroll-precision-mode 1)
-;port from nano-theme
-;(setq frame-title-format nil)
+					;(pixel-scroll-precision-mode 1)
+					;port from nano-theme
+					;(setq frame-title-format nil)
 (setq initial-major-mode 'text-mode)
 (setq default-major-mode 'text-mode)
 (setq font-lock-maximum-decoration t)
 ;; (setq default-frame-alist '((undecorated . t))) ;;; 隐藏窗口标题栏
 ;; font family
 ;; (set-face-attribute 'default nil :font (font-spec :family "FiraCode Nerd Font Mono" :size 17 :weight 'thin))
-;; (set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "PingFang SC" :weight 'regular))
-(set-face-attribute 'default nil :font (font-spec :family "Sarasa Mono SC" :size 17 :weight 'thin))
+(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy" :size 16 :weight 'regular))
+(set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "Sarasa Mono CL" :weight 'regular))
 
 ;; (setq resize-mini-windows nil)
-;https://www.reddit.com/r/emacs/comments/wpr2n2/comment/ikj2vn1/?utm_source=share&utm_medium=web2x&context=3
+;;https://www.reddit.com/r/emacs/comments/wpr2n2/comment/ikj2vn1/?utm_source=share&utm_medium=web2x&context=3
 (customize-set-variable 'org-blank-before-new-entry'((heading . nil)(plain-list-item . nil)))(setq org-cycle-separator-lines 1)
 
 (column-number-mode)
@@ -26,9 +26,6 @@
 	  (lambda ()
 	    (display-line-numbers-mode 1)))
 
-(use-package markdown-mode
-  :mode ("\\.md\\'" . markdown-mode)
-  )
 
 (use-package diminish)
 (diminish 'visual-line-mode)
@@ -55,36 +52,39 @@
   ;; (org-mode . olivetti-mode)
   :config
   (add-hook 'olivetti-mode-on-hook #'(lambda ()
-				    (text-scale-increase 1)))
+				       (text-scale-increase 1)))
   (add-hook 'olivetti-mode-off-hook #'(lambda ()
-				    (text-scale-decrease 1)))
-  (setq-default olivetti-body-width 0.45)
+					(text-scale-decrease 1)))
+  (setq-default olivetti-body-width 0.4)
   ;; (setq-default olivetti-minimum-body-width 78)
   )
 
-(use-package re-builder
-  :config
-  (setq reb-re-syntax 'string))
 
 (set-frame-parameter nil 'alpha '(95 . 100))
 
-(use-package posframe)
 (use-package ef-themes
   :config
   (setq ef-themes-headings
 	(quote ((t . (regular))))))
 
-(load-theme 'ef-frost t)
+
+(load-theme 'ef-cyprus t)
 
 ;; window
 (winner-mode)
+
 (use-package ace-window
   :bind
   (("M-o" . ace-window)))
 
+(use-package all-the-icons
+  :after dired
+  :load-path "git/all-the-icons.el")
 
-;; (use-package hide-mode-line
-;;   :hook
-;;   (text-mode . hide-mode-line-mode))
+(pixel-scroll-precision-mode 1)
+
+(use-package spacious-padding
+  :config
+  (spacious-padding-mode 1))
 
 (provide 'init-ui)
