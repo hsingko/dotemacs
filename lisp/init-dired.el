@@ -14,10 +14,6 @@
   (dired-mode . dired-omit-mode)
   (dired-mode . dired-hide-details-mode))
 
-(use-package all-the-icons-dired
-  :if (featurep 'all-the-icons)
-  :hook
-  (dired-mode . all-the-icons-dired-mode))
 
 (use-package dired-narrow)
 

@@ -77,10 +77,6 @@
   :bind
   (("M-o" . ace-window)))
 
-(use-package all-the-icons
-  :after dired
-  :load-path "git/all-the-icons.el")
-
 (pixel-scroll-precision-mode 1)
 
 (use-package spacious-padding

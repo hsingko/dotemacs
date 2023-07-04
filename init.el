@@ -4,6 +4,11 @@
 (package-initialize) ;; You might already have this line
 (unless package-archive-contents
   (package-refresh-contents))
+(setq url-proxy-services
+      '(("http" . "127.0.0.1:7890")
+        ("https" . "127.0.0.1:7890")))
+
+
 
 (setq use-package-enable-imenu-support t) ;; this line must placed before import `use-package`
 (require 'use-package)
@@ -125,22 +130,28 @@
 
 
 (auto-insert-mode t)
-;; (setq auto-insert-query nil)
-(define-auto-insert "\\.org\\'" ; Match .org extension
-  '(nil
-    "#+TITLE: " (file-name-base (buffer-file-name)) \n ; Insert title
-    "#+DATE: " (format-time-string "%Y-%m-%d") \n ; Insert date
-    \n ; Insert a blank line
-    _)) ; Place the cursor here
+(setq auto-insert-query nil)
+(define-auto-insert "\\.org\\'"
+  (lambda ()
+    (unless (file-in-directory-p (buffer-file-name) (denote-directory))
+      (insert "#+TITLE: " (file-name-base (buffer-file-name)) "\n")
+      (insert "#+DATE: " (format-time-string "%Y-%m-%d") "\n" )
+      (newline)
+      (goto-char (point-max)))))
 
 
-;;; minibuffer
+
+;;+-──────────────────-+
+;;| this is minibuffer |
+;;+-──────────────────-+
 (setq enable-recursive-minibuffers t)
 (setq minibuffer-depth-indicate-mode t)
 
 
+;;+-─────────────────────-+
+;;| treesit configuration |
+;;+-─────────────────────-+
 
-;;; treesit
 (setq treesit-extra-load-path `(,(expand-file-name "treesit" user-emacs-directory)))
 (setq major-mode-remap-alist
       '((yaml-mode . yaml-ts-mode)
