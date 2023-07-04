@@ -1,10 +1,11 @@
-					; package management
+;; package management
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 (package-initialize) ;; You might already have this line
 (unless package-archive-contents
   (package-refresh-contents))
 
+(setq use-package-enable-imenu-support t) ;; this line must placed before import `use-package`
 (require 'use-package)
 (setq use-package-always-ensure t)
 (setq use-package-compute-statistics t)
