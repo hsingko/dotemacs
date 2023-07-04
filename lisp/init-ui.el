@@ -14,7 +14,7 @@
 ;; (setq default-frame-alist '((undecorated . t))) ;;; 隐藏窗口标题栏
 ;; font family
 ;; (set-face-attribute 'default nil :font (font-spec :family "FiraCode Nerd Font Mono" :size 17 :weight 'thin))
-(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy" :size 16 :weight 'regular))
+(set-face-attribute 'default nil :font (font-spec :family "IntelOne Mono" :size 16 :weight 'regular))
 (set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "Sarasa Mono CL" :weight 'regular))
 
 ;; (setq resize-mini-windows nil)

@@ -1,0 +1,38 @@
+﻿# coding: utf-8
+# 键道6用户词库
+# 该文件以UTF-8编码保存
+---
+name: xkjd6.user
+version: "Q1"
+sort: original
+...
+# 编码各字段以制表符（Tab）分隔
+# ==============================
+# Tab符（右滑T）或（长按G）点Tab
+# ==============================
+# 示例 （记得把注释符号 # 去掉）：
+# 词组	bmmso
+
+王女	wpnlva
+张静守	qjeavo
+心流	xblqoa
+心流	xblq
+提灯	tkdrio
+海伯利安	hblxai
+三津田信三	sjts
+沙耶之歌	eyfgav
+京极夏彦	jjxyov
+阿加莎·克里斯蒂	xjedaa
+黑斯廷斯	hsts
+劳伦斯	lls
+斯芬克斯	sfks
+!g	ig
+!b	ib
+布鲁诺	blnvuo
+地精	dkjgvo
+崔斯特	cstivu
+魔像	mlxxoi
+菲利普·迪克	flpkiu
+大禹	dsylvu
+宫本武藏	gbwzov
+脑鸣	nzmguo

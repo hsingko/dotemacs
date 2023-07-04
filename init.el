@@ -31,7 +31,8 @@
 (require 'keymaps)
 (require 'init-cn)
 (require 'init-calibre)
-(require 'init-yas)
+;; (require 'init-yas)
+(require 'init-tempel)
 (require 'init-bridge)
 (require 'init-dired)
 (require 'init-rg)
@@ -46,6 +47,7 @@
 (require 'init-formater)
 (require 'init-abbrev)
 (require 'init-shellcmd)
+;; (require 'init-bingai)
 
 (put 'erase-buffer 'disabled nil)
 
@@ -122,15 +124,14 @@
 
 
 (auto-insert-mode t)
-
+;; (setq auto-insert-query nil)
 (define-auto-insert "\\.org\\'" ; Match .org extension
-  '(nil ;; No condition, always match
+  '(nil
     "#+TITLE: " (file-name-base (buffer-file-name)) \n ; Insert title
     "#+DATE: " (format-time-string "%Y-%m-%d") \n ; Insert date
     \n ; Insert a blank line
     _)) ; Place the cursor here
 
-;; (ffap-bindings)
 
 ;;; minibuffer
 (setq enable-recursive-minibuffers t)

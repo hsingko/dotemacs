@@ -6,6 +6,7 @@ elpa/
 places
 projects
 recentf
-rime/
+rime/build
+rime/trash
 tramp
 transient/

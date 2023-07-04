@@ -144,11 +144,10 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
                             (- (window-body-width) 9)))))
 
 
-
 (require 'subr-x)
 
 (defun get--pinyin-first-letters (string)
-  "将给定的中文字符串转换成各自拼音首字母构成的字符串，使用外部 python 命令 pypinyin"
+  "translate Chinese Words to pinyin using external command: pypinyin"
   (string-trim-right
    (shell-command-to-string (format "~/.local/bin/pypinyin -f slug -p '' -s FIRST_LETTER %s" string))))
 
@@ -191,6 +190,12 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
     (message "Appimage installation success!")))
 
 
+(defun my/insert-font-name ()
+  "Insert the selected font name as a quoted string."
+  (interactive)
+  (let ((font (completing-read "Select font: " (font-family-list))))
+    (when (not (string-empty-p font))
+      (insert (format "\"%s\"" font)))))
 
 
 (provide 'init-utils)

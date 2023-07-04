@@ -114,6 +114,6 @@
   :hook
   (text-mode . cns-mode))
 
-
+(use-package unicad)
 
 (provide 'init-cn)
