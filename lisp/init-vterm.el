@@ -1,4 +1,5 @@
 (use-package vterm
+  :commands (vterm vterm-toggle-cd)
   :config
   (add-to-list 'display-buffer-alist
 	       '("\\*vterm\\*"

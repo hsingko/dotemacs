@@ -1,4 +1,5 @@
 (use-package calibredb
+  :commands (calibredb)
   :config
   (setq calibredb-preferred-format 'epub)
   (setq calibredb-root-dir "~/data/CalibreBooks/")
@@ -10,8 +11,10 @@
   (visual-line-mode -1))
 
 (use-package nov
-  :config
-  (add-to-list 'auto-mode-alist
-	       '("\\.epub\\'" . nov-mode)))
+  :mode ("\\.epub\\'" . nov-mode)
+  ;; :config
+  ;; (add-to-list 'auto-mode-alist
+  ;; 	       '("\\.epub\\'" . nov-mode))
+  )
 
 (provide 'init-calibre)

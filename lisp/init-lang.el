@@ -37,5 +37,9 @@
   :mode ("\\.md\\'" . markdown-mode)
   )
 
+(use-package css-mode
+  :ensure nil
+  :custom
+  (css-indent-offset 2))
 (provide 'init-lang)
 ;;; init-lang.el ends here

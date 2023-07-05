@@ -65,10 +65,8 @@
 (use-package ef-themes
   :config
   (setq ef-themes-headings
-	(quote ((t . (regular))))))
-
-
-(load-theme 'ef-cyprus t)
+	(quote ((t . (regular)))))
+  (load-theme 'ef-frost t))
 
 ;; window
 (winner-mode)

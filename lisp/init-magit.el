@@ -1,4 +1,4 @@
 (use-package magit
-  :defer t)
+  :commands magit)
 
 (provide 'init-magit)

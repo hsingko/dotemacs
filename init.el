@@ -8,8 +8,6 @@
       '(("http" . "127.0.0.1:7890")
         ("https" . "127.0.0.1:7890")))
 
-
-
 (setq use-package-enable-imenu-support t) ;; this line must placed before import `use-package`
 (require 'use-package)
 (setq use-package-always-ensure t)
@@ -25,7 +23,6 @@
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'init-ui)
-;; (require 'init-dashboard)
 (require 'init-meow)
 (require 'init-consult)
 (require 'init-vertico)
@@ -37,14 +34,11 @@
 (require 'keymaps)
 (require 'init-cn)
 (require 'init-calibre)
-;; (require 'init-yas)
 (require 'init-tempel)
-(require 'init-bridge)
 (require 'init-dired)
 (require 'init-rg)
 (require 'init-embark)
 (require 'init-builtin)
-(require 'init-magit)
 (require 'init-window)
 (require 'init-helper)
 (require 'init-vterm)
@@ -53,11 +47,10 @@
 (require 'init-formater)
 (require 'init-abbrev)
 (require 'init-shellcmd)
-;; (require 'init-bingai)
+(require 'init-corfu)
+(require 'init-magit)
 
 (put 'erase-buffer 'disabled nil)
-
-
 ;; isearch(incremental search)
 ;; https://www.youtube.com/watch?v=9CdbfZXsrqg
 (setq-default isearch-lazy-count t)
@@ -75,10 +68,6 @@
 
 ;; marks
 (setq-default set-mark-command-repeat-pop t)
-;; but I still don't know how to use mark
-;; (global-unset-key (kbd "C-@"))
-;; (global-set-key (kbd "M-SPC") 'set-mark-command)
-
 
 (use-package jinx
   :diminish
@@ -87,7 +76,6 @@
   :config
   (add-to-list 'jinx-exclude-regexps '(t "\\cc")))
 
-(unbind-key (kbd "C-c C-k") org-mode-map)
 
 (setq scheme-program-name "guile")
 
@@ -140,18 +128,11 @@
       (goto-char (point-max)))))
 
 
-
-;;+-──────────────────-+
-;;| this is minibuffer |
-;;+-──────────────────-+
+;; set minibuffer
 (setq enable-recursive-minibuffers t)
 (setq minibuffer-depth-indicate-mode t)
 
-
-;;+-─────────────────────-+
-;;| treesit configuration |
-;;+-─────────────────────-+
-
+;;custom treesitter
 (setq treesit-extra-load-path `(,(expand-file-name "treesit" user-emacs-directory)))
 (setq major-mode-remap-alist
       '((yaml-mode . yaml-ts-mode)
@@ -162,3 +143,10 @@
 	(json-mode . json-ts-mode)
 	(css-mode . css-ts-mode)
 	(python-mode . python-ts-mode)))
+
+
+;; Display boot time message
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "Emacs initialized in %.2f seconds" (float-time (time-subtract after-init-time before-init-time)))))
+

@@ -14,3 +14,5 @@ text-mode
 (calc (p "taylor(sin(x),x=0,3)" formula) n "----" n (format "%s" (calc-eval formula)))
 
 
+emacs-lisp-mode
+(use "(use-package " p ")")
