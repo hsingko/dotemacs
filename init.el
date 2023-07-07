@@ -16,6 +16,12 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq custom-file "~/.emacs.d/custom.el")
 
+;; change auto-save directory
+;; I don't if it works
+;; yes, it works
+(setq auto-save-file-name-transforms
+      `((".*" ,(expand-file-name "~/.emacs.d/autosave/") t)))
+
 (use-package exec-path-from-shell
   :config
   (exec-path-from-shell-initialize))
@@ -41,13 +47,14 @@
 (require 'init-builtin)
 (require 'init-window)
 (require 'init-helper)
-(require 'init-vterm)
+;; (require 'init-vterm)
 (require 'init-xeft)
 (require 'init-html)
 (require 'init-formater)
 (require 'init-abbrev)
 (require 'init-shellcmd)
 (require 'init-corfu)
+;; (require 'init-bridge)
 (require 'init-magit)
 
 (put 'erase-buffer 'disabled nil)
@@ -71,8 +78,8 @@
 
 (use-package jinx
   :diminish
-  :hook
-  (text-mode . jinx-mode)
+  ;; :hook
+  ;; (text-mode . jinx-mode)
   :config
   (add-to-list 'jinx-exclude-regexps '(t "\\cc")))
 
@@ -121,7 +128,7 @@
 (setq auto-insert-query nil)
 (define-auto-insert "\\.org\\'"
   (lambda ()
-    (unless (file-in-directory-p (buffer-file-name) (denote-directory))
+    (unless (file-in-directory-p (buffer-file-name) "~/Documents/org/notes/") ;; 如果使用 denote-directory 来判断则会产生对 denote 加载的依赖
       (insert "#+TITLE: " (file-name-base (buffer-file-name)) "\n")
       (insert "#+DATE: " (format-time-string "%Y-%m-%d") "\n" )
       (newline)
@@ -135,8 +142,9 @@
 ;;custom treesitter
 (setq treesit-extra-load-path `(,(expand-file-name "treesit" user-emacs-directory)))
 (setq major-mode-remap-alist
-      '((yaml-mode . yaml-ts-mode)
-	(html-mode . html-ts-mode)
+      '(
+	;; (yaml-mode . yaml-ts-mode) yaml-ts-mode does not have indent
+	;; (html-mode . html-ts-mode) there is no html-ts-mode
 	(bash-mode . bash-ts-mode)
 	(js2-mode . js-ts-mode)
 	(typescript-mode . typescript-ts-mode)
@@ -149,4 +157,3 @@
 (add-hook 'emacs-startup-hook
           (lambda ()
             (message "Emacs initialized in %.2f seconds" (float-time (time-subtract after-init-time before-init-time)))))
-

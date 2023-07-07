@@ -81,7 +81,9 @@
 ;; file
 (global-set-key (kbd "C-c f r") #'consult-recent-file)
 (global-set-key (kbd "C-c f f") #'find-file)
-(global-set-key (kbd "C-c f w") #'+create-free-writing)
+(global-set-key (kbd "C-c f i") #'consult-imenu)
+(global-set-key (kbd "C-c f w") #'widen)
+(global-set-key (kbd "C-c f n") #'org-narrow-to-subtree)
 (global-set-key (kbd "C-c f p") #'project-find-file)
 (global-set-key (kbd "C-c f D") #'+delete-this-file)
 (global-set-key (kbd "C-c f F") #'find-file-other-window)

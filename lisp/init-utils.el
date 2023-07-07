@@ -198,4 +198,20 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
       (insert (format "\"%s\"" font)))))
 
 
+
+
+(define-minor-mode textnov-mode
+  "text novel minor mode"
+  :lighter "Nov"
+  :init-value nil
+  (if textnov-mode
+      (progn
+	(setq imenu-generic-expression '((nil "^\\(　+第[一二三四五六七八九十零]+章.*\\)" 1)))
+	(read-only-mode)
+	(setq imenu-sort-function 'imenu--sort-by-position))
+    (progn
+      (read-only-mode -1)
+      (message "textnov-mode disabled"))))
+
+
 (provide 'init-utils)

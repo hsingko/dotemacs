@@ -24,7 +24,10 @@
 
 ;;; Code:
 
-(use-package yaml-mode)
+(use-package yaml-mode
+  :mode ("\\.ya?ml\\'" . yaml-mode)
+  :hook
+  (yaml-mode . display-line-numbers-mode))
 
 (use-package markdown-mode
   :mode ("README\\.md\\'" . gfm-mode)
@@ -39,7 +42,14 @@
 
 (use-package css-mode
   :ensure nil
+  :mode ("\\.css\\'" . css-mode)
   :custom
   (css-indent-offset 2))
+
+
+;; disable html mode keybindings, it's useless, and conflicts with ace-window
+(with-eval-after-load 'mhtml-mode
+  (define-key mhtml-mode-map (kbd "M-o") nil))
+
 (provide 'init-lang)
 ;;; init-lang.el ends here

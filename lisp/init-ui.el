@@ -26,7 +26,6 @@
 	  (lambda ()
 	    (display-line-numbers-mode 1)))
 
-
 (use-package diminish)
 (diminish 'visual-line-mode)
 
@@ -68,8 +67,8 @@
 	(quote ((t . (regular)))))
   (load-theme 'ef-frost t))
 
-;; window
-(winner-mode)
+;; window redo, never used it
+;; (winner-mode)
 
 (use-package ace-window
   :bind

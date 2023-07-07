@@ -13,8 +13,7 @@
   (add-hook 'conf-mode-hook 'tempel-setup-capf)
   (add-hook 'prog-mode-hook 'tempel-setup-capf)
   (add-hook 'text-mode-hook 'tempel-setup-capf)
-  (global-tempel-abbrev-mode)
-  )
+  (global-tempel-abbrev-mode))
 
 (use-package tempel-collection
   :after tempel)

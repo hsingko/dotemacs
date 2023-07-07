@@ -119,8 +119,8 @@ engine:
     - reverse_lookup_translator
     - table_translator
     - history_translator@repeat_history
-    - lua_translator@Lunar_calendar_translator
-    - lua_translator@date_time_translator
+    # - lua_translator@Lunar_calendar_translator
+    # - lua_translator@date_time_translator
   filters:
     - simplifier
     - uniquifier

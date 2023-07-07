@@ -10,13 +10,7 @@
   (setq denote-directory (expand-file-name "notes" org-directory)
         denote-file-type "org"
         denote-dired-directories (list
-                                  denote-directory
-                                  ;; (thread-last denote-directory (expand-file-name "movies"))
-                                  ;; (thread-last denote-directory (expand-file-name "books"))
-				  ;; (thread-last denote-directory (expand-file-name "courses"))
-                                  ;; (thread-last denote-directory (expand-file-name "posts"))
-                                  ;; (thread-last denote-directory (expand-file-name "logs"))
-                                  ))
+                                  denote-directory))
   ;; :config
   (setq denote-excluded-directories-regexp "archive")
   (add-hook 'dired-mode-hook #'my/denote-dired-mode-hook))

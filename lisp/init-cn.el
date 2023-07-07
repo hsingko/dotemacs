@@ -11,19 +11,10 @@
         )
        ))
 
-(defun +rime-predicate-meow-mode-p ()
-  (and (fboundp 'meow-mode)
-       (or (meow-normal-mode-p)
-           (meow-motion-mode-p)
-	   (meow-beacon-mode-p)
-	   (meow-keypad-mode-p)
-           )))
-
 (defun +rime-predicates-basic ()
   "The basic necessary predicates combination."
   (or
-   ;(rime-predicate-evil-mode-p)
-      (+rime-predicate-meow-mode-p)
+      ;; (+rime-predicate-meow-mode-p)
       (rime-predicate-ace-window-p)
       (rime-predicate-hydra-p)
       (+rime-predicate-button-at-point-p)
@@ -62,6 +53,12 @@
                  rime-predicate-punctuation-after-ascii-p
 		 rime-predicate-after-ascii-char-p ;; 为了使用 abbrev 模式
 		 ))
+
+(if (featurep 'meow)
+    (add-to-list 'rime-disable-predicates '+rime-predicate-meow-mode-p))
+
+
+
 (setq-default rime-inline-predicates
               '(rime-predicate-current-uppercase-letter-p
                  rime-predicate-space-after-cc-p
@@ -92,17 +89,6 @@
   :hook
   (org-mode . ace-pinyin-mode)
   (markdown-mode . ace-pinyin-mode))
-
-;; 拼音搜索功能
-;; (defun completion--regex-pinyin (str)
-;;   (orderless-regexp (pinyinlib-build-regexp-string str nil t nil t)))
-;; (defun advice--regexp-pinyin (func &rest args)
-;;   (add-to-list 'orderless-matching-styles #'completion--regex-pinyin)
-;;   (let ((result (apply func args)))
-;;     (setq orderless-matching-styles
-;;       (delete 'completion--regex-pinyin orderless-matching-styles))
-;;     result))
-;; (advice-add 'consult-notes :around #'advice--regexp-pinyin)
 
 
 ;; 基于中文分词的跳跃功能

@@ -10,11 +10,11 @@
 (defun +disable-line-wrap-and-number ()
   (visual-line-mode -1))
 
-(use-package nov
-  :mode ("\\.epub\\'" . nov-mode)
-  ;; :config
-  ;; (add-to-list 'auto-mode-alist
-  ;; 	       '("\\.epub\\'" . nov-mode))
-  )
+;; (use-package nov
+;;   :mode ("\\.epub\\'" . nov-mode)
+;;   ;; :config
+;;   ;; (add-to-list 'auto-mode-alist
+;;   ;; 	       '("\\.epub\\'" . nov-mode))
+;;   )
 
 (provide 'init-calibre)

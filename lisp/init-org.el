@@ -52,6 +52,7 @@
 
 (setq org-agenda-files `(
 			 ,(expand-file-name "gtd.org" org-directory)
+			 ,(expand-file-name "capture.org" org-directory)
 			 ))
 
 (setq org-file-apps-gnu '((remote . emacs)
@@ -85,11 +86,11 @@
       org-startup-with-inline-images nil
       org-image-actual-width '(400))
 
-(use-package org-superstar
-  :hook (org-mode . org-superstar-mode)
-  :config
-  (setq org-superstar-special-todo-items t)
-  )
+;; (use-package org-superstar
+;;   :hook (org-mode . org-superstar-mode)
+;;   :config
+;;   (setq org-superstar-special-todo-items t)
+;;   )
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -135,14 +136,6 @@
            (call-interactively 'org-insert-link)))))
 
 
-(use-package ox-hugo
-  :after ox
-  :config
-;;; this seems fix ox-hugo exports freeze problem
-;;; see: https://github.com/kaushalmodi/ox-hugo/discussions/651
-  (setq org-element-use-cache nil)  
-  )
-
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
 (setq org-startup-with-inline-images nil)
 (setq org-file-apps '((directory . emacs)
@@ -171,39 +164,11 @@
 	       (file "capture.org")
 	       "* TODO %?\n%T"))
 
-; capture book entry with douban isbn api
-(require 'json)
-; movie api: https://api.douban.com/v2/movie/imdb/tt6718170
-(defcustom DOUBAN_BOOK_API_TEMPLATE "curl --location -s --request POST 'https://api.douban.com/v2/book/isbn/%s' --data-urlencode 'apikey=0ab215a8b1977939201640fa14c66bab'"
-  "default book api, provide a string slot for isbn")
-(defcustom book-entry-header-template
-  "#+title:\t%s\n#+date:\t%s\n#+book_author:\t%s\n#+book_pubdate:\t%s\n#+book_publisher:\t%s\n#+book_isbn:\t%s\n"
-  "default books/{title}.org header template")
-(defun hs/create-book-entry ()
-  (let* ((isbn (read-string "ISBN:"))
-	 (book-data
-	  (let (
-		(json-object-type 'plist)
-		(json-array-type 'list))
-	    (json-read-from-string
-	     (shell-command-to-string (format DOUBAN_BOOK_API_TEMPLATE isbn)))))
-	 (title (plist-get book-data :title))
-	 (pubdate (plist-get book-data :pubdate))
-	 (publisher (plist-get book-data :publisher))
-	 (author (mapconcat 'identity (plist-get book-data :author) ", "))
-	 (filename (expand-file-name (format "%s.org" title)
-				     (expand-file-name "books"
-						       org-directory))))
-    (set-buffer (org-capture-target-buffer filename))
-    (insert (format
-	     book-entry-header-template
-	     title (format-time-string "%Y-%m-%d %a %H:%M") author pubdate publisher isbn))
-    (goto-char (point-max))))
 
-(add-to-list 'org-capture-templates
-	     '("b" "Add Book" plain
-	       (function hs/create-book-entry)
-	       ""
-	       :empty-lines 1))
+(eval-after-load 'org
+  '(progn
+     (define-key org-src-mode-map (kbd "C-c C-c") 'org-edit-src-exit)))
+
+
 
 (provide 'init-org)

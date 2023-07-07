@@ -84,6 +84,15 @@
    '("'" . repeat)
    '("P" . meow-pop-to-mark)
    '("<escape>" . ignore)))
+
+(defun +rime-predicate-meow-mode-p ()
+  (and (fboundp 'meow-mode)
+       (or (meow-normal-mode-p)
+           (meow-motion-mode-p)
+	   (meow-beacon-mode-p)
+	   (meow-keypad-mode-p)
+           )))
+
 (use-package meow
   :diminish meow-keypad-mode
   :diminish meow-insert-mode
@@ -96,8 +105,6 @@
   (meow-setup-indicator) ;; custom meow modeline mode helper
   (meow-setup)
   (add-to-list 'meow-mode-state-list '(calibredb-search-mode . motion))
-  (add-to-list 'meow-mode-state-list '(color-rg-mode . motion)))
-(require 'meow)
-(meow-global-mode 1)
+  (meow-global-mode 1))
 
 (provide 'init-meow)
