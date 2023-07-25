@@ -4,7 +4,8 @@
   (:map dired-mode-map
 	("h" . dired-up-directory)
 	("l" . dired-find-file)
-	("N" . dired-narrow))
+	("N" . dired-narrow)
+	("E" . calibredb-dired-add))
   :config
   (setq dired-bind-man nil)
   (setq dired-listing-switches "-alhv --group-directories-first")

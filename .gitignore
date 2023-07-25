@@ -11,3 +11,11 @@ rime/trash
 rime/user.yaml
 tramp
 transient/
+/%backup%~
+/.cache/
+/autosave/
+/backups/
+/eshell/
+/undohist/
+/url/
+/treesit/

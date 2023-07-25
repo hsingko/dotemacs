@@ -13,6 +13,7 @@
                                   denote-directory))
   ;; :config
   (setq denote-excluded-directories-regexp "archive")
+  (denote-rename-buffer-mode 1)
   (add-hook 'dired-mode-hook #'my/denote-dired-mode-hook))
 
 (defun +create-free-writing (title)
@@ -28,5 +29,11 @@
   (setq consult-notes-denote-dir nil
 	consult-notes-denote-display-id nil))
 
+(use-package denote-menu
+  :config
+  (define-key denote-menu-mode-map (kbd "/") #'denote-menu-filter)
+  (define-key denote-menu-mode-map (kbd "c") #'denote-menu-clear-filters)
+  (define-key denote-menu-mode-map (kbd "t") #'denote-menu-filter-by-keyword)
+  (define-key denote-menu-mode-map (kbd "d") #'denote-menu-export-to-dired))
 
 (provide 'init-denote)

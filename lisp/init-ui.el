@@ -5,17 +5,18 @@
 (tooltip-mode -1)    ;disable tooltip
 (set-fringe-mode 8)
 (menu-bar-mode -1)
-					;(pixel-scroll-precision-mode 1)
-					;port from nano-theme
-					;(setq frame-title-format nil)
 (setq initial-major-mode 'text-mode)
 (setq default-major-mode 'text-mode)
 (setq font-lock-maximum-decoration t)
+(setq cursor-type 'bar)
+
 ;; (setq default-frame-alist '((undecorated . t))) ;;; 隐藏窗口标题栏
 ;; font family
-;; (set-face-attribute 'default nil :font (font-spec :family "FiraCode Nerd Font Mono" :size 17 :weight 'thin))
+;; (set-face-attribute 'default nil :font (font-spec :family "FiraCode Nerd Font Mono" :size 16 :weight 'thin))
 (set-face-attribute 'default nil :font (font-spec :family "IntelOne Mono" :size 16 :weight 'regular))
-(set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "Sarasa Mono CL" :weight 'regular))
+(set-face-attribute 'variable-pitch nil :font (font-spec :family "IBM Plex Serif" :size 16 :weight 'regular))
+;; (set-face-attribute 'default nil :font (font-spec :family "Sarasa Mono CL" :size 16 :weight 'regular))
+(set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "LXGW WenKai Screen" :weight 'regular))
 
 ;; (setq resize-mini-windows nil)
 ;;https://www.reddit.com/r/emacs/comments/wpr2n2/comment/ikj2vn1/?utm_source=share&utm_medium=web2x&context=3
@@ -67,9 +68,6 @@
 	(quote ((t . (regular)))))
   (load-theme 'ef-frost t))
 
-;; window redo, never used it
-;; (winner-mode)
-
 (use-package ace-window
   :bind
   (("M-o" . ace-window)))
@@ -79,5 +77,13 @@
 (use-package spacious-padding
   :config
   (spacious-padding-mode 1))
+
+(set-face-attribute 'mode-line nil :height 105)
+
+
+;; use variable-pitch-font in text mode
+(use-package mixed-pitch
+  :hook
+  (text-mode . mixed-pitch-mode))
 
 (provide 'init-ui)

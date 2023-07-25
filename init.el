@@ -56,6 +56,7 @@
 (require 'init-corfu)
 ;; (require 'init-bridge)
 (require 'init-magit)
+(require 'init-undo)
 
 (put 'erase-buffer 'disabled nil)
 ;; isearch(incremental search)
@@ -93,33 +94,6 @@
   (forward-page 1)
   (narrow-to-page))
 (global-set-key (kbd "C-x n f") #'my/org-narrow-forward)
-
-;;; hugo setup
-(defcustom HUGO_DIRECTORY "~/Documents/Blog"
-  "The default hugo blog directory")
-(defun extract-double-quoted-substring (string)
-  "Extracts the double-quoted substring from the given string."
-  (when (string-match "\"\\([^\"]*\\)\"" string)
-    (match-string 1 string)))
-(defun create-hugo-post ()
-  (interactive)
-  (let* ((default-directory HUGO_DIRECTORY)
-	 (title (replace-regexp-in-string
-		 "\\s-"
-		 "-"
-		 (read-string "Blog Title:")))
-	 (section (read-string "Section:"))
-	 (date (decode-time (current-time)))
-	 (year (nth 5 date))
-	 (month (nth 4 date))
-	 (day (nth 3 date))
-	 (res (shell-command-to-string
-	       (format
-		"hugo new %s/%s/%s/%s/%s/index.md" section year month day title)))
-	 (path (extract-double-quoted-substring res)))
-    (message res)
-    (org-insert-link nil path title)))
-
 
 (put 'narrow-to-page 'disabled nil)
 

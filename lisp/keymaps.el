@@ -58,6 +58,7 @@
 (global-set-key (kbd "C-c n m") #'list-denotes)
 (global-set-key (kbd "C-c n b") #'denote-link-show-backlinks-buffer)
 (global-set-key (kbd "C-c n r") #'denote-rename-file-using-front-matter)
+(global-set-key (kbd "C-c n s") #'denote-signature)
 ;; buffer
 (global-set-key (kbd "C-c b p") #'previous-buffer)
 (global-set-key (kbd "C-c b n") #'next-buffer)
@@ -72,7 +73,7 @@
 (global-set-key (kbd "C-c b s") #'basic-save-buffer)
 (global-set-key (kbd "C-c b r") #'revert-buffer)
 (global-set-key (kbd "C-c b b") #'consult-buffer)
-;; (global-set-key (kbd "C-c b x") #'scratch-buffer) ; emacs-29
+(global-set-key (kbd "C-c b x") #'scratch-buffer) ; emacs-29
 (global-set-key (kbd "C-c b S") #'save-some-buffers)
 
 ;; bookmark

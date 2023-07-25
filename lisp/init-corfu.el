@@ -8,8 +8,8 @@
   :bind
   (:map corfu-map
 	([escape] . corfu-quit))
-  :init
-  (global-corfu-mode))
+  :hook
+  (prog-mode . corfu-mode))
 
 (use-package cape
   :init

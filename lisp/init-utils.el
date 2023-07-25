@@ -65,12 +65,14 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
 (defun doom/sudo-this-file ()
   "Open the current file as root."
   (interactive)
-  (find-file
-   (doom--sudo-file-path
-    (or buffer-file-name
-        (when (or (derived-mode-p 'dired-mode)
-                  (derived-mode-p 'wdired-mode))
-          default-directory)))))
+  (let ((p (point)))
+    (find-file
+     (doom--sudo-file-path
+      (or buffer-file-name
+          (when (or (derived-mode-p 'dired-mode)
+                    (derived-mode-p 'wdired-mode))
+            default-directory))))
+    (goto-char p)))
 
 (defun doom/sudo-save-buffer ()
   "Save this file as root."

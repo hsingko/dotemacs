@@ -5,23 +5,23 @@
 (defun +rime-predicate-line-begin-with-left-arrow ()
   (and (<= (point) (save-excursion (back-to-indentation) (point)))
        (or
-       (= #x3c rime--current-input-key)
-       (= #x7c rime--current-input-key)
-       (= #x28 rime--current-input-key)
+	(= #x3c rime--current-input-key)
+	(= #x7c rime--current-input-key)
+	(= #x28 rime--current-input-key)
         )
        ))
 
 (defun +rime-predicates-basic ()
   "The basic necessary predicates combination."
   (or
-      ;; (+rime-predicate-meow-mode-p)
-      (rime-predicate-ace-window-p)
-      (rime-predicate-hydra-p)
-      (+rime-predicate-button-at-point-p)
-      ;; 行首切换 ascii-mode 在写中文文章的时候不好用，因为会遇到双引号开头段落的情况
-      ;; (rime-predicate-punctuation-line-begin-p)
-      (+rime-predicate-line-begin-with-left-arrow)
-      ))
+   ;; (+rime-predicate-meow-mode-p)
+   (rime-predicate-ace-window-p)
+   (rime-predicate-hydra-p)
+   (+rime-predicate-button-at-point-p)
+   ;; 行首切换 ascii-mode 在写中文文章的时候不好用，因为会遇到双引号开头段落的情况
+   ;; (rime-predicate-punctuation-line-begin-p)
+   (+rime-predicate-line-begin-with-left-arrow)
+   ))
 
 (defun +rime-predicate-button-at-point-p ()
   "Detect whether the point is a button.
@@ -47,23 +47,21 @@
 
 (setq-default rime-disable-predicates
               '(+rime-predicates-basic
-                 ;; rime-predicate-org-in-src-block-p
-                 rime-predicate-org-latex-mode-p
-                 rime-predicate-punctuation-after-space-cc-p
-                 rime-predicate-punctuation-after-ascii-p
-		 rime-predicate-after-ascii-char-p ;; 为了使用 abbrev 模式
-		 ))
+                ;; rime-predicate-org-in-src-block-p
+                rime-predicate-org-latex-mode-p
+                rime-predicate-punctuation-after-space-cc-p
+                rime-predicate-punctuation-after-ascii-p
+		rime-predicate-after-ascii-char-p ;; 为了使用 abbrev 模式
+		))
 
 (if (featurep 'meow)
     (add-to-list 'rime-disable-predicates '+rime-predicate-meow-mode-p))
 
 
-
 (setq-default rime-inline-predicates
               '(rime-predicate-current-uppercase-letter-p
-                 rime-predicate-space-after-cc-p
-                 ;; rime-predicate-after-ascii-char-p
-		 ))
+                rime-predicate-space-after-cc-p
+		))
 
 (setq rime-show-candidate 'minibuffer)
 (setq rime-posframe-properties nil)
@@ -72,9 +70,9 @@
 (use-package rime
   :custom
   ;;; 切换方案：https://emacs-china.org/t/emacs-rime/12048/54
-  (bind-key "C-`" 'rime-send-keybinding rime-mode-map)
   (default-input-method "rime")
   :config
+  (bind-key "C-`" 'rime-send-keybinding rime-mode-map)
   (add-hook 'kill-emacs-hook (lambda ()
 			       (ignore-errors (rime-lib-finalize)))))
 
