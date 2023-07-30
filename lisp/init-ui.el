@@ -13,10 +13,15 @@
 ;; (setq default-frame-alist '((undecorated . t))) ;;; 隐藏窗口标题栏
 ;; font family
 ;; (set-face-attribute 'default nil :font (font-spec :family "FiraCode Nerd Font Mono" :size 16 :weight 'thin))
-(set-face-attribute 'default nil :font (font-spec :family "IntelOne Mono" :size 16 :weight 'regular))
-(set-face-attribute 'variable-pitch nil :font (font-spec :family "IBM Plex Serif" :size 16 :weight 'regular))
+(set-face-attribute 'default nil :font (font-spec :family "FiraCode Nerd Font Mono" :size 16 :weight 'regular))
+
+(set-face-attribute 'variable-pitch nil :font (font-spec :family "Bookerly" :size 16 :weight 'regular))
 ;; (set-face-attribute 'default nil :font (font-spec :family "Sarasa Mono CL" :size 16 :weight 'regular))
-(set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "LXGW WenKai Screen" :weight 'regular))
+;; (set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "Sarasa Mono SC" :weight 'regular))
+(set-fontset-font t 'han (font-spec :family "Sarasa Mono SC" :weight 'regular))
+;; (set-fontset-font t 'han (font-spec :family "GenRyuMin TW" :weight 'regular))
+
+(set-fontset-font t 'kana "Noto Sans CJK JP")
 
 ;; (setq resize-mini-windows nil)
 ;;https://www.reddit.com/r/emacs/comments/wpr2n2/comment/ikj2vn1/?utm_source=share&utm_medium=web2x&context=3
@@ -66,6 +71,7 @@
   :config
   (setq ef-themes-headings
 	(quote ((t . (regular)))))
+  (setq ef-themes-mixed-fonts t)
   (load-theme 'ef-frost t))
 
 (use-package ace-window
@@ -84,6 +90,14 @@
 ;; use variable-pitch-font in text mode
 (use-package mixed-pitch
   :hook
-  (text-mode . mixed-pitch-mode))
+  (text-mode . mixed-pitch-mode)
+  :config
+  (setq-default mixed-pitch-cursor-type 'bar))
+
+
+(use-package rainbow-mode
+  :hook
+  (help-mode . rainbow-mode)
+  (emacs-lisp-mode . rainbow-mode))
 
 (provide 'init-ui)

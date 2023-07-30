@@ -19,9 +19,17 @@
           (save-buffer)
           (xeft--front-page-cache-refresh))
 	(run-hooks 'xeft-find-file-hook))))
+  (defun +clear-xeft-search ()
+    (interactive)
+    (goto-char (point-min))
+    (unless (string-empty-p (xeft--get-search-phrase))
+      (kill-visual-line))
+    (featurep 'meow
+	      (meow-insert)))
   :bind
   (("C-c n x" . xeft))
   (:map xeft-mode-map
-	([remap xeft-create-note] . my/xeft-create-note)))
+	([remap xeft-create-note] . my/xeft-create-note)
+	("C-k" . +clear-xeft-search)))
 
 (provide 'init-xeft)

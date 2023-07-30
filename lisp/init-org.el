@@ -8,6 +8,7 @@
 ;; org-download configuration
 (setq org-startup-folded 'overview)
 
+
 (setq org-src-preserve-indentation nil 
       org-edit-src-content-indentation 0)
 (setq org-M-RET-may-split-line nil)
@@ -82,7 +83,6 @@
 ;; Improve org mode looks
 (setq org-startup-indented t
       org-pretty-entities t
-      org-hide-emphasis-markers nil
       org-startup-with-inline-images nil
       org-image-actual-width '(400))
 
@@ -168,6 +168,18 @@
 (eval-after-load 'org
   '(progn
      (define-key org-src-mode-map (kbd "C-c C-c") 'org-edit-src-exit)))
+
+
+;; (use-package org-appear
+;;   :hook
+;;   (org-mode . org-appear)
+;;   :config
+;;   (setq org-hide-emphasis-markers t))
+
+(setq org-hide-emphasis-markers t)
+
+(eval-after-load 'org
+  '(set-face-attribute 'org-quote nil :slant 'italic))
 
 
 

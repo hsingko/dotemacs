@@ -1,6 +1,7 @@
 ;; package management
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+
 (package-initialize) ;; You might already have this line
 (unless package-archive-contents
   (package-refresh-contents))
@@ -104,7 +105,7 @@
   (lambda ()
     (unless (file-in-directory-p (buffer-file-name) "~/Documents/org/notes/") ;; 如果使用 denote-directory 来判断则会产生对 denote 加载的依赖
       (insert "#+TITLE: " (file-name-base (buffer-file-name)) "\n")
-      (insert "#+DATE: " (format-time-string "%Y-%m-%d") "\n" )
+      (insert "#+DATE: " (format-time-string "%Y-%m-%dT%H:%M:%S%z") "\n" )
       (newline)
       (goto-char (point-max)))))
 

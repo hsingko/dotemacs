@@ -105,6 +105,14 @@
   (meow-setup-indicator) ;; custom meow modeline mode helper
   (meow-setup)
   (add-to-list 'meow-mode-state-list '(calibredb-search-mode . motion))
-  (meow-global-mode 1))
+  (meow-global-mode 1)
+
+  ;; custom meow mode state cursor color
+  (custom-set-faces
+   '(meow-normal-cursor ((t (:background "#DC143C"))))
+   '(meow-insert-cursor ((t (:inherit font-lock-keyword-face)))))
+  (add-hook 'ef-themes-post-load-hook (lambda ()
+					(custom-set-faces
+					 '(meow-insert-cursor ((t (:inherit font-lock-keyword-face))))))))
 
 (provide 'init-meow)

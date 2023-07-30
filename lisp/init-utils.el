@@ -216,4 +216,9 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
       (message "textnov-mode disabled"))))
 
 
+(defun +insert-time-string-in-ISO8601 ()
+  (interactive)
+  (insert (format-time-string "%Y-%m-%dT%H:%M:%S%z")))
+
+
 (provide 'init-utils)
