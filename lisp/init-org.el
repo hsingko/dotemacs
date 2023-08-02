@@ -9,7 +9,7 @@
 (setq org-startup-folded 'overview)
 
 
-(setq org-src-preserve-indentation nil 
+(setq org-src-preserve-indentation nil
       org-edit-src-content-indentation 0)
 (setq org-M-RET-may-split-line nil)
 
@@ -22,18 +22,23 @@
   :commands (org-journal-new-entry)
   :config
   (setq org-journal-file-type 'yearly
-      org-journal-file-format "%Y.org"
-      org-journal-file-header "#+TITLE: Year %Y Journal"
-      org-journal-date-prefix "* "
-      org-journal-date-format "%a, %Y-%m-%d"
-      org-journal-time-prefix "** "
-      ;; org-journal-encrypt-journal t
-      org-journal-dir (expand-file-name "journal" org-directory)
-      )
+	org-journal-file-format "%Y.org"
+	org-journal-file-header "#+TITLE: Year %Y Journal"
+	org-journal-date-prefix "* "
+	org-journal-date-format "%a, %Y-%m-%d"
+	org-journal-time-prefix "** "
+	;; org-journal-encrypt-journal t
+	org-journal-dir (expand-file-name "journal" org-directory)
+	)
   )
 
 (use-package org-download
   :commands (org-download-clipboard org-download-image)
+  :init
+  (dir-locals-set-class-variables 'org-download-hugo-directory
+				  '((org-mode . ((org-download-image-dir . "./images")))))
+  (dir-locals-set-directory-class
+   "~/Documents/Blog/content/" 'org-download-hugo-directory)
   :config
   (setq-default org-download-heading-lvl nil)
   (setq-default org-download-image-dir (expand-file-name "images" org-directory))
@@ -43,13 +48,13 @@
   (defun dummy-org-download-annotate-function (link)
     "")
   (setq org-download-annotate-function
-      #'dummy-org-download-annotate-function)
+	#'dummy-org-download-annotate-function)
   )
 (defun my/org-download-file-path ()
-    (interactive)
-    (org-download-image
-     (concat "file://" (current-kill 0)))
-    )
+  (interactive)
+  (org-download-image
+   (concat "file://" (current-kill 0)))
+  )
 
 (setq org-agenda-files `(
 			 ,(expand-file-name "gtd.org" org-directory)
@@ -57,15 +62,15 @@
 			 ))
 
 (setq org-file-apps-gnu '((remote . emacs)
-                            (system . "open %s")
-                            ("ps.gz" . "gv %s")
-                            ("eps.gz" . "gv %s")
-                            ("dvi" . "xdvi %s")
-                            ("fig" . "xfig %s")
-			    ("webm" . "mpv %s")
-                            (t . "open %s")
-                            (".png" . "open %s")
-			    ))
+                          (system . "open %s")
+                          ("ps.gz" . "gv %s")
+                          ("eps.gz" . "gv %s")
+                          ("dvi" . "xdvi %s")
+                          ("fig" . "xfig %s")
+			  ("webm" . "mpv %s")
+                          (t . "open %s")
+                          (".png" . "open %s")
+			  ))
 
 
 
@@ -83,8 +88,8 @@
 ;; Improve org mode looks
 (setq org-startup-indented t
       org-pretty-entities t
-      org-startup-with-inline-images nil
-      org-image-actual-width '(400))
+      org-startup-with-inline-images t
+      org-image-actual-width '(800))
 
 ;; (use-package org-superstar
 ;;   :hook (org-mode . org-superstar-mode)
@@ -100,15 +105,8 @@
    ))
 (setq org-confirm-babel-evaluate nil)
 
-; hide drawers when cycle headline visibility
+					; hide drawers when cycle headline visibility
 (add-hook 'org-cycle-hook #'org-cycle-hide-drawers)
-
-
-
-(add-hook 'org-mode-hook (lambda ()
-			   (toggle-input-method)
-			   ))
-
 
 (defun ar/org-insert-link-dwim ()
   "Like `org-insert-link' but with personal dwim preferences."

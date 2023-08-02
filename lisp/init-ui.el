@@ -12,8 +12,7 @@
 
 ;; (setq default-frame-alist '((undecorated . t))) ;;; 隐藏窗口标题栏
 ;; font family
-;; (set-face-attribute 'default nil :font (font-spec :family "FiraCode Nerd Font Mono" :size 16 :weight 'thin))
-(set-face-attribute 'default nil :font (font-spec :family "FiraCode Nerd Font Mono" :size 16 :weight 'regular))
+(set-face-attribute 'default nil :font (font-spec :family "IntelOne Mono" :size 16 :weight 'regular))
 
 (set-face-attribute 'variable-pitch nil :font (font-spec :family "Bookerly" :size 16 :weight 'regular))
 ;; (set-face-attribute 'default nil :font (font-spec :family "Sarasa Mono CL" :size 16 :weight 'regular))
@@ -78,7 +77,24 @@
   :bind
   (("M-o" . ace-window)))
 
+
+;; pixel scroll
+(setq scroll-conservatively 100) ;; when next-line/previous-line move point out of screen, move by 1 line stead of scroll half screen and center the pointer
 (pixel-scroll-precision-mode 1)
+(setq pixel-scroll-precision-interpolate-page t)
+(defun +pixel-scroll-interpolate-down (&optional lines)
+  (interactive)
+  (if lines
+      (pixel-scroll-precision-interpolate (* -1 lines (pixel-line-height)))
+    (pixel-scroll-interpolate-down)))
+(defun +pixel-scroll-interpolate-up (&optional lines)
+  (interactive)
+  (if lines
+      (pixel-scroll-precision-interpolate (* lines (pixel-line-height))))
+  (pixel-scroll-interpolate-up))
+(defalias 'scroll-up-command '+pixel-scroll-interpolate-down)
+(defalias 'scroll-down-command '+pixel-scroll-interpolate-up)
+
 
 (use-package spacious-padding
   :config
@@ -90,7 +106,7 @@
 ;; use variable-pitch-font in text mode
 (use-package mixed-pitch
   :hook
-  (text-mode . mixed-pitch-mode)
+  (org-mode . mixed-pitch-mode)
   :config
   (setq-default mixed-pitch-cursor-type 'bar))
 

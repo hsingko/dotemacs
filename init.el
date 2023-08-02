@@ -21,7 +21,8 @@
 ;; I don't if it works
 ;; yes, it works
 (setq auto-save-file-name-transforms
-      `((".*" ,(expand-file-name "~/.emacs.d/autosave/") t)))
+      '((".*" "~/.emacs.d/autosave/" t)))
+(setq create-lockfiles nil)
 
 (use-package exec-path-from-shell
   :config

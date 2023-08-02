@@ -26,6 +26,8 @@
       (kill-visual-line))
     (featurep 'meow
 	      (meow-insert)))
+  (custom-set-faces
+   '(xeft-inline-highlight ((t (:inherit isearch)))))
   :bind
   (("C-c n x" . xeft))
   (:map xeft-mode-map
