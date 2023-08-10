@@ -49,14 +49,12 @@
 (require 'init-builtin)
 (require 'init-window)
 (require 'init-helper)
-;; (require 'init-vterm)
 (require 'init-xeft)
 (require 'init-html)
 (require 'init-formater)
 (require 'init-abbrev)
 (require 'init-shellcmd)
 (require 'init-corfu)
-;; (require 'init-bridge)
 (require 'init-magit)
 (require 'init-undo)
 
@@ -133,3 +131,13 @@
 (add-hook 'emacs-startup-hook
           (lambda ()
             (message "Emacs initialized in %.2f seconds" (float-time (time-subtract after-init-time before-init-time)))))
+
+
+
+;;; savehist
+(use-package savehist
+  :ensure nil
+  :init
+  (savehist-mode)
+  :config
+  (setq command-history t))

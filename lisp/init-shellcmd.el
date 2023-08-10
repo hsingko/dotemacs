@@ -1,30 +1,6 @@
-;;; init-shellcmd.el --- init for shell commands provide by dwim-shell-command  -*- lexical-binding: t; -*-
-
-;; Copyright (C) 2023  
-
-;; Author:  <erokit@earth>
-;; Keywords: tools
-
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-;;; Commentary:
-
-;; 
-
-;;; Code:
 (use-package dwim-shell-command
   :ensure t
+  :defer nil
   :bind (([remap shell-command] . dwim-shell-command)
          :map dired-mode-map
          ([remap dired-do-async-shell-command] . dwim-shell-command)
@@ -63,6 +39,7 @@
   "kindle comic converter support list")
 
 (defun my/generate-comic-meta-in-current-directory ()
+  " 将当前目录下的所有压缩文件转换成 Kindle Comic Convert 便于处理的格式"
   (interactive)
   (let* ((series (read-string "Series Name:"))
 	 (writer (read-string "Writer:"))
@@ -70,9 +47,8 @@
     (dolist (file (directory-files dir t))
       (let ((ext (file-name-extension file)))
 	(when (and (file-regular-p file)
-		   (gethash ext COMIC_SUPPORT_LIST nil)
-		   (string-match "[0-9]+" (file-name-base file)))
-	  
+		   (gethash ext COMIC_SUPPORT_LIST nil))
+	  (string-match "[0-9]+" (file-name-base file))
 	  (async-shell-command
 	   (format "echo '%s'|7z a -siComicInfo.xml \"%s\" && mv \"%s\" \"%s\""
 		   (format COMIC_META
@@ -86,8 +62,8 @@
 		    (file-name-base file)
 			   "."
 			   (gethash ext COMIC_SUPPORT_LIST)))
-	   nil nil)
-	  )))))
+	   nil nil))))))
+
 (put 'narrow-to-region 'disabled nil)
 
 (provide 'init-shellcmd)

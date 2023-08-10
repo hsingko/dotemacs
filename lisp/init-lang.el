@@ -38,7 +38,8 @@
 
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode)
-  )
+  :config
+  (define-key markdown-mode-map (kbd "C-c C-a r") #'markdown-footnote-return))
 
 (use-package css-mode
   :ensure nil
@@ -46,6 +47,7 @@
   :custom
   (css-indent-offset 2))
 
+(use-package csv-mode)
 
 ;; disable html mode keybindings, it's useless, and conflicts with ace-window
 (with-eval-after-load 'mhtml-mode

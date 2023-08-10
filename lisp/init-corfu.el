@@ -8,8 +8,17 @@
   :bind
   (:map corfu-map
 	([escape] . corfu-quit))
-  :hook
-  (prog-mode . corfu-mode))
+  :config
+  (defun corfu-enable-in-minibuffer ()
+    "Enable Corfu in the minibuffer if `completion-at-point' is bound."
+    (when (where-is-internal #'completion-at-point (list (current-local-map)))
+      ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
+      (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+                  corfu-popupinfo-delay nil)
+      (corfu-mode 1)))
+  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
+  :init
+  (add-hook 'prog-mode-hook #'corfu-mode))
 
 (use-package cape
   :init

@@ -92,7 +92,7 @@
 	   (meow-beacon-mode-p)
 	   (meow-keypad-mode-p)
            )))
-
+ 
 (use-package meow
   :diminish meow-keypad-mode
   :diminish meow-insert-mode

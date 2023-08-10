@@ -114,7 +114,7 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
 (use-package elec-pair
   :ensure nil
   :hook
-  (prog-mode . electric-pair-mode))
+  (text-mode . electric-pair-mode))
 
 
 (defun ar/remove-from-list-variable ()
@@ -273,5 +273,11 @@ Version 2020-08-30"
                (overlay-put (make-overlay (- (point) (length (elt $x 1))) (point)) 'font-lock-face '(:foreground "red"))))
            $findReplaceMap))))))
 
+
+(use-package link-hint
+  :ensure t
+  :bind
+  ("C-c l o" . link-hint-open-link)
+  ("C-c l c" . link-hint-copy-link))
 
 (provide 'init-utils)

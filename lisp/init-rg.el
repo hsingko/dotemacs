@@ -1,7 +1,9 @@
-(use-package color-rg
-  :load-path "git/color-rg"
+(use-package deadgrep
   :bind
-  (("C-c f g" . color-rg-search-input)
-   ("C-c f s" . color-rg-search-symbol)))
+  (("C-c f d" . deadgrep))
+  (:map deadgrep-mode-map
+	("e" . 'wgrep-change-to-wgrep-mode)))
+
+(use-package wgrep-deadgrep)
 
 (provide 'init-rg)

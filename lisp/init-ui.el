@@ -12,14 +12,10 @@
 
 ;; (setq default-frame-alist '((undecorated . t))) ;;; 隐藏窗口标题栏
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "IntelOne Mono" :size 16 :weight 'regular))
+(set-face-attribute 'default nil :font (font-spec :family "Cousine Nerd Font Mono" :size 14 :weight 'regular))
 
-(set-face-attribute 'variable-pitch nil :font (font-spec :family "Bookerly" :size 16 :weight 'regular))
-;; (set-face-attribute 'default nil :font (font-spec :family "Sarasa Mono CL" :size 16 :weight 'regular))
-;; (set-fontset-font t '(#x2ff0 . #x9ffc) (font-spec :family "Sarasa Mono SC" :weight 'regular))
+(set-face-attribute 'variable-pitch nil :font (font-spec :family "Bookerly" :size 14 :weight 'regular))
 (set-fontset-font t 'han (font-spec :family "Sarasa Mono SC" :weight 'regular))
-;; (set-fontset-font t 'han (font-spec :family "GenRyuMin TW" :weight 'regular))
-
 (set-fontset-font t 'kana "Noto Sans CJK JP")
 
 ;; (setq resize-mini-windows nil)
@@ -59,19 +55,14 @@
 				       (text-scale-increase 1)))
   (add-hook 'olivetti-mode-off-hook #'(lambda ()
 					(text-scale-decrease 1)))
-  (setq-default olivetti-body-width 0.4)
-  ;; (setq-default olivetti-minimum-body-width 78)
-  )
-
-
-(set-frame-parameter nil 'alpha '(95 . 100))
+  (setq-default olivetti-body-width 0.4))
 
 (use-package ef-themes
   :config
   (setq ef-themes-headings
 	(quote ((t . (regular)))))
   (setq ef-themes-mixed-fonts t)
-  (load-theme 'ef-frost t))
+  (load-theme 'ef-trio-light t))
 
 (use-package ace-window
   :bind
@@ -100,8 +91,7 @@
   :config
   (spacious-padding-mode 1))
 
-(set-face-attribute 'mode-line nil :height 105)
-
+(set-face-attribute 'mode-line nil :height 100)
 
 ;; use variable-pitch-font in text mode
 (use-package mixed-pitch
@@ -110,8 +100,8 @@
   :config
   (setq-default mixed-pitch-cursor-type 'bar))
 
-
 (use-package rainbow-mode
+  :diminish rainbow-mode
   :hook
   (help-mode . rainbow-mode)
   (emacs-lisp-mode . rainbow-mode))
