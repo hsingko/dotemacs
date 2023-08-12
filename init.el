@@ -79,8 +79,8 @@
 
 (use-package jinx
   :diminish
-  ;; :hook
-  ;; (text-mode . jinx-mode)
+  :hook
+  (text-mode . jinx-mode)
   :config
   (add-to-list 'jinx-exclude-regexps '(t "\\cc")))
 
@@ -141,3 +141,8 @@
   (savehist-mode)
   :config
   (setq command-history t))
+
+(setq enable-local-variables :safe)
+
+;; substitute
+(use-package substitute)

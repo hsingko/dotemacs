@@ -12,10 +12,9 @@
 
 ;; (setq default-frame-alist '((undecorated . t))) ;;; 隐藏窗口标题栏
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "Cousine Nerd Font Mono" :size 14 :weight 'regular))
-
-(set-face-attribute 'variable-pitch nil :font (font-spec :family "Bookerly" :size 14 :weight 'regular))
-(set-fontset-font t 'han (font-spec :family "Sarasa Mono SC" :weight 'regular))
+(set-face-attribute 'default nil :font (font-spec :family "Input Mono" :size 15 :weight 'regular))
+(set-face-attribute 'variable-pitch nil :font (font-spec :family "Bookerly" :size 15 :weight 'regular))
+(set-fontset-font t 'han (font-spec :family "Sarasa Gothic SC" :weight 'regular))
 (set-fontset-font t 'kana "Noto Sans CJK JP")
 
 ;; (setq resize-mini-windows nil)
@@ -48,8 +47,8 @@
 (use-package olivetti
   :commands olivetti-mode
   :diminish
-  ;; :hook
-  ;; (org-mode . olivetti-mode)
+  :hook
+  (org-mode . olivetti-mode)
   :config
   (add-hook 'olivetti-mode-on-hook #'(lambda ()
 				       (text-scale-increase 1)))
@@ -62,12 +61,13 @@
   (setq ef-themes-headings
 	(quote ((t . (regular)))))
   (setq ef-themes-mixed-fonts t)
-  (load-theme 'ef-trio-light t))
+  (load-theme 'ef-deuteranopia-dark t))
 
 (use-package ace-window
   :bind
   (("M-o" . ace-window)))
 
+(setq default-frame-alist (append default-frame-alist '((alpha-background . 85))))
 
 ;; pixel scroll
 (setq scroll-conservatively 100) ;; when next-line/previous-line move point out of screen, move by 1 line stead of scroll half screen and center the pointer
@@ -87,10 +87,6 @@
 (defalias 'scroll-down-command '+pixel-scroll-interpolate-up)
 
 
-(use-package spacious-padding
-  :config
-  (spacious-padding-mode 1))
-
 (set-face-attribute 'mode-line nil :height 100)
 
 ;; use variable-pitch-font in text mode
@@ -105,5 +101,11 @@
   :hook
   (help-mode . rainbow-mode)
   (emacs-lisp-mode . rainbow-mode))
+
+(use-package spacious-padding
+  :config
+  (spacious-padding-mode))
+
+
 
 (provide 'init-ui)

@@ -16,3 +16,11 @@ text-mode
 
 emacs-lisp-mode
 (use "(use-package " p ")")
+
+
+org-mode
+(kbd "@@html:<kbd>@@" p "@@html:</kbd>@@")
+
+
+markdown-mode
+(kbd "<kbd>" p "</kbd>")

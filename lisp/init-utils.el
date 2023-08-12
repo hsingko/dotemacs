@@ -280,4 +280,13 @@ Version 2020-08-30"
   ("C-c l o" . link-hint-open-link)
   ("C-c l c" . link-hint-copy-link))
 
+
+(defun +consult-keydo-on-region ()
+  (interactive)
+  (funcall-interactively 'consult-ripgrep
+			 (expand-file-name "rime" user-emacs-directory)
+			 (buffer-substring (region-beginning)
+					   (region-end))))
+
+
 (provide 'init-utils)

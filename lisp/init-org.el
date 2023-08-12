@@ -44,7 +44,7 @@
   (setq-default org-download-image-dir (expand-file-name "images" org-directory))
   (setq org-download-backend "wget")
   (setq org-download-abbreviate-filename-function (lambda (fn) fn)) ; use original filename
-  (setq org-download-timestamp "%y%m%dT%H%M%S-")
+  (setq org-download-timestamp "%y%m%dT%H%M%S")
   (defun dummy-org-download-annotate-function (link)
     "")
   (setq org-download-annotate-function
@@ -90,12 +90,6 @@
       org-pretty-entities t
       org-startup-with-inline-images t
       org-image-actual-width '(800))
-
-;; (use-package org-superstar
-;;   :hook (org-mode . org-superstar-mode)
-;;   :config
-;;   (setq org-superstar-special-todo-items t)
-;;   )
 
 (org-babel-do-load-languages
  'org-babel-load-languages

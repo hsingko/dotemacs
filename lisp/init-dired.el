@@ -10,6 +10,7 @@
   (setq dired-bind-man nil)
   (setq dired-listing-switches "-alhv --group-directories-first")
   (setq delete-by-moving-to-trash t)
+  (setq dired-auto-revert-buffer t)
   (setq dired-dwim-target t) ;; make dired guess the destnation by another dired buffer in split size window
   :hook
   (dired-mode . dired-omit-mode)

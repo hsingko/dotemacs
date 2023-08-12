@@ -1,10 +1,13 @@
 ;;-*-coding: utf-8;-*-
 (define-abbrev-table 'global-abbrev-table
   '(
+    ("2gp" "耕平" nil :count 15)
     ("2hh" "狐猴" nil :count 7)
     ("2kmd" "科莫多" nil :count 6)
     ("2lbh" "拉布汉巴焦" nil :count 2)
+    ("2me" "米山美佐" nil :count 3)
     ("2nl" "尼禄" nil :count 4)
+    ("2qyz" "真由子" nil :count 9)
     ("2sjtxs" "三津田信三" nil :count 5)
     ("2wjx" "维吉尔" nil :count 6)
     ("2xxhh" "艾艾狐猴" nil :count 1)

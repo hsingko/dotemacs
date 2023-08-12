@@ -92,7 +92,7 @@
 	   (meow-beacon-mode-p)
 	   (meow-keypad-mode-p)
            )))
- 
+
 (use-package meow
   :diminish meow-keypad-mode
   :diminish meow-insert-mode
@@ -105,6 +105,7 @@
   (meow-setup-indicator) ;; custom meow modeline mode helper
   (meow-setup)
   (add-to-list 'meow-mode-state-list '(calibredb-search-mode . motion))
+  (add-to-list 'meow-mode-state-list '(deadgrep-mode . motion))
   (meow-global-mode 1)
 
   ;; custom meow mode state cursor color

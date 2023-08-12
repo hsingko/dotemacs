@@ -93,6 +93,12 @@
 (global-set-key (kbd "C-c f c") #'doom/copy-this-file)
 (global-set-key (kbd "C-c f m") #'format-all-region-or-buffer)
 
+
+;;utils
+(global-set-key (kbd "C-c q c") #'quick-calc)
+(global-set-key (kbd "C-c q e") #'emoji-search)
+
+
 ;; agenda
 (global-set-key (kbd "C-c o") #'org-agenda)
 
