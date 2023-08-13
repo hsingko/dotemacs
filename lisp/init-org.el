@@ -162,17 +162,14 @@
      (define-key org-src-mode-map (kbd "C-c C-c") 'org-edit-src-exit)))
 
 
-;; (use-package org-appear
-;;   :hook
-;;   (org-mode . org-appear)
-;;   :config
-;;   (setq org-hide-emphasis-markers t))
+(use-package org-appear
+  :hook
+  (org-mode . org-appear))
 
 (setq org-hide-emphasis-markers t)
 
 (eval-after-load 'org
   '(set-face-attribute 'org-quote nil :slant 'italic))
-
 
 
 (provide 'init-org)

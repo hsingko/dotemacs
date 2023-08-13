@@ -92,7 +92,7 @@
 (global-set-key (kbd "C-c f U") #'doom/sudo-this-file)
 (global-set-key (kbd "C-c f c") #'doom/copy-this-file)
 (global-set-key (kbd "C-c f m") #'format-all-region-or-buffer)
-
+(global-set-key (kbd "C-c f l") #'+insert-org-link-in-current-directory)
 
 ;;utils
 (global-set-key (kbd "C-c q c") #'quick-calc)

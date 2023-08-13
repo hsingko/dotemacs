@@ -20,7 +20,8 @@ emacs-lisp-mode
 
 org-mode
 (kbd "@@html:<kbd>@@" p "@@html:</kbd>@@")
-
+(rk "#+rank: " p)
+(au "#+author: " p)
 
 markdown-mode
 (kbd "<kbd>" p "</kbd>")

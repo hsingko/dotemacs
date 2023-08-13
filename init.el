@@ -103,8 +103,8 @@
 (define-auto-insert "\\.org\\'"
   (lambda ()
     (unless (file-in-directory-p (buffer-file-name) "~/Documents/org/notes/") ;; 如果使用 denote-directory 来判断则会产生对 denote 加载的依赖
-      (insert "#+TITLE: " (file-name-base (buffer-file-name)) "\n")
-      (insert "#+DATE: " (format-time-string "%Y-%m-%dT%H:%M:%S%z") "\n" )
+      (insert "#+title: " (file-name-base (buffer-file-name)) "\n")
+      (insert "#+date: " (format-time-string "%Y-%m-%dT%H:%M:%S%z") "\n" )
       (newline)
       (goto-char (point-max)))))
 
@@ -131,7 +131,6 @@
 (add-hook 'emacs-startup-hook
           (lambda ()
             (message "Emacs initialized in %.2f seconds" (float-time (time-subtract after-init-time before-init-time)))))
-
 
 
 ;;; savehist

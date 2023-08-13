@@ -288,5 +288,16 @@ Version 2020-08-30"
 			 (buffer-substring (region-beginning)
 					   (region-end))))
 
+(defun +insert-org-link-in-current-directory ()
+  "Insert an Org link to a file in the current directory, the description is without directory and extension"
+  (interactive)
+  (let ((files (directory-files "." nil ".org" t)))
+    (if files
+        (let* ((selected-file (consult--read files
+					     :prompt "Chose a file: "
+					     ))
+               (org-link (concat "[[file:" selected-file "][" (file-name-sans-extension (file-name-nondirectory selected-file)) "]]")))
+          (insert org-link))
+      (message "No files in the current directory."))))
 
 (provide 'init-utils)

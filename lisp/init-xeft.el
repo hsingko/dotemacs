@@ -31,4 +31,5 @@
 	([remap xeft-create-note] . my/xeft-create-note)
 	("C-k" . +clear-xeft-search)))
 
+
 (provide 'init-xeft)

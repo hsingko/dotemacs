@@ -15,7 +15,4 @@
   (add-hook 'text-mode-hook 'tempel-setup-capf)
   (global-tempel-abbrev-mode))
 
-(use-package tempel-collection
-  :after tempel)
-
 (provide 'init-tempel)

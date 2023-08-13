@@ -12,8 +12,8 @@
 
 ;; (setq default-frame-alist '((undecorated . t))) ;;; 隐藏窗口标题栏
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "Input Mono" :size 15 :weight 'regular))
-(set-face-attribute 'variable-pitch nil :font (font-spec :family "Bookerly" :size 15 :weight 'regular))
+(set-face-attribute 'default nil :font (font-spec :family "Input Mono" :size 14 :weight 'regular))
+(set-face-attribute 'variable-pitch nil :font (font-spec :family "Bookerly" :size 14 :weight 'regular))
 (set-fontset-font t 'han (font-spec :family "Sarasa Gothic SC" :weight 'regular))
 (set-fontset-font t 'kana "Noto Sans CJK JP")
 
@@ -106,6 +106,16 @@
   :config
   (spacious-padding-mode))
 
+;; (use-package holo-layer
+;;   :load-path "git/holo-layer"
+;;   :config
+;;   (holo-layer-enable))
+
+;; (use-package awesome-tray
+;;   :load-path "git/awesome-tray"
+;;   :config
+;;   (setq awesome-tray-date-format "")
+;;   (awesome-tray-mode 1))
 
 
 (provide 'init-ui)
