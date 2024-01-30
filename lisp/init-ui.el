@@ -10,12 +10,13 @@
 (setq font-lock-maximum-decoration t)
 (setq cursor-type 'bar)
 
-;; (setq default-frame-alist '((undecorated . t))) ;;; 隐藏窗口标题栏
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "Input Mono" :size 14 :weight 'regular))
-(set-face-attribute 'variable-pitch nil :font (font-spec :family "Bookerly" :size 14 :weight 'regular))
-(set-fontset-font t 'han (font-spec :family "Sarasa Gothic SC" :weight 'regular))
+(set-face-attribute 'default nil :font (font-spec :family "JetBrains Mono"  :size 16 :weight 'light))
+(set-face-attribute 'variable-pitch nil :font (font-spec :family "Charis SIL" :size 16  :weight 'regular))
+(set-fontset-font t 'han (font-spec :family "Noto Serif CJK SC"))
+(set-fontset-font t 'cjk-misc (font-spec :family "Noto Serif CJK SC"))
 (set-fontset-font t 'kana "Noto Sans CJK JP")
+
 
 ;; (setq resize-mini-windows nil)
 ;;https://www.reddit.com/r/emacs/comments/wpr2n2/comment/ikj2vn1/?utm_source=share&utm_medium=web2x&context=3
@@ -27,7 +28,12 @@
 	    (display-line-numbers-mode 1)))
 
 (use-package diminish)
+
 (diminish 'visual-line-mode)
+(add-hook 'text-mode-hook
+	  (lambda ()
+	    (visual-line-mode)))
+
 
 (use-package autorevert
   :ensure nil
@@ -37,9 +43,14 @@
   :ensure t
   :custom
   (org-modern-hide-stars nil) ; adds extra indentation
+  (org-modern-table nil)
+  (org-modern-checkbox nil)
+  (org-modern-tag t)
+  (org-modern-timestamp t)
   :hook
   (org-mode . org-modern-mode)
   (org-agenda-finalize . org-modern-agenda))
+
 
 (setq display-time-24hr-format t)
 (setq display-time-default-load-average nil)
@@ -54,20 +65,29 @@
 				       (text-scale-increase 1)))
   (add-hook 'olivetti-mode-off-hook #'(lambda ()
 					(text-scale-decrease 1)))
-  (setq-default olivetti-body-width 0.4))
+  (setq-default olivetti-body-width 85))
 
 (use-package ef-themes
   :config
-  (setq ef-themes-headings
-	(quote ((t . (regular)))))
   (setq ef-themes-mixed-fonts t)
-  (load-theme 'ef-deuteranopia-dark t))
+  (setq ef-themes-headings ; read the manual's entry or the doc string
+      '((0 variable-pitch light 1.7)
+        (1 variable-pitch light 1.6)
+        (2 variable-pitch regular 1.4)
+        (3 variable-pitch regular 1.3)
+        (4 variable-pitch regular 1.2)
+        (5 variable-pitch 1.1) ; absence of weight means `bold'
+        (6 variable-pitch 1.1)
+        (7 variable-pitch 1.1)
+        (t variable-pitch 1.1)))
+  (load-theme 'ef-tritanopia-light t))
+
 
 (use-package ace-window
   :bind
   (("M-o" . ace-window)))
 
-(setq default-frame-alist (append default-frame-alist '((alpha-background . 85))))
+;; (setq default-frame-alist (append default-frame-alist '((alpha-background . 93))))
 
 ;; pixel scroll
 (setq scroll-conservatively 100) ;; when next-line/previous-line move point out of screen, move by 1 line stead of scroll half screen and center the pointer
@@ -87,35 +107,40 @@
 (defalias 'scroll-down-command '+pixel-scroll-interpolate-up)
 
 
-(set-face-attribute 'mode-line nil :height 100)
-
-;; use variable-pitch-font in text mode
-(use-package mixed-pitch
-  :hook
-  (org-mode . mixed-pitch-mode)
-  :config
-  (setq-default mixed-pitch-cursor-type 'bar))
-
 (use-package rainbow-mode
   :diminish rainbow-mode
   :hook
   (help-mode . rainbow-mode)
   (emacs-lisp-mode . rainbow-mode))
 
+(use-package feline
+  :config (feline-mode)
+  :custom
+  (feline-line-prefix "🎯")
+  (feline-column-prefix ":")
+  (feline-mode-symbols
+   '(emacs-lisp-mode "🤖"
+		     python-ts-mode "🐍"
+		     org-mode "🐮")))
+
+
+
 (use-package spacious-padding
   :config
+  (setq spacious-padding-subtle-mode-line t)
+  (setq spacious-padding-widths
+	'( :internal-border-width 2
+           :header-line-width 4
+           :mode-line-width 3
+           :tab-width 4
+           :right-divider-width 30
+           :scroll-bar-width 8))
   (spacious-padding-mode))
 
-;; (use-package holo-layer
-;;   :load-path "git/holo-layer"
-;;   :config
-;;   (holo-layer-enable))
 
-;; (use-package awesome-tray
-;;   :load-path "git/awesome-tray"
-;;   :config
-;;   (setq awesome-tray-date-format "")
-;;   (awesome-tray-mode 1))
-
+(use-package mixed-pitch
+  :config
+  ;; (add-hook 'org-mode-hook 'mixed-pitch-mode)
+  )
 
 (provide 'init-ui)

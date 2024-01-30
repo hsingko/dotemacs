@@ -11,10 +11,29 @@
         denote-file-type "org"
         denote-dired-directories (list
                                   denote-directory))
+
   ;; :config
   (setq denote-excluded-directories-regexp "archive")
   (denote-rename-buffer-mode 1)
-  (add-hook 'dired-mode-hook #'my/denote-dired-mode-hook))
+  (setq denote-backlinks-show-context t)
+  (setq xref-search-program 'ugrep)
+  (add-hook 'dired-mode-hook #'my/denote-dired-mode-hook)
+  ;; add *.org.age note type, for security
+  (add-to-list 'denote-file-types
+	       '(age
+		 :extension ".org.age"
+		 :date-function denote-date-org-timestamp
+		 :front-matter denote-org-front-matter
+		 :title-key-regexp "^#\\+title\\s-*:"
+		 :title-value-function identity
+		 :title-value-reverse-function denote-trim-whitespace
+		 :keywords-key-regexp "^#\\+filetags\\s-*:"
+		 :keywords-value-function denote-format-keywords-for-org-front-matter
+		 :keywords-value-reverse-function denote-extract-keywords-from-front-matter
+		 :link denote-org-link-format
+		 :link-in-context-regexp denote-org-link-in-context-regexp))
+  :config
+  (require 'denote-org-dblock))
 
 (defun +create-free-writing (title)
   (interactive "sWhat's in your mind? ")
@@ -22,18 +41,11 @@
    title nil nil (expand-file-name "freewriting" denote-directory)))
 
 
-(use-package consult-notes
-  :commands consult-notes
-  :config
-  (consult-notes-denote-mode)
-  (setq consult-notes-denote-dir nil
-	consult-notes-denote-display-id nil))
-
-(use-package denote-menu
-  :config
-  (define-key denote-menu-mode-map (kbd "/") #'denote-menu-filter)
-  (define-key denote-menu-mode-map (kbd "c") #'denote-menu-clear-filters)
-  (define-key denote-menu-mode-map (kbd "t") #'denote-menu-filter-by-keyword)
-  (define-key denote-menu-mode-map (kbd "d") #'denote-menu-export-to-dired))
+;; (use-package consult-notes
+;;   :commands consult-notes
+;;   :config
+;;   (consult-notes-denote-mode)
+;;   (setq consult-notes-denote-dir nil
+;; 	consult-notes-denote-display-id t))
 
 (provide 'init-denote)

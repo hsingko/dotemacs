@@ -171,7 +171,7 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
 (defun my/install-appimage ()
   " 将指定的 Appimage 文件自动拷贝到 Applications 目录并生成 desktop 文件"
   (interactive)
-  (let* ((filepath (read-file-name "Select Appimage:" nil nil nil nil "Appimage"))
+  (let* ((filepath (read-file-name "Select AppImage:" nil nil nil nil "Appimage"))
 	 (name (read-string "Set the application name:" nil (file-name-base filepath)))
 	 (new-name (concat name ".Appimage"))
 	 (new-path (expand-file-name new-name "~/Applications")))
@@ -299,5 +299,16 @@ Version 2020-08-30"
                (org-link (concat "[[file:" selected-file "][" (file-name-sans-extension (file-name-nondirectory selected-file)) "]]")))
           (insert org-link))
       (message "No files in the current directory."))))
+
+
+
+(defun +consult-imenu-respect-narrow ()
+  "after consult-imenu, keep org narrowing status"
+  (interactive)
+  (if (org-buffer-narrowed-p)
+      (progn (consult-imenu)
+	     (org-narrow-to-subtree))
+    (consult-imenu)))
+
 
 (provide 'init-utils)

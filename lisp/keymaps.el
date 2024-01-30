@@ -31,8 +31,7 @@
 
 ;;helpful
 (use-package helpful
-  :commands describe-function
-  )
+  :commands describe-function)
 
 (global-unset-key (kbd "C-h C-f")) ;unbind emacs-faq, good for meow keypad
 (global-set-key (kbd "C-h f") #'helpful-callable)
@@ -44,7 +43,8 @@
 
 ;; key bindings
 ;; notes
-(global-set-key (kbd "C-c n f") #'consult-notes)
+;; (global-set-key (kbd "C-c n f") #'consult-notes)
+(global-set-key (kbd "C-c n f") #'denote-open-or-create)
 (global-set-key (kbd "C-c n d") #'denote)
 (global-set-key (kbd "C-c n D") #'denote-subdirectory)
 (global-set-key (kbd "C-c n l") #'denote-link)
@@ -59,6 +59,7 @@
 (global-set-key (kbd "C-c n b") #'denote-link-show-backlinks-buffer)
 (global-set-key (kbd "C-c n r") #'denote-rename-file-using-front-matter)
 (global-set-key (kbd "C-c n s") #'denote-signature)
+(global-set-key (kbd "C-c n o") #'denote-open-or-create)
 ;; buffer
 (global-set-key (kbd "C-c b p") #'previous-buffer)
 (global-set-key (kbd "C-c b n") #'next-buffer)
@@ -82,7 +83,8 @@
 ;; file
 (global-set-key (kbd "C-c f r") #'consult-recent-file)
 (global-set-key (kbd "C-c f f") #'find-file)
-(global-set-key (kbd "C-c f i") #'consult-imenu)
+;; (global-set-key (kbd "C-c f i") #'consult-imenu)
+(global-set-key (kbd "C-c f i") #'+consult-imenu-respect-narrow)
 (global-set-key (kbd "C-c f w") #'widen)
 (global-set-key (kbd "C-c f n") #'org-narrow-to-subtree)
 (global-set-key (kbd "C-c f p") #'project-find-file)
@@ -93,7 +95,7 @@
 (global-set-key (kbd "C-c f c") #'doom/copy-this-file)
 (global-set-key (kbd "C-c f m") #'format-all-region-or-buffer)
 (global-set-key (kbd "C-c f l") #'+insert-org-link-in-current-directory)
-
+(global-set-key (kbd "C-c f s") #'sdcv-search-input)
 ;;utils
 (global-set-key (kbd "C-c q c") #'quick-calc)
 (global-set-key (kbd "C-c q e") #'emoji-search)
@@ -102,5 +104,6 @@
 ;; agenda
 (global-set-key (kbd "C-c o") #'org-agenda)
 
+(global-set-key (kbd "C-SPC") #'set-mark-command)
 
 (provide 'keymaps)

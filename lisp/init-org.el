@@ -11,7 +11,12 @@
 
 (setq org-src-preserve-indentation nil
       org-edit-src-content-indentation 0)
+
+;; ?? 
 (setq org-M-RET-may-split-line nil)
+(setq org-insert-heading-respect-content t)
+;;
+
 
 (use-package org-indent
   :after org
@@ -19,32 +24,34 @@
   :diminish)
 
 (use-package org-journal
+  :after org
   :commands (org-journal-new-entry)
   :config
   (setq org-journal-file-type 'yearly
-	org-journal-file-format "%Y.org"
+	org-journal-file-format "%Y.org.age"
 	org-journal-file-header "#+TITLE: Year %Y Journal"
 	org-journal-date-prefix "* "
 	org-journal-date-format "%a, %Y-%m-%d"
 	org-journal-time-prefix "** "
-	;; org-journal-encrypt-journal t
+	org-journal-encrypt-journal nil
 	org-journal-dir (expand-file-name "journal" org-directory)
-	)
-  )
+	))
 
 (use-package org-download
   :commands (org-download-clipboard org-download-image)
   :init
-  (dir-locals-set-class-variables 'org-download-hugo-directory
-				  '((org-mode . ((org-download-image-dir . "./images")))))
-  (dir-locals-set-directory-class
-   "~/Documents/Blog/content/" 'org-download-hugo-directory)
+  ;; (dir-locals-set-class-variables 'org-download-hugo-directory
+  ;; 				  '((org-mode . ((org-download-image-dir . "./images")))))
+  ;; (dir-locals-set-directory-class
+  ;;  "~/Documents/Blog/content/" 'org-download-hugo-directory)
   :config
+  (setq org-download-display-inline-images nil)
   (setq-default org-download-heading-lvl nil)
-  (setq-default org-download-image-dir (expand-file-name "images" org-directory))
+  ;; (setq-default org-download-image-dir (expand-file-name "images" org-directory))
+  (setq-default org-download-image-dir "./images")
   (setq org-download-backend "wget")
   (setq org-download-abbreviate-filename-function (lambda (fn) fn)) ; use original filename
-  (setq org-download-timestamp "%y%m%dT%H%M%S")
+  (setq org-download-timestamp "%y%m%dT%H%M%S-")
   (defun dummy-org-download-annotate-function (link)
     "")
   (setq org-download-annotate-function
@@ -76,12 +83,7 @@
 
 ;; long line wrap
 ;; see: https://stackoverflow.com/questions/950340/how-do-you-activate-line-wrapping-in-emacs/950406#950406
-(global-visual-line-mode)
 ;;; org-modern
-(global-org-modern-mode)
-;; apperance
-(setq org-modern-table nil)
-(setq org-modern-checkbox nil)
 (setq org-fontify-quote-and-verse-blocks t)
 
 
@@ -89,7 +91,7 @@
 (setq org-startup-indented t
       org-pretty-entities t
       org-startup-with-inline-images t
-      org-image-actual-width '(800))
+      org-image-actual-width '(400))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -99,7 +101,7 @@
    ))
 (setq org-confirm-babel-evaluate nil)
 
-					; hide drawers when cycle headline visibility
+;; hide drawers when cycle headline visibility
 (add-hook 'org-cycle-hook #'org-cycle-hide-drawers)
 
 (defun ar/org-insert-link-dwim ()
@@ -129,7 +131,6 @@
 
 
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
-(setq org-startup-with-inline-images nil)
 (setq org-file-apps '((directory . emacs)
                       (auto-mode . emacs)
                       ("\\.png\\'" . "xdg-open %s")
@@ -146,15 +147,6 @@
 
 ;; org-capture
 (setq org-capture-templates nil)
-(add-to-list 'org-capture-templates
-	     '("l" "System Modfication Logs" entry
-	       (file "syslogs.org")
-	       "* %?\n%a"))
-
-(add-to-list 'org-capture-templates
-	     '("c" "Capture Ideas" entry
-	       (file "capture.org")
-	       "* TODO %?\n%T"))
 
 
 (eval-after-load 'org
@@ -162,14 +154,15 @@
      (define-key org-src-mode-map (kbd "C-c C-c") 'org-edit-src-exit)))
 
 
-(use-package org-appear
-  :hook
-  (org-mode . org-appear))
-
 (setq org-hide-emphasis-markers t)
 
 (eval-after-load 'org
   '(set-face-attribute 'org-quote nil :slant 'italic))
 
+;; (use-package svg-lib
+;;   :load-path "git/svg-lib")
+
+;; (use-package org-margin
+;;   :load-path "git/org-margin")
 
 (provide 'init-org)

@@ -53,5 +53,7 @@
 (with-eval-after-load 'mhtml-mode
   (define-key mhtml-mode-map (kbd "M-o") nil))
 
+(use-package systemd)
+
 (provide 'init-lang)
 ;;; init-lang.el ends here

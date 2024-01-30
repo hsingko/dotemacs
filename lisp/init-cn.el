@@ -60,8 +60,7 @@
 
 (setq-default rime-inline-predicates
               '(rime-predicate-current-uppercase-letter-p
-                rime-predicate-space-after-cc-p
-		))
+                rime-predicate-space-after-cc-p))
 
 (setq rime-show-candidate 'minibuffer)
 (setq rime-posframe-properties nil)
@@ -74,11 +73,11 @@
   :config
   (bind-key "C-`" 'rime-send-keybinding rime-mode-map)
   (add-hook 'kill-emacs-hook (lambda ()
-			       (ignore-errors (rime-lib-finalize)))))
+			       (ignore-errors (rime-lib-finalize))))
+  )
 
 ;; 中文断行问题
 (setq word-wrap-by-category t)
-
 
 
 ;;; ace-pin 通过首字母在文字间定位
@@ -101,3 +100,4 @@
 (use-package unicad)
 
 (provide 'init-cn)
+

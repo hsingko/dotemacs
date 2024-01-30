@@ -20,8 +20,15 @@ emacs-lisp-mode
 
 org-mode
 (kbd "@@html:<kbd>@@" p "@@html:</kbd>@@")
-(rk "#+rank: " p)
-(au "#+author: " p)
+(rk "#+rank: ")
+(au "#+author: ")
+(elisp "#+begin_src emacs-lisp" n> r> n "#+end_src" :post (org-edit-src-code))
+(qut "#+begin_quote" n> r> n "#+end_quote")
+(capt "#+CAPTION: ")
+(bash "#+begin_src bash" n> r> n "#+end_src" :post (org-edit-src-code))
+(chess "#+begin_src chess" n> r> n "#+end_src" :post (org-edit-src-code))
+
 
 markdown-mode
 (kbd "<kbd>" p "</kbd>")
+(car "{{<car>}}" n> "{{<img src=" p ">}}" n> "{{</car>}}" )

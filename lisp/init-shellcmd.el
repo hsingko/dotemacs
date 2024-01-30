@@ -15,7 +15,18 @@
     (dwim-shell-command-on-marked-files
      "Convert to gif"
      "ffmpeg -loglevel quiet -stats -y -i <<f>> -pix_fmt rgb24 -r 15 <<fne>>.gif"
-     :utils "ffmpeg")))
+     :utils "ffmpeg"))
+  (defun my/dwim-shell-command-age-encrypt-file ()
+    "Encrypt all marked files to *.age"
+    (interactive)
+    (dwim-shell-command-on-marked-files
+     "Encrypt with age"
+     (concat
+      "age -R " age-default-recipient
+      " <<f>> > <<f>>.age")
+     :utils "age")))
+
+
 
 ;; comic generator
 (defcustom COMIC_META `

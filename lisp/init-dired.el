@@ -11,13 +11,13 @@
   (setq dired-listing-switches "-alhv --group-directories-first")
   (setq delete-by-moving-to-trash t)
   (setq dired-auto-revert-buffer t)
+  (setq dired-async-mode t)
   (setq dired-dwim-target t) ;; make dired guess the destnation by another dired buffer in split size window
   :hook
   (dired-mode . dired-omit-mode)
   (dired-mode . dired-hide-details-mode))
 
-
 (use-package dired-narrow)
-
+(use-package dired-subtree)
 
 (provide 'init-dired)

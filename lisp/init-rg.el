@@ -6,4 +6,5 @@
 
 (use-package wgrep-deadgrep)
 
+
 (provide 'init-rg)
