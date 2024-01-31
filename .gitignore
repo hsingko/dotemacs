@@ -21,3 +21,5 @@ transient/
 /treesit/
 /image-dired/
 /multisession/
+.emacs-bmk-bmenu-state.el
+eln-cache/

@@ -26,7 +26,6 @@
   (custom-set-faces
    '(xeft-inline-highlight ((t (:inherit isearch)))))
   :bind
-  (("C-c n x" . xeft))
   (:map xeft-mode-map
 	([remap xeft-create-note] . my/xeft-create-note)
 	("C-k" . +clear-xeft-search)))

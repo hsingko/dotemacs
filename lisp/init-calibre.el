@@ -5,16 +5,21 @@
   (setq calibredb-root-dir "~/Documents/CalibreBooks/")
   (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
   (setq calibredb-id-width 0)
-  )
+  (set-face-attribute 'calibredb-search-header-highlight-face
+		      nil :family "Iosevka Comfy")
+  (set-face-attribute 'calibredb-format-face
+		      nil :family "Iosevka Comfy")
+  (set-face-attribute 'calibredb-title-face
+		      nil :family "Iosevka Comfy")
+  (set-face-attribute 'calibredb-highlight-face
+		      nil :family "Iosevka Comfy")
+  (set-face-attribute 'calibredb-date-face
+		      nil :family "Iosevka Comfy")
+  (set-face-attribute 'calibredb-archive-face
+		      nil :family "Iosevka Comfy"))
 
-;; (use-package nov
-;;   :mode ("\\.epub\\'" . nov-mode)
-;;   ;; :config
-;;   ;; (add-to-list 'auto-mode-alist
-;;   ;; 	       '("\\.epub\\'" . nov-mode))
-;;   )
 
-(defun my/calibredb-consult-read (arg)
+(defun hsk/calibredb-consult-read (arg)
   "consult read for calibredb."
   (interactive "P")
   (let* ((cand (let ((candidates calibredb-search-entries))

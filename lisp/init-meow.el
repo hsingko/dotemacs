@@ -107,11 +107,11 @@
   (add-to-list 'meow-mode-state-list '(calibredb-search-mode . motion))
   (add-to-list 'meow-mode-state-list '(deadgrep-mode . motion))
   (meow-global-mode 1)
-  (setq meow-replace-state-name-list '((normal . "<N>")
-				       (motion . "<M>")
-				       (keypad . "<K>")
-				       (insert . "<I>")
-				       (beacon . "<B>")))
+  (setq meow-replace-state-name-list '((normal . "[N]")
+				       (motion . "[M]")
+				       (keypad . "[K]")
+				       (insert . "[I]")
+				       (beacon . "[B]")))
   ;; custom meow mode state cursor color
   ;; (custom-set-faces
   ;;  '(meow-normal-cursor ((t (:background "#DC143C"))))

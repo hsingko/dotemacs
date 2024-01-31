@@ -1,9 +1,3 @@
-[submodule "git/color-rg"]
-	path = git/color-rg
-	url = https://github.com/manateelazycat/color-rg.git
-[submodule "git/lsp-bridge"]
-	path = git/lsp-bridge
-	url = https://github.com/manateelazycat/lsp-bridge.git
 [submodule "git/bookmark-plus"]
 	path = git/bookmark-plus
 	url = https://github.com/emacsmirror/bookmark-plus

@@ -44,61 +44,74 @@
 ;; key bindings
 ;; notes
 ;; (global-set-key (kbd "C-c n f") #'consult-notes)
-(global-set-key (kbd "C-c n f") #'denote-open-or-create)
-(global-set-key (kbd "C-c n d") #'denote)
-(global-set-key (kbd "C-c n D") #'denote-subdirectory)
-(global-set-key (kbd "C-c n l") #'denote-link)
-(global-set-key (kbd "C-c n t") #'denote-keywords-add)
-(global-set-key (kbd "C-c n T") #'denote-keywords-remove)
-(global-set-key (kbd "C-c n j") #'org-journal-new-entry)
-(global-set-key (kbd "C-c n c") #'org-capture)
-(global-set-key (kbd "C-c n z") #'olivetti-mode)
-(global-set-key (kbd "C-c n p") #'org-download-clipboard)
-(global-set-key (kbd "C-c n q") #'calibredb)
-(global-set-key (kbd "C-c n m") #'list-denotes)
-(global-set-key (kbd "C-c n b") #'denote-link-show-backlinks-buffer)
-(global-set-key (kbd "C-c n r") #'denote-rename-file-using-front-matter)
-(global-set-key (kbd "C-c n s") #'denote-signature)
-(global-set-key (kbd "C-c n o") #'denote-open-or-create)
-;; buffer
-(global-set-key (kbd "C-c b p") #'previous-buffer)
-(global-set-key (kbd "C-c b n") #'next-buffer)
-(global-set-key (kbd "C-c b k") #'kill-current-buffer)
-(defun +close-all-buffers ()
-  (interactive)
-  (mapc 'kill-buffer (buffer-list)))
-(defun +save-all-buffers ()
-  (interactive)
-  (save-some-buffers t))
-(global-set-key (kbd "C-c b K") #'+close-all-buffers)
-(global-set-key (kbd "C-c b s") #'basic-save-buffer)
-(global-set-key (kbd "C-c b r") #'revert-buffer)
-(global-set-key (kbd "C-c b b") #'consult-buffer)
-(global-set-key (kbd "C-c b x") #'scratch-buffer) ; emacs-29
-(global-set-key (kbd "C-c b S") #'save-some-buffers)
+
+
+
+(defvar-keymap hsk/notetaking-map
+  :doc "My key map related to notetaking"
+  "f" #'denote-open-or-create
+  "d" #'denote
+  "t" #'denote-keywords-add
+  "T" #'denote-keywords-remove
+  "j" #'org-journal-new-entry
+  "z" #'olivetti-mode
+  "q" #'calibredb
+  "b" #'denote-show-backlinks-buffer
+  "x" #'xeft)
+
+(keymap-set global-map "C-c n" hsk/notetaking-map)
+
+
+(defvar-keymap hsk/buffer-opt-map
+  :doc "buffer related key map"
+  "p" #'previous-buffer
+  "n" #'next-buffer
+  "k" #'kill-current-buffer
+  "s" #'basic-save-buffer
+  "b" #'consult-buffer
+  "x" #'scratch-buffer)
+(keymap-global-set "C-c b" hsk/buffer-opt-map)
 
 ;; bookmark
 (global-set-key (kbd "C-c <RET>") #'consult-bookmark)
 (global-set-key (kbd "C-c b m") #'bookmark-set)
 ;; file
-(global-set-key (kbd "C-c f r") #'consult-recent-file)
-(global-set-key (kbd "C-c f f") #'find-file)
-;; (global-set-key (kbd "C-c f i") #'consult-imenu)
-(global-set-key (kbd "C-c f i") #'+consult-imenu-respect-narrow)
-(global-set-key (kbd "C-c f w") #'widen)
-(global-set-key (kbd "C-c f n") #'org-narrow-to-subtree)
-(global-set-key (kbd "C-c f p") #'project-find-file)
-(global-set-key (kbd "C-c f D") #'+delete-this-file)
-(global-set-key (kbd "C-c f F") #'find-file-other-window)
-(global-set-key (kbd "C-c f R") #'doom/move-this-file)
-(global-set-key (kbd "C-c f U") #'doom/sudo-this-file)
-(global-set-key (kbd "C-c f c") #'doom/copy-this-file)
-(global-set-key (kbd "C-c f m") #'format-all-region-or-buffer)
-(global-set-key (kbd "C-c f l") #'+insert-org-link-in-current-directory)
-(global-set-key (kbd "C-c f s") #'sdcv-search-input)
+;; (global-set-key (kbd "C-c f r") #'consult-recent-file)
+;; (global-set-key (kbd "C-c f f") #'find-file)
+;; ;; (global-set-key (kbd "C-c f i") #'consult-imenu)
+;; (global-set-key (kbd "C-c f i") #'hsk/consult-imenu-respect-narrow)
+;; (global-set-key (kbd "C-c f w") #'widen)
+;; (global-set-key (kbd "C-c f n") #'org-narrow-to-subtree)
+;; (global-set-key (kbd "C-c f p") #'project-find-file)
+;; (global-set-key (kbd "C-c f D") #'+delete-this-file)
+;; (global-set-key (kbd "C-c f F") #'find-file-other-window)
+;; (global-set-key (kbd "C-c f R") #'doom/move-this-file)
+;; (global-set-key (kbd "C-c f U") #'doom/sudo-this-file)
+;; (global-set-key (kbd "C-c f c") #'doom/copy-this-file)
+;; (global-set-key (kbd "C-c f m") #'format-all-region-or-buffer)
+;; (global-set-key (kbd "C-c f l") #'+insert-org-link-in-current-directory)
+
+(defvar-keymap hsk/file-opt-map
+  :doc "file associated operations"
+  "r" #'consult-recent-file
+  "f" #'find-file
+  "i" #'hsk/consult-imenu-respect-narrow
+  "w" #'widen
+  "n" #'org-narrow-to-subtree
+  "p" #'project-find-file
+  "D" #'+delete-this-file
+  "m" #'format-all-region-or-buffer)
+
+(keymap-global-set "C-c f" hsk/file-opt-map)
+
+
 ;;utils
-(global-set-key (kbd "C-c q c") #'quick-calc)
-(global-set-key (kbd "C-c q e") #'emoji-search)
+(defvar-keymap hsk/quick-utils-map
+  :doc "my quick utils"
+  "c" #'quick-calc
+  "e" #'emoji-search)
+
+(keymap-global-set "C-c q" hsk/quick-utils-map)
 
 
 ;; agenda

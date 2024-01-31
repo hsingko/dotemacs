@@ -1,21 +1,17 @@
 ;; simplify the default emacs ui
 (setq inhibit-startup-message t)
-(scroll-bar-mode -1) ;disable visible scrollbar
-(tool-bar-mode -1)   ;disable toolbar
-(tooltip-mode -1)    ;disable tooltip
-(set-fringe-mode 8)
-(menu-bar-mode -1)
 (setq initial-major-mode 'text-mode)
 (setq default-major-mode 'text-mode)
 (setq font-lock-maximum-decoration t)
 (setq cursor-type 'bar)
 
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "JetBrains Mono"  :size 16 :weight 'light))
+(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy Wide Motion"  :size 16 :weight 'regular))
 (set-face-attribute 'variable-pitch nil :font (font-spec :family "Charis SIL" :size 16  :weight 'regular))
 (set-fontset-font t 'han (font-spec :family "Noto Serif CJK SC"))
 (set-fontset-font t 'cjk-misc (font-spec :family "Noto Serif CJK SC"))
 (set-fontset-font t 'kana "Noto Sans CJK JP")
+
 
 
 ;; (setq resize-mini-windows nil)
@@ -69,13 +65,13 @@
 
 (use-package ef-themes
   :config
-  (setq ef-themes-mixed-fonts t)
+  (setq ef-themes-mixed-fonts nil)
   (setq ef-themes-headings ; read the manual's entry or the doc string
-      '((0 variable-pitch light 1.7)
-        (1 variable-pitch light 1.6)
-        (2 variable-pitch regular 1.4)
-        (3 variable-pitch regular 1.3)
-        (4 variable-pitch regular 1.2)
+      '((0 variable-pitch light 1.4)
+        (1 variable-pitch light 1.2)
+        (2 variable-pitch regular 1.1)
+        (3 variable-pitch regular 1.1)
+        (4 variable-pitch regular 1.1)
         (5 variable-pitch 1.1) ; absence of weight means `bold'
         (6 variable-pitch 1.1)
         (7 variable-pitch 1.1)
@@ -85,7 +81,9 @@
 
 (use-package ace-window
   :bind
-  (("M-o" . ace-window)))
+  (("M-o" . ace-window))
+  :config
+  (add-to-list 'aw-ignored-buffers "*shell*"))
 
 ;; (setq default-frame-alist (append default-frame-alist '((alpha-background . 93))))
 
@@ -113,15 +111,15 @@
   (help-mode . rainbow-mode)
   (emacs-lisp-mode . rainbow-mode))
 
-(use-package feline
-  :config (feline-mode)
-  :custom
-  (feline-line-prefix "🎯")
-  (feline-column-prefix ":")
-  (feline-mode-symbols
-   '(emacs-lisp-mode "🤖"
-		     python-ts-mode "🐍"
-		     org-mode "🐮")))
+;; (use-package feline
+;;   :config (feline-mode)
+;;   :custom
+;;   (feline-line-prefix "🎯")
+;;   (feline-column-prefix ":")
+;;   (feline-mode-symbols
+;;    '(emacs-lisp-mode "🤖"
+;; 		     python-ts-mode "🐍"
+;; 		     org-mode "🐮")))
 
 
 

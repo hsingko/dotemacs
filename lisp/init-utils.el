@@ -72,7 +72,8 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
           (when (or (derived-mode-p 'dired-mode)
                     (derived-mode-p 'wdired-mode))
             default-directory))))
-    (goto-char p)))
+    (goto-char p)
+    (kill-buffer (other-buffer (current-buffer) 1))))
 
 (defun doom/sudo-save-buffer ()
   "Save this file as root."
@@ -301,14 +302,21 @@ Version 2020-08-30"
       (message "No files in the current directory."))))
 
 
-
-(defun +consult-imenu-respect-narrow ()
+(defun hsk/consult-imenu-respect-narrow ()
   "after consult-imenu, keep org narrowing status"
   (interactive)
   (if (org-buffer-narrowed-p)
       (progn (consult-imenu)
 	     (org-narrow-to-subtree))
     (consult-imenu)))
+
+
+;; steal from prot
+(defun hsk/make-frame-floating-with-current-buffer ()
+  (interactive)
+  (make-frame '((name . "floating")
+		(window-system . x)
+		(minibuffer . nil))))
 
 
 (provide 'init-utils)

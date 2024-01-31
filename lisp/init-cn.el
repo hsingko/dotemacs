@@ -90,7 +90,7 @@
 
 ;; 基于中文分词的跳跃功能
 (use-package cns
-  :load-path "git/cns"
+  :vc (:url "https://github.com/kanglmf/emacs-chinese-word-segmentation")
   :config
   (setq cns-prog (expand-file-name "git/cns/cnws" user-emacs-directory))
   (setq cns-dict-directory (expand-file-name "git/cns/cppjieba/dict" user-emacs-directory))

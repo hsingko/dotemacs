@@ -25,7 +25,7 @@
 ;;; Code:
 
 (use-package bookmark+
-  :load-path "git/bookmark-plus"
+  :vc (:url "https://github.com/emacsmirror/bookmark-plus")
   :defer 2
   :config
   (setq bmkp-bmenu-state-file (expand-file-name ".emacs-bmk-bmenu-state.el"

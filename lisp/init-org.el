@@ -17,7 +17,6 @@
 (setq org-insert-heading-respect-content t)
 ;;
 
-
 (use-package org-indent
   :after org
   :ensure nil
@@ -158,11 +157,5 @@
 
 (eval-after-load 'org
   '(set-face-attribute 'org-quote nil :slant 'italic))
-
-;; (use-package svg-lib
-;;   :load-path "git/svg-lib")
-
-;; (use-package org-margin
-;;   :load-path "git/org-margin")
 
 (provide 'init-org)
