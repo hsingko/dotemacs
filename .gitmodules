@@ -1,6 +1,0 @@
-[submodule "git/bookmark-plus"]
-	path = git/bookmark-plus
-	url = https://github.com/emacsmirror/bookmark-plus
-[submodule "git/cns"]
-	path = git/cns
-	url = https://github.com/kanglmf/emacs-chinese-word-segmentation
