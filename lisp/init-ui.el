@@ -6,11 +6,30 @@
 (setq cursor-type 'bar)
 
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy Wide Motion"  :size 16 :weight 'regular))
+(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy Wide Motion"  :size 16 :weight 'light))
 (set-face-attribute 'variable-pitch nil :font (font-spec :family "Charis SIL" :size 16  :weight 'regular))
-(set-fontset-font t 'han (font-spec :family "Noto Serif CJK SC"))
-(set-fontset-font t 'cjk-misc (font-spec :family "Noto Serif CJK SC"))
+(set-fontset-font t 'han (font-spec :family "LXGW Neo ZhiSong"))
+(set-fontset-font t 'cjk-misc (font-spec :family "LXGW Neo ZhiSong"))
 (set-fontset-font t 'kana "Noto Sans CJK JP")
+
+
+(use-package org
+  :ensure nil
+  :config
+  ;; link: https://emacs-china.org/t/org/19458/2
+  (add-to-list 'org-emphasis-alist
+	       '("=" (
+		      :background "#fef7ca")))
+  (add-to-list 'org-emphasis-alist
+	       '("+" (
+		      :foreground "dark grey"
+		      :strike-through t)))
+  (add-to-list 'org-emphasis-alist
+	       '("~" (:box (
+			    :line-width 1
+			    :color "grey75"
+			    :style released-button))))
+  )
 
 
 
@@ -43,6 +62,8 @@
   (org-modern-checkbox nil)
   (org-modern-tag t)
   (org-modern-timestamp t)
+  :config
+  (set-face-attribute 'org-modern-radio-target nil :height 120)
   :hook
   (org-mode . org-modern-mode)
   (org-agenda-finalize . org-modern-agenda))
@@ -56,27 +77,35 @@
   :diminish
   :hook
   (org-mode . olivetti-mode)
+  (markdown-mode . olivetti-mode)
   :config
   (add-hook 'olivetti-mode-on-hook #'(lambda ()
 				       (text-scale-increase 1)))
   (add-hook 'olivetti-mode-off-hook #'(lambda ()
 					(text-scale-decrease 1)))
-  (setq-default olivetti-body-width 85))
+  (setq-default olivetti-body-width 70))
 
 (use-package ef-themes
   :config
   (setq ef-themes-mixed-fonts nil)
   (setq ef-themes-headings ; read the manual's entry or the doc string
-      '((0 variable-pitch light 1.4)
-        (1 variable-pitch light 1.2)
-        (2 variable-pitch regular 1.1)
-        (3 variable-pitch regular 1.1)
-        (4 variable-pitch regular 1.1)
-        (5 variable-pitch 1.1) ; absence of weight means `bold'
-        (6 variable-pitch 1.1)
-        (7 variable-pitch 1.1)
-        (t variable-pitch 1.1)))
-  (load-theme 'ef-tritanopia-light t))
+	'((0 variable-pitch light 1.4)
+          (1 variable-pitch light 1.2)
+          (2 variable-pitch regular 1.1)
+          (3 variable-pitch regular 1.1)
+          (4 variable-pitch regular 1.1)
+          (5 variable-pitch 1.1) ; absence of weight means `bold'
+          (6 variable-pitch 1.1)
+          (7 variable-pitch 1.1)
+          (t variable-pitch 1.1)))
+  (load-theme 'ef-frost t)
+  (defun custom-ef-looks ()
+    (set-face-attribute 'org-block nil :height 110)
+    (set-face-attribute 'org-block-begin-line nil :height 110 :background nil)
+    (set-face-attribute 'org-block-end-line nil :height 110 :background nil))
+  (custom-ef-looks)
+  (add-hook 'ef-themes-post-load-hook 'custom-ef-looks)
+  )
 
 
 (use-package ace-window
@@ -85,7 +114,6 @@
   :config
   (add-to-list 'aw-ignored-buffers "*shell*"))
 
-;; (setq default-frame-alist (append default-frame-alist '((alpha-background . 93))))
 
 ;; pixel scroll
 (setq scroll-conservatively 100) ;; when next-line/previous-line move point out of screen, move by 1 line stead of scroll half screen and center the pointer
@@ -111,18 +139,6 @@
   (help-mode . rainbow-mode)
   (emacs-lisp-mode . rainbow-mode))
 
-;; (use-package feline
-;;   :config (feline-mode)
-;;   :custom
-;;   (feline-line-prefix "🎯")
-;;   (feline-column-prefix ":")
-;;   (feline-mode-symbols
-;;    '(emacs-lisp-mode "🤖"
-;; 		     python-ts-mode "🐍"
-;; 		     org-mode "🐮")))
-
-
-
 (use-package spacious-padding
   :config
   (setq spacious-padding-subtle-mode-line t)
@@ -135,10 +151,5 @@
            :scroll-bar-width 8))
   (spacious-padding-mode))
 
-
-(use-package mixed-pitch
-  :config
-  ;; (add-hook 'org-mode-hook 'mixed-pitch-mode)
-  )
 
 (provide 'init-ui)

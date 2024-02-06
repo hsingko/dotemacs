@@ -49,7 +49,8 @@
 
 (defvar-keymap hsk/notetaking-map
   :doc "My key map related to notetaking"
-  "f" #'denote-open-or-create
+  ;; "f" #'consult-denote
+  "f" #'consult-denote-pinyin
   "d" #'denote
   "t" #'denote-keywords-add
   "T" #'denote-keywords-remove
@@ -57,6 +58,9 @@
   "z" #'olivetti-mode
   "q" #'calibredb
   "b" #'denote-show-backlinks-buffer
+  "p" #'denote-type
+  "l" #'consult-denote-link
+  "h" #'consult-hugo-blog
   "x" #'xeft)
 
 (keymap-set global-map "C-c n" hsk/notetaking-map)
@@ -95,6 +99,7 @@
   :doc "file associated operations"
   "r" #'consult-recent-file
   "f" #'find-file
+  "U" #'doom/sudo-this-file
   "i" #'hsk/consult-imenu-respect-narrow
   "w" #'widen
   "n" #'org-narrow-to-subtree
@@ -112,6 +117,8 @@
   "e" #'emoji-search)
 
 (keymap-global-set "C-c q" hsk/quick-utils-map)
+
+(keymap-global-set "C-c h" #'ef-themes-toggle)
 
 
 ;; agenda

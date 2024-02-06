@@ -25,7 +25,8 @@
 ;;; Code:
 
 (use-package bookmark+
-  :vc (:url "https://github.com/emacsmirror/bookmark-plus")
+  :vc (:url "https://github.com/emacsmirror/bookmark-plus"
+	    :branch "master")
   :defer 2
   :config
   (setq bmkp-bmenu-state-file (expand-file-name ".emacs-bmk-bmenu-state.el"

@@ -11,6 +11,10 @@
 (setq url-proxy-services
       '(("http" . "127.0.0.1:7890")
         ("https" . "127.0.0.1:7890")))
+(setenv "PATH" (concat (getenv "PATH") ":/home/rookie/.cargo/bin"))
+(setenv "PATH" (concat (getenv "PATH") ":/home/rookie/go/bin"))
+
+
 
 (setq use-package-enable-imenu-support t) ;; this line must placed before import `use-package`
 (require 'use-package)
@@ -65,6 +69,8 @@
 (require 'init-phisearch)
 (require 'init-bookmark)
 (require 'denote-image)
+(load "consult-buku.el")
+;; (require 'init-tab)
 
 (put 'erase-buffer 'disabled nil)
 ;; isearch(incremental search)
@@ -81,7 +87,7 @@
 (use-package server
   :config
   (unless (server-running-p)
-  (server-start)))
+    (server-start)))
 
 
 
@@ -139,19 +145,6 @@
 (setq enable-recursive-minibuffers t)
 (setq minibuffer-depth-indicate-mode t)
 
-;;custom treesitter
-;; (setq treesit-extra-load-path `(,(expand-file-name "treesit" user-emacs-directory)))
-;; (setq major-mode-remap-alist
-;;       '(
-;; 	;; (yaml-mode . yaml-ts-mode) yaml-ts-mode does not have indent
-;; 	(bash-mode . bash-ts-mode)
-;; 	(js2-mode . js-ts-mode)
-;; 	(typescript-mode . typescript-ts-mode)
-;; 	(json-mode . json-ts-mode)
-;; 	(css-mode . css-ts-mode)
-;; 	(python-mode . python-ts-mode)))
-
-
 ;; Display boot time message
 (add-hook 'emacs-startup-hook
           (lambda ()
@@ -172,5 +165,40 @@
 ;; suppress native comp warnings
 (setq native-comp-async-report-warnings-errors nil)
 
+
+
+(use-package the-magical-str
+  :load-path "~/Repo/the-magical-str.el/")
+
+(defun consult-denote-pinyin ()
+  (interactive)
+  (find-file (consult--read (mapcar (lambda (fn)
+				      (cons (get-magical-str (file-relative-name fn denote-directory))
+					    fn))
+				    (denote-directory-files))
+			    :lookup #'consult--lookup-cdr)))
+
+
+
 ;; substitute
 (use-package substitute)
+
+
+(keymap-global-set "M-l" #'avy-goto-line)
+
+
+(defun md/alfred ()
+  (interactive)
+  (get-buffer-create "*alfred*")
+  (let ((frame (make-frame '((minibuffer . only)))))
+    ;; Set frame parameters to make it as minimal as possible
+    (modify-frame-parameters frame '((width . 80) (height . 20)))
+    ;; Adjust frame position if needed
+    (set-frame-position frame 200 200)
+    (inhibit-message t)
+    (hsk/consult-buku)
+    (delete-frame frame)
+    ;; If we don't kill the buffer it messes up future state.
+    (kill-buffer "*alfred*")
+    (other-window 1)))
+

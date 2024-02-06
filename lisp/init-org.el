@@ -89,8 +89,7 @@
 ;; Improve org mode looks
 (setq org-startup-indented t
       org-pretty-entities t
-      org-startup-with-inline-images t
-      org-image-actual-width '(400))
+      org-startup-with-inline-images nil)
 
 (org-babel-do-load-languages
  'org-babel-load-languages

@@ -319,4 +319,109 @@ Version 2020-08-30"
 		(minibuffer . nil))))
 
 
+
+
+;;; consult-buku
+(defcustom buku-db-file "~/.local/share/buku/bookmarks.db"
+  "the buku bookmark database file")
+
+(defun hsk/consult-buku--build-tag-string (raw)
+  (let ((str (substring raw 0 (1- (length raw)))))
+    (put-text-property 0 (length str) 'face '(:foreground red) str)
+    str))
+
+;;; consult font family
+(defun hsk/insert-font-family ()
+  "consult and insert font family name"
+  (interactive)
+  (insert (consult--read (font-family-list))))
+
+
+
+;;; consult-denote
+(defun consult-denote-file-prompt ()
+  (expand-file-name
+   (consult--read (mapcar (lambda (f) (file-relative-name f denote-directory))
+			  (denote-directory-files)))
+   denote-directory))
+
+(defun consult-denote ()
+  (interactive)
+  (find-file (consult-denote-file-prompt)))
+
+(defun consult-denote-link (file file-type description &optional id-only)
+  (interactive
+   (let ((file (consult-denote-file-prompt)) ;; <====== Hey, I'm here
+         (type (denote-filetype-heuristics (buffer-file-name))))
+     (list
+      file
+      type
+      (denote--link-get-description file type)
+      current-prefix-arg)))
+  (let* ((beg (point))
+         (identifier-only (or id-only (string-empty-p description))))
+    (insert
+     (denote-format-link
+      file
+      (denote-link--file-type-format file-type identifier-only)
+      description))
+    (unless (derived-mode-p 'org-mode)
+      (make-button beg (point) 'type 'denote-link-button))))
+
+
+(defun consult-hugo-blog ()
+  (interactive)
+  (let (files)
+    (setq files (directory-files-recursively "~/Documents/castlemaybe/content"  "\\.\\(org\\|md\\)$"))
+    (find-file (consult--read (mapcar (lambda (f)
+					(cons
+					 (consult-hugo-retrieve-title-value f (intern (file-name-extension f))) f))
+				      files)
+			      :lookup #'consult--lookup-cdr))))
+
+
+(defun consult-hugo-retrieve-title-value (f ext)
+  (if (eq ext 'md)
+      (denote-retrieve-title-value f 'markdown-yaml)
+    (denote-retrieve-title-value f 'org)))
+
+
+(setq abbrev_directory "~/.emacs.d/abbrev/")
+(add-to-list 'load-path abbrev_directory)
+
+(defun consult-load-abbrevs ()
+  (interactive)
+  (load (consult--read (directory-files abbrev_directory))))
+
+
+(defun hsk/convert-region-t2y (start end)
+  "convert region from toml to yaml, using external command jyt"
+  (interactive "r")
+  (shell-command-on-region start end "jyt ty" nil t))
+
+(defun hsk/convert-region-y2t (start end)
+  "convert region from yaml to toml, using external command jyt"
+  (interactive "r")
+  (shell-command-on-region start end "jyt yt" nil t))
+
+
+
+(defcustom renpy_games_location "~/Downloads"
+  "where did you put those games?")
+
+(defun hsk/find-sh-scripts-recursively (directory)
+  "Find all .sh script files under DIRECTORY recursively."
+  (interactive "DDirectory: ")
+  (let ((sh-scripts '()))
+    (dolist (file (directory-files-recursively directory "\\.sh$"))
+      (when (file-regular-p file)
+        (push file sh-scripts)))
+    sh-scripts))
+
+(defun hsk/run-renpy-games-in-download ()
+  "select and run renpy game from ~/Downloads directory"
+  (interactive)
+  (async-shell-command
+   (consult--read (find-sh-scripts-recursively renpy_games_location))))
+
 (provide 'init-utils)

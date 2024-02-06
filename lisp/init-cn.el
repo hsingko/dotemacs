@@ -7,9 +7,7 @@
        (or
 	(= #x3c rime--current-input-key)
 	(= #x7c rime--current-input-key)
-	(= #x28 rime--current-input-key)
-        )
-       ))
+	(= #x28 rime--current-input-key))))
 
 (defun +rime-predicates-basic ()
   "The basic necessary predicates combination."
@@ -90,10 +88,11 @@
 
 ;; 基于中文分词的跳跃功能
 (use-package cns
-  :vc (:url "https://github.com/kanglmf/emacs-chinese-word-segmentation")
+  :vc (:url "https://github.com/kanglmf/emacs-chinese-word-segmentation"
+	    :branch "master")
   :config
-  (setq cns-prog (expand-file-name "git/cns/cnws" user-emacs-directory))
-  (setq cns-dict-directory (expand-file-name "git/cns/cppjieba/dict" user-emacs-directory))
+  (setq cns-prog (expand-file-name "cns/cnws" user-emacs-directory))
+  (setq cns-dict-directory (expand-file-name "cns/dict" user-emacs-directory))
   :hook
   (text-mode . cns-mode))
 

@@ -22,7 +22,7 @@ org-mode
 (kbd "@@html:<kbd>@@" p "@@html:</kbd>@@")
 (rk "#+rank: ")
 (au "#+author: ")
-(elisp "#+begin_src emacs-lisp" n> r> n "#+end_src" :post (org-edit-src-code))
+(=e "#+begin_src emacs-lisp" n> r> n "#+end_src" :post (org-edit-src-code))
 (qut "#+begin_quote" n> r> n "#+end_quote")
 (capt "#+CAPTION: ")
 (bash "#+begin_src bash" n> r> n "#+end_src" :post (org-edit-src-code))

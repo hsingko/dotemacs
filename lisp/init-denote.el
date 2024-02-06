@@ -41,11 +41,7 @@
    title nil nil (expand-file-name "freewriting" denote-directory)))
 
 
-;; (use-package consult-notes
-;;   :commands consult-notes
-;;   :config
-;;   (consult-notes-denote-mode)
-;;   (setq consult-notes-denote-dir nil
-;; 	consult-notes-denote-display-id t))
+
+
 
 (provide 'init-denote)
