@@ -3,7 +3,6 @@
   (cd "~/.emacs.d")
   (call-interactively #'find-file-in-project))
 
-
 (defun +delete-this-file()
   "kill this file and buffer with no confirm"
   (interactive)
@@ -149,19 +148,6 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
 
 (require 'subr-x)
 
-(defun get--pinyin-first-letters (string)
-  "translate Chinese Words to pinyin using external command: pypinyin"
-  (string-trim-right
-   (shell-command-to-string (format "~/.local/bin/pypinyin -f slug -p '' -s FIRST_LETTER %s" string))))
-
-(defun get--org-headlines-under-tree (pattern)
-  "获取给定 headline 下所有子节点字符串"
-  (save-excursion
-    (org-with-point-at (org-find-exact-headline-in-buffer pattern)
-      (org-element-map (org-element-parse-buffer) 'headline
-        (lambda (headline)
-          (org-element-property :title headline))))))
-
 
 
 (defcustom DESKTOP_ENTRY_TEMPLATE
@@ -193,86 +179,9 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
     (message "Appimage installation success!")))
 
 
-(defun my/insert-font-name ()
-  "Insert the selected font name as a quoted string."
-  (interactive)
-  (let ((font (completing-read "Select font: " (font-family-list))))
-    (when (not (string-empty-p font))
-      (insert (format "\"%s\"" font)))))
-
-
-
-
-(define-minor-mode textnov-mode
-  "text novel minor mode"
-  :lighter "Nov"
-  :init-value nil
-  (if textnov-mode
-      (progn
-	(setq imenu-generic-expression '((nil "^\\(　+第[一二三四五六七八九十零]+章.*\\)" 1)))
-	(read-only-mode)
-	(setq imenu-sort-function 'imenu--sort-by-position))
-    (progn
-      (read-only-mode -1)
-      (message "textnov-mode disabled"))))
-
-
 (defun +insert-time-string-in-ISO8601 ()
   (interactive)
   (insert (format-time-string "%Y-%m-%dT%H:%M:%S%z")))
-
-(defun xah-html-escape-char-to-entity (@begin @end &optional @entity-to-char-p)
-  "Replace HTML chars & < > to HTML entities on current text block or selection.
-The string replaced are:
- & ⇒ &amp;
- < ⇒ &lt;
- > ⇒ &gt;
-
-Highlight changed places.
-If `universal-argument' is called first, the replacement direction is reversed.
-
-When called in lisp code, @begin @end are region begin/end positions. If @entity-to-char-p is true, reverse change direction.
-
-URL `http://xahlee.info/emacs/emacs/elisp_replace_html_entities_command.html'
-Version 2020-08-30"
-  (interactive
-   (save-excursion
-     (list
-      (if (use-region-p)
-          (region-beginning)
-        (progn
-          (re-search-backward "\n[ \t]*\n" nil "move")
-          (re-search-forward "\n[ \t]*\n" nil "move")
-          (point)))
-      (if (use-region-p)
-          (region-end)
-        (progn
-          (re-search-forward "\n[ \t]*\n" nil "move")
-          (re-search-backward "\n[ \t]*\n" nil "move")
-          (point)))
-      (if current-prefix-arg t nil))))
-  (let (($changedItems '())
-        ($findReplaceMap
-         (if @entity-to-char-p
-             ;; this to prevent creating a replacement sequence out of blue
-             [
-              ["&amp;" "螽⛫1"] ["&lt;" "螽⛫2"] ["&gt;" "螽⛫3"]
-              ["螽⛫1" "&"] ["螽⛫2" "<"] ["螽⛫3" ">"]
-              ]
-           [ ["&" "&amp;"] ["<" "&lt;"] [">" "&gt;"] ]
-           )))
-    (save-excursion
-      (save-restriction
-        (narrow-to-region @begin @end)
-        (let ( (case-fold-search nil))
-          (mapc
-           (lambda ($x)
-             (goto-char (point-min))
-             (while (search-forward (elt $x 0) nil t)
-               (push (format "%s %s" (point) $x) $changedItems)
-               (replace-match (elt $x 1) "FIXEDCASE" "LITERAL")
-               (overlay-put (make-overlay (- (point) (length (elt $x 1))) (point)) 'font-lock-face '(:foreground "red"))))
-           $findReplaceMap))))))
 
 
 (use-package link-hint
@@ -288,18 +197,6 @@ Version 2020-08-30"
 			 (expand-file-name "rime" user-emacs-directory)
 			 (buffer-substring (region-beginning)
 					   (region-end))))
-
-(defun +insert-org-link-in-current-directory ()
-  "Insert an Org link to a file in the current directory, the description is without directory and extension"
-  (interactive)
-  (let ((files (directory-files "." nil ".org" t)))
-    (if files
-        (let* ((selected-file (consult--read files
-					     :prompt "Chose a file: "
-					     ))
-               (org-link (concat "[[file:" selected-file "][" (file-name-sans-extension (file-name-nondirectory selected-file)) "]]")))
-          (insert org-link))
-      (message "No files in the current directory."))))
 
 
 (defun hsk/consult-imenu-respect-narrow ()
@@ -322,13 +219,6 @@ Version 2020-08-30"
 
 
 ;;; consult-buku
-(defcustom buku-db-file "~/.local/share/buku/bookmarks.db"
-  "the buku bookmark database file")
-
-(defun hsk/consult-buku--build-tag-string (raw)
-  (let ((str (substring raw 0 (1- (length raw)))))
-    (put-text-property 0 (length str) 'face '(:foreground red) str)
-    str))
 
 ;;; consult font family
 (defun hsk/insert-font-family ()
@@ -372,7 +262,7 @@ Version 2020-08-30"
 (defun consult-hugo-blog ()
   (interactive)
   (let (files)
-    (setq files (directory-files-recursively "~/Documents/castlemaybe/content"  "\\.\\(org\\|md\\)$"))
+    (setq files (directory-files-recursively "~/Documents/Blog/content"  "\\.\\(org\\|md\\)$"))
     (find-file (consult--read (mapcar (lambda (f)
 					(cons
 					 (consult-hugo-retrieve-title-value f (intern (file-name-extension f))) f))
@@ -404,8 +294,6 @@ Version 2020-08-30"
   (interactive "r")
   (shell-command-on-region start end "jyt yt" nil t))
 
-
-
 (defcustom renpy_games_location "~/Downloads"
   "where did you put those games?")
 
@@ -422,6 +310,6 @@ Version 2020-08-30"
   "select and run renpy game from ~/Downloads directory"
   (interactive)
   (async-shell-command
-   (consult--read (find-sh-scripts-recursively renpy_games_location))))
+   (consult--read (hskf/ind-sh-scripts-recursively renpy_games_location))))
 
 (provide 'init-utils)

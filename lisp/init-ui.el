@@ -6,10 +6,10 @@
 (setq cursor-type 'bar)
 
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy Wide Motion"  :size 16 :weight 'light))
+(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy Wide Motion"  :size 16 :weight 'regular))
 (set-face-attribute 'variable-pitch nil :font (font-spec :family "Charis SIL" :size 16  :weight 'regular))
-(set-fontset-font t 'han (font-spec :family "LXGW Neo ZhiSong"))
-(set-fontset-font t 'cjk-misc (font-spec :family "LXGW Neo ZhiSong"))
+(set-fontset-font t 'han (font-spec :family "Sarasa Mono SC"))
+(set-fontset-font t 'cjk-misc (font-spec :family "Sarasa Mono SC"))
 (set-fontset-font t 'kana "Noto Sans CJK JP")
 
 
@@ -30,7 +30,6 @@
 			    :color "grey75"
 			    :style released-button))))
   )
-
 
 
 ;; (setq resize-mini-windows nil)
@@ -62,6 +61,7 @@
   (org-modern-checkbox nil)
   (org-modern-tag t)
   (org-modern-timestamp t)
+  (org-modern-block-name nil)
   :config
   (set-face-attribute 'org-modern-radio-target nil :height 120)
   :hook
@@ -89,11 +89,11 @@
   :config
   (setq ef-themes-mixed-fonts nil)
   (setq ef-themes-headings ; read the manual's entry or the doc string
-	'((0 variable-pitch light 1.4)
-          (1 variable-pitch light 1.2)
-          (2 variable-pitch regular 1.1)
-          (3 variable-pitch regular 1.1)
-          (4 variable-pitch regular 1.1)
+	'((0 variable-pitch  1.4)
+          (1 variable-pitch  1.2)
+          (2 variable-pitch  1.1)
+          (3 variable-pitch  1.1)
+          (4 variable-pitch  1.1)
           (5 variable-pitch 1.1) ; absence of weight means `bold'
           (6 variable-pitch 1.1)
           (7 variable-pitch 1.1)
@@ -150,6 +150,14 @@
            :right-divider-width 30
            :scroll-bar-width 8))
   (spacious-padding-mode))
+
+(setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "»")
+                                       ("#+END_SRC" . "«")
+                                       ("#+begin_src" . "»")
+                                       ("#+end_src" . "»")
+				       ("#+begin_quote" . "“")
+				       ("#+end_quote" . "”")))
+(add-hook 'org-mode-hook 'prettify-symbols-mode)
 
 
 (provide 'init-ui)

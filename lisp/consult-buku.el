@@ -1,19 +1,26 @@
+(defcustom buku-db-file "~/.local/share/buku/bookmarks.db"
+  "the buku bookmark database file")
+
+(defface consult-buku-base
+  '((t :family "Iosevka Comfy"))
+  "base face style for consult-buku")
+
 (defface consult-buku-id-face
   '((t :foreground "#3B6EA8"))
   "face for buku id")
 
 (defface consult-buku-domain-face
   '((t :foreground "#3B6EA8"
-       :family "Iosevka Comfy"))
+       :inherit 'consult-buku-base))
   "face for buku domain")
 
 (defface consult-buku-title-face
-  '((t :family "Iosevka Comfy"))
+  '((t :inherit 'consult-buku-base))
   "face for buku domain")
 
 (defface consult-buku-tag-face
   '((t :foreground "#996c4f"
-       :family "Iosevka Comfy"))
+       :inherit 'consult-buku-base))
   "face for buku tags")
 
 (defun hsk/format-string-with-fixed-length (str len)
