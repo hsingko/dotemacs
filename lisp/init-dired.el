@@ -5,7 +5,7 @@
 	("h" . dired-up-directory)
 	("l" . dired-find-file)
 	("N" . dired-narrow)
-	("E" . calibredb-dired-add))
+	("E" . hsk/add-book-to-calibredb))
   :config
   (setq dired-bind-man nil)
   (setq dired-listing-switches "-alhv --group-directories-first")
@@ -13,9 +13,18 @@
   (setq dired-auto-revert-buffer t)
   (setq dired-async-mode t)
   (setq dired-dwim-target t) ;; make dired guess the destnation by another dired buffer in split size window
+  (setq dired-clean-confirm-killing-deleted-buffers nil)
   :hook
   (dired-mode . dired-omit-mode)
   (dired-mode . dired-hide-details-mode))
+
+
+(defun hsk/add-book-to-calibredb ()
+  (interactive)
+  (unless (featurep 'calibredb)
+    (require 'calibredb))
+  (calibredb-dired-add))
+
 
 (use-package dired-narrow)
 (use-package dired-subtree)

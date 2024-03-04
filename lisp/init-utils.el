@@ -229,6 +229,14 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
 
 
 ;;; consult-denote
+(defun consult-denote-file-prompt-pinyin ()
+  (consult--read (mapcar (lambda (fn)
+				      (cons (get-magical-str (file-relative-name fn denote-directory))
+					    fn))
+				    (denote-directory-files))
+			    :lookup #'consult--lookup-cdr))
+
+
 (defun consult-denote-file-prompt ()
   (expand-file-name
    (consult--read (mapcar (lambda (f) (file-relative-name f denote-directory))
@@ -241,7 +249,7 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
 
 (defun consult-denote-link (file file-type description &optional id-only)
   (interactive
-   (let ((file (consult-denote-file-prompt)) ;; <====== Hey, I'm here
+   (let ((file (consult-denote-file-prompt-pinyin)) ;; <====== Hey, I'm here
          (type (denote-filetype-heuristics (buffer-file-name))))
      (list
       file
@@ -279,11 +287,6 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
 (setq abbrev_directory "~/.emacs.d/abbrev/")
 (add-to-list 'load-path abbrev_directory)
 
-(defun consult-load-abbrevs ()
-  (interactive)
-  (load (consult--read (directory-files abbrev_directory))))
-
-
 (defun hsk/convert-region-t2y (start end)
   "convert region from toml to yaml, using external command jyt"
   (interactive "r")
@@ -310,6 +313,36 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
   "select and run renpy game from ~/Downloads directory"
   (interactive)
   (async-shell-command
-   (consult--read (hskf/ind-sh-scripts-recursively renpy_games_location))))
+   (consult--read (hsk/find-sh-scripts-recursively renpy_games_location))))
+
+
+(defun hsk/wrap (start end)
+  "Wrap the region between START and END with square brackets."
+  (interactive "r")
+  (save-excursion
+    (let ((region (buffer-substring-no-properties start end)))
+      (delete-region start end)
+      (insert (format "<<<%s>>>" region)))))
+
+
+
+(use-package alarm-clock)
+
+
+(defun next-heading-with-narrow ()
+  (interactive)
+  (widen)
+  (org-next-visible-heading 1)
+  (org-narrow-to-subtree)
+  (goto-char (point-max)))
+
+(defun previous-heading-with-narrow ()
+  (interactive)
+  (widen)
+  (goto-char (point-min))
+  (org-next-visible-heading -1)
+  (org-narrow-to-subtree)
+  (goto-char (point-max)))
+
 
 (provide 'init-utils)

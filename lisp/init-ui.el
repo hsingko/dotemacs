@@ -6,8 +6,8 @@
 (setq cursor-type 'bar)
 
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "Iosevka Comfy Wide Motion"  :size 16 :weight 'regular))
-(set-face-attribute 'variable-pitch nil :font (font-spec :family "Charis SIL" :size 16  :weight 'regular))
+(set-face-attribute 'default nil :font (font-spec :family "IBM Plex Mono"  :size 16 :weight 'light))
+(set-face-attribute 'variable-pitch nil :font (font-spec :family "Charis SIL" :size 16  :weight 'light))
 (set-fontset-font t 'han (font-spec :family "Sarasa Mono SC"))
 (set-fontset-font t 'cjk-misc (font-spec :family "Sarasa Mono SC"))
 (set-fontset-font t 'kana "Noto Sans CJK JP")
@@ -62,6 +62,8 @@
   (org-modern-tag t)
   (org-modern-timestamp t)
   (org-modern-block-name nil)
+  ;; (org-modern-radio-target nil)
+  ;; (org-modern-internal-target nil)
   :config
   (set-face-attribute 'org-modern-radio-target nil :height 120)
   :hook
@@ -98,10 +100,15 @@
           (6 variable-pitch 1.1)
           (7 variable-pitch 1.1)
           (t variable-pitch 1.1)))
-  (load-theme 'ef-frost t)
+  (load-theme 'ef-kassio t)
   (defun custom-ef-looks ()
+    (set-face-attribute 'org-quote nil :slant 'italic)
     (set-face-attribute 'org-block nil :height 110)
+    ;; (set-face-attribute 'org-meta-line nil :family "Iosevka Comfy" )
+    ;; (set-face-attribute 'org-document-info nil :family "Iosevka Comfy")
     (set-face-attribute 'org-block-begin-line nil :height 110 :background nil)
+    (custom-set-faces
+     '(mode-line ((t (:height 0.9)))))
     (set-face-attribute 'org-block-end-line nil :height 110 :background nil))
   (custom-ef-looks)
   (add-hook 'ef-themes-post-load-hook 'custom-ef-looks)
@@ -143,7 +150,7 @@
   :config
   (setq spacious-padding-subtle-mode-line t)
   (setq spacious-padding-widths
-	'( :internal-border-width 2
+	'( :internal-border-width 5
            :header-line-width 4
            :mode-line-width 3
            :tab-width 4
@@ -154,10 +161,43 @@
 (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "»")
                                        ("#+END_SRC" . "«")
                                        ("#+begin_src" . "»")
-                                       ("#+end_src" . "»")
+                                       ("#+end_src" . "«")
 				       ("#+begin_quote" . "“")
 				       ("#+end_quote" . "”")))
 (add-hook 'org-mode-hook 'prettify-symbols-mode)
+
+
+(setq display-buffer-alist '(
+			     ("*Async Shell Command*"
+			      (display-buffer-no-window))))
+
+
+;; 保证光标在跳转之后，完全显示当前行
+(setq scroll-margin 3)
+
+
+
+
+(use-package tab-bar
+  :config
+  (setq tab-bar-show 1)
+  (setq tab-bar-close-button-show nil)
+  (setq tab-bar-tab-hints t)
+  (setq tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
+  (keymap-global-set "s-w" #'tab-bar-close-tab)
+  (keymap-global-set "s-t" #'tab-bar-new-tab)
+  (keymap-global-set "s-{" #'tab-bar-switch-to-prev-tab)
+  (keymap-global-set "s-}" #'tab-bar-switch-to-next-tab)
+  )
+
+(use-package mixed-pitch
+  ;; :hook
+  ;; (org-mode . mixed-pitch-mode)
+  )
+
+(use-package valign
+  :hook
+  (org-mode . valign-mode))
 
 
 (provide 'init-ui)

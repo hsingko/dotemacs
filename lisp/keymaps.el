@@ -118,12 +118,15 @@
 
 (keymap-global-set "C-c q" hsk/quick-utils-map)
 
-(keymap-global-set "C-c h" #'ef-themes-toggle)
+(keymap-global-set "C-c h" #'consult-theme)
 
 
 ;; agenda
 (global-set-key (kbd "C-c o") #'org-agenda)
 
 (global-set-key (kbd "C-SPC") #'set-mark-command)
+
+
+
 
 (provide 'keymaps)

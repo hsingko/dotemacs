@@ -1,9 +1,10 @@
+
 ;; package management
 ;; (setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages")
 ;;                          ("melpa" . "https://melpa.org/packages")))
-(setq package-archives '(("gnu"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("nongnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
-                         ("melpa"  . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+;; (setq package-archives '(("gnu"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+;;                          ("nongnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
+;;                          ("melpa"  . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
 (package-initialize) ;; You might already have this line
 (unless package-archive-contents
@@ -11,9 +12,10 @@
 (setq url-proxy-services
       '(("http" . "127.0.0.1:7890")
         ("https" . "127.0.0.1:7890")))
-(setenv "PATH" (concat (getenv "PATH") ":/home/rookie/.cargo/bin"))
-(setenv "PATH" (concat (getenv "PATH") ":/home/rookie/go/bin"))
 
+
+(add-to-list 'exec-path "/home/rookie/.cargo/bin")
+(add-to-list 'exec-path "/home/rookie/go/bin")
 
 
 (setq use-package-enable-imenu-support t) ;; this line must placed before import `use-package`
@@ -60,17 +62,17 @@
 (require 'init-xeft)
 (require 'init-html)
 (require 'init-formater)
-(require 'init-abbrev)
 (require 'init-shellcmd)
 (require 'init-corfu)
 (require 'init-magit)
 (require 'init-undo)
-(require 'init-mpv)
 (require 'init-phisearch)
-(require 'init-bookmark)
+;; (require 'init-bookmark)
 (require 'denote-image)
+(require 'init-mpv)
+
 (load "consult-buku.el")
-;; (require 'init-tab)
+
 
 (put 'erase-buffer 'disabled nil)
 ;; isearch(incremental search)
@@ -168,6 +170,7 @@
 
 
 (use-package the-magical-str
+  :after consult
   :load-path "~/Repo/the-magical-str.el/")
 
 (defun consult-denote-pinyin ()
@@ -202,3 +205,21 @@
     (kill-buffer "*alfred*")
     (other-window 1)))
 
+
+(use-package zhau-abbrev
+  :load-path "git/zhau-abbrev/"
+  :custom
+  (zhau-abbrev--pinyin-program "/home/rookie/go/bin/pinyin")
+  :config
+  (add-hook 'kill-emacs-hook #'zhau-abbrev-save-all-tables)
+  ;; (add-hook 'org-mode-hook #'zhau-abbrev-mode)
+  )
+
+
+
+(use-package binky
+  :config
+  (binky-mode)
+  (binky-margin-mode))
+
+(setq-default abbrev-mode 1)

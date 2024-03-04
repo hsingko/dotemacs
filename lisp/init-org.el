@@ -157,4 +157,20 @@
 (eval-after-load 'org
   '(set-face-attribute 'org-quote nil :slant 'italic))
 
+
+(use-package org-appear
+  :hook
+  (org-mode . org-appear-mode))
+
+
+;; 处理 orgmode 中文格式化的问题，不显示左右空格
+;; 参考：https://emacs-china.org/t/org-mode/22313
+(font-lock-add-keywords 'org-mode
+                        '(("\\cc\\( \\)[/+*_=~][^a-zA-Z0-9/+*_=~\n]+?[/+*_=~]\\( \\)?\\cc?"
+                           (1 (prog1 () (compose-region (match-beginning 1) (match-end 1) ""))))
+                          ("\\cc?\\( \\)?[/+*_=~][^a-zA-Z0-9/+*_=~\n]+?[/+*_=~]\\( \\)\\cc"
+                           (2 (prog1 () (compose-region (match-beginning 2) (match-end 2) "")))))
+                        'append)
+
+
 (provide 'init-org)

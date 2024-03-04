@@ -1,6 +1,9 @@
 (setq package-enable-at-startup nil)
-(setq gc-cons-threshold most-positive-fixnum)
+;; (setq gc-cons-threshold most-positive-fixnum)
 ;; (setq gc-cons-threshold 2147483648)
+(setq gc-cons-threshold (* 1024 1024 500)
+      gc-cons-percentage 0.2)
+
 (setq use-file-dialog nil)
 (setq use-dialog-box nil)
 (setq inhibit-startup-screen t)

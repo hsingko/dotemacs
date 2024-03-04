@@ -81,7 +81,8 @@
    '("y" . meow-save)
    '("Y" . meow-sync-grab)
    '("z" . meow-pop-selection)
-   '("'" . repeat)
+   ;; '("'" . repeat)
+   '("'" . binky-binky)
    '("P" . meow-pop-to-mark)
    '("<escape>" . ignore)))
 

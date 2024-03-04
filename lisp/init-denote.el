@@ -10,11 +10,14 @@
   (setq denote-directory (expand-file-name "notes" org-directory)
         denote-file-type "org"
         denote-dired-directories (list
-                                  denote-directory))
+                                  denote-directory
+				  "~/Pictures/"))
 
   ;; :config
   (setq denote-excluded-directories-regexp "archive")
   (denote-rename-buffer-mode 1)
+  (setq denote-rename-no-confirm t)
+  (setq denote-rename-buffer-format "[D] %t")
   (setq denote-backlinks-show-context t)
   (setq xref-search-program 'ugrep)
   (add-hook 'dired-mode-hook #'my/denote-dired-mode-hook)
@@ -39,9 +42,6 @@
   (interactive "sWhat's in your mind? ")
   (denote
    title nil nil (expand-file-name "freewriting" denote-directory)))
-
-
-
 
 
 (provide 'init-denote)

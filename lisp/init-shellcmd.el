@@ -24,7 +24,17 @@
      (concat
       "age -R " age-default-recipient
       " <<f>> > <<f>>.age")
-     :utils "age")))
+     :utils "age"))
+(defun my/dwim-shell-command-age-decrypt-file ()
+    "Encrypt all marked files to *.age"
+    (interactive)
+    (dwim-shell-command-on-marked-files
+     "Decrypt file with age"
+     (concat
+      "age -d -i " age-default-identity
+      " <<f>> > <<fne>>")
+     :utils "age"))  
+  )
 
 
 
