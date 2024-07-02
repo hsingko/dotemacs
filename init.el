@@ -1,7 +1,8 @@
 
 ;; package management
-;; (setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages")
-;;                          ("melpa" . "https://melpa.org/packages")))
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("elpa" . "https://elpa.gnu.org/packages") t)
 ;; (setq package-archives '(("gnu"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
 ;;                          ("nongnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
 ;;                          ("melpa"  . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
@@ -16,7 +17,7 @@
 
 (add-to-list 'exec-path "/home/rookie/.cargo/bin")
 (add-to-list 'exec-path "/home/rookie/go/bin")
-
+(add-to-list 'exec-path "/home/rookie/.local/bin/")
 
 (setq use-package-enable-imenu-support t) ;; this line must placed before import `use-package`
 (require 'use-package)
@@ -31,12 +32,6 @@
 ;; yes, it works
 (setq auto-save-file-name-transforms
       '((".*" "~/.emacs.d/autosave/" t)))
-(setq create-lockfiles nil)
-
-;; (use-package exec-path-from-shell
-;;   :config
-;;   (exec-path-from-shell-initialize))
-
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'init-ui)
@@ -57,7 +52,7 @@
 (require 'init-rg)
 (require 'init-embark)
 (require 'init-builtin)
-(require 'init-window)
+;; (require 'init-window)
 (require 'init-helper)
 (require 'init-xeft)
 (require 'init-html)
@@ -69,7 +64,7 @@
 (require 'init-phisearch)
 ;; (require 'init-bookmark)
 (require 'denote-image)
-(require 'init-mpv)
+;; (require 'init-mpv)
 
 (load "consult-buku.el")
 
@@ -136,12 +131,11 @@
     (insert "Name=" (read-from-minibuffer "Entry name: ") "\n")
     (insert "GenericName=" (read-from-minibuffer "GenericName: ") "\n")
     (insert "Comment=\n")
-    (insert "Exec=" (read-file-name "Program location: ") "\n")
+    (insert "Exec=" (file-truename (read-file-name "Program location: ")) "\n")
     (insert "Terminal=false\n")
     (insert "Type=Application\n")
-    (insert "Icon=" (read-file-name "Icon file location: ") "\n")
+    (insert "Icon=" (file-truename (read-file-name "Icon file location: ")) "\n")
     (insert "Categories=Utility")))
-
 
 ;; set minibuffer
 (setq enable-recursive-minibuffers t)
@@ -184,10 +178,14 @@
 
 
 ;; substitute
-(use-package substitute)
-
-
-(keymap-global-set "M-l" #'avy-goto-line)
+(use-package substitute
+  :bind
+  (("C-c s" . #'substitute-prefix-map)
+   :map substitute-prefix-map
+   ("b" . #'substitute-target-in-buffer)
+   ("d" . #'substitute-target-in-defun)
+   ("r" . #'substitute-target-above-point)
+   ("s" . #'substitute-target-below-point)))
 
 
 (defun md/alfred ()
@@ -217,9 +215,50 @@
 
 
 
-(use-package binky
-  :config
-  (binky-mode)
-  (binky-margin-mode))
+;; (use-package binky
+;;   :config
+;;   (binky-mode)
+;;   (binky-margin-mode))
+
+
+(setq garbage-collection-messages t)
+(defvar k-gc-timer
+  (run-with-idle-timer 15 t
+                       'garbage-collect))
+
+
+
+;; (setq visible-bell t)
+(setq ring-bell-function 'ignore)
 
 (setq-default abbrev-mode 1)
+(setq save-abbrevs nil) ;; 不提示保存 abbrev 
+
+
+(use-package tiny
+  :config
+  (tiny-setup-default))
+
+
+(add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
+
+(use-package eglot
+  :ensure nil
+  :defer t
+  :hook (python-ts-mode . eglot-ensure))
+
+(use-package toggle-term
+  :bind (("C-` C-f" . toggle-term-find)
+         ("C-` C-t" . toggle-term-term)
+         ("C-` C-s" . toggle-term-shell)
+         ("C-` C-e" . toggle-term-eshell)
+         ("C-` C-i" . toggle-term-ielm)
+         ("C-` C-o" . toggle-term-toggle))
+  :config
+    (setq toggle-term-size 25)
+    (setq toggle-term-switch-upon-toggle t))
+
+
+(use-package casual-avy
+  :bind (("M-p" . #'casual-avy-tmenu)))
+

@@ -6,7 +6,7 @@
   (setq popper-reference-buffers
         '("\\*Messages\\*"
           "Output\\*$"
-          "\\*Async Shell Command\\*"
+          ;; "\\*Async Shell Command\\*"
           help-mode
 	  denote-backlinks-mode
           compilation-mode))

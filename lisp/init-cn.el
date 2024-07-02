@@ -69,7 +69,7 @@
   ;;; 切换方案：https://emacs-china.org/t/emacs-rime/12048/54
   (default-input-method "rime")
   :config
-  (bind-key "C-`" 'rime-send-keybinding rime-mode-map)
+  ;; (bind-key "C-`" 'rime-send-keybinding rime-mode-map)
   (add-hook 'kill-emacs-hook (lambda ()
 			       (ignore-errors (rime-lib-finalize))))
   )

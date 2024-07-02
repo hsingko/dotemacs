@@ -33,7 +33,8 @@
       '(orderless-literal . ""))
      ((string-prefix-p "!" pattern)
       `(orderless-without-literal . ,(substring pattern 1)))))
-  (add-to-list 'orderless-style-dispatchers #'without-if-bang))
+  (add-to-list 'orderless-style-dispatchers #'without-if-bang)
+  )
 
 
 (provide 'init-vertico)

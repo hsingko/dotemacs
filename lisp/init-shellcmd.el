@@ -25,7 +25,14 @@
       "age -R " age-default-recipient
       " <<f>> > <<f>>.age")
      :utils "age"))
-(defun my/dwim-shell-command-age-decrypt-file ()
+  (defun my/dwim-shell-command-convert-to-azw3 ()
+	"convert marked ebooks to azw3 format"
+	(interactive)
+	(dwim-shell-command-on-marked-files
+	 "convert ebooks with ebook-convert"
+	 "ebook-convert '<<f>>' .azw3"
+	 :utils "ebook-convert"))
+  (defun my/dwim-shell-command-age-decrypt-file ()
     "Encrypt all marked files to *.age"
     (interactive)
     (dwim-shell-command-on-marked-files
@@ -33,7 +40,7 @@
      (concat
       "age -d -i " age-default-identity
       " <<f>> > <<fne>>")
-     :utils "age"))  
+     :utils "age"))
   )
 
 
@@ -51,39 +58,39 @@
   "default comic meta xml format")
 
 (defcustom COMIC_SUPPORT_LIST #s(hash-table
-				 :size 3
-				 test equal
-				 data (
-				       "7z" "cb7"
-				       "rar" "cbr"
-				       "zip" "cbz"))
+								 :size 3
+								 test equal
+								 data (
+									   "7z" "cb7"
+									   "rar" "cbr"
+									   "zip" "cbz"))
   "kindle comic converter support list")
 
 (defun my/generate-comic-meta-in-current-directory ()
   " 将当前目录下的所有压缩文件转换成 Kindle Comic Convert 便于处理的格式"
   (interactive)
   (let* ((series (read-string "Series Name:"))
-	 (writer (read-string "Writer:"))
-	 (dir (dired-current-directory)))
+		 (writer (read-string "Writer:"))
+		 (dir (dired-current-directory)))
     (dolist (file (directory-files dir t))
       (let ((ext (file-name-extension file)))
-	(when (and (file-regular-p file)
-		   (gethash ext COMIC_SUPPORT_LIST nil))
-	  (string-match "[0-9]+" (file-name-base file))
-	  (async-shell-command
-	   (format "echo '%s'|7z a -siComicInfo.xml \"%s\" && mv \"%s\" \"%s\""
-		   (format COMIC_META
-			   series
-			   (string-to-number (match-string 0 (file-name-base file)))
-			   writer)
-		   file
-		   file
-		   (concat
-		    (file-name-directory file)
-		    (file-name-base file)
-			   "."
-			   (gethash ext COMIC_SUPPORT_LIST)))
-	   nil nil))))))
+		(when (and (file-regular-p file)
+				   (gethash ext COMIC_SUPPORT_LIST nil))
+		  (string-match "[0-9]+" (file-name-base file))
+		  (async-shell-command
+		   (format "echo '%s'|7z a -siComicInfo.xml \"%s\" && mv \"%s\" \"%s\""
+				   (format COMIC_META
+						   series
+						   (string-to-number (match-string 0 (file-name-base file)))
+						   writer)
+				   file
+				   file
+				   (concat
+					(file-name-directory file)
+					(file-name-base file)
+					"."
+					(gethash ext COMIC_SUPPORT_LIST)))
+		   nil nil))))))
 
 (put 'narrow-to-region 'disabled nil)
 

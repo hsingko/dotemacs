@@ -32,4 +32,40 @@
     (insert (format "[[calibredb:%s][%s]]" id title))))
 
 
+(defun hsk/calibredb-consult-open (arg)
+  "open books in calibredb using default tool"
+  (interactive "P")
+  (let* ((cand (let ((candidates calibredb-search-entries))
+		 (consult--read candidates
+				:prompt "Pick a book: "
+				:lookup #'consult--lookup-cdr
+				:sort nil)))
+	 (fp (cadr (assoc :file-path (car cand)))))
+    (calibredb-open-with-default-tool fp)))
+
+(defun hsk/gen-ebook-todo-toc ()
+  (interactive)
+  (let* ((cand (let ((candidates calibredb-search-entries))
+		 (consult--read candidates
+				:prompt "Pick a book: "
+				:lookup #'consult--lookup-cdr
+				:sort nil)))
+	 (title (cadr (assoc :book-title (car cand))))
+	 (fp (car (split-string (cadr (assoc :file-path (car cand))) ",")))
+	 (formats (cadr (assoc :file-path (car cand))))
+	 (epub-fp (cond ((string-match-p "epub" fp) fp)
+			((string-match-p "epub" formats)
+			 (s-concat
+			  (car (split-string fp "."))
+			  ".epub"))
+			;; ((string-match-p "mobi\\|azw" formats)
+			;;  (let ((tmp (make-temp-file "ebook-convert-" nil ".epub" nil)))
+			;;    (call-process-shell-command (format "ebook-convert %s %s" fp tmp))
+			;;    tmp))
+			(t
+			 (error "epub not supported for this book")))))
+    (insert (format "* TODO [0%] %s\n" title))
+    (insert (shell-command-to-string (format "python ~/Lab/ebook-toc.py \"%s\"" (file-truename
+										 epub-fp))))))
+
 (provide 'init-calibre)

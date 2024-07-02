@@ -81,8 +81,7 @@
    '("y" . meow-save)
    '("Y" . meow-sync-grab)
    '("z" . meow-pop-selection)
-   ;; '("'" . repeat)
-   '("'" . binky-binky)
+   '("'" . repeat)
    '("P" . meow-pop-to-mark)
    '("<escape>" . ignore)))
 
@@ -120,5 +119,12 @@
   (add-hook 'ef-themes-post-load-hook (lambda ()
 					(custom-set-faces
 					 '(meow-insert-cursor ((t (:inherit font-lock-keyword-face))))))))
+
+
+;; (use-package meow-tree-sitter
+;;   :load-path "git/meow-tree-sitter"
+;;   :config
+;;   (meow-tree-sitter-register-defaults))
+
 
 (provide 'init-meow)

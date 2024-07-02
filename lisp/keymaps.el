@@ -3,7 +3,6 @@
 (global-unset-key (kbd "M-k")) ;; forward-word
 (global-unset-key (kbd "C-SPC"))
 (global-unset-key (kbd "S-<delete>"))
-(global-set-key (kbd "M-p") #'pop-global-mark)
 ;; embrace the power of avy!
 (global-set-key (kbd "M-j") #'avy-goto-char-timer)
 (global-set-key (kbd "M-c") #'avy-goto-char-2)
@@ -16,18 +15,19 @@
 (global-set-key (kbd "C-c w c") #'delete-window)
 (global-set-key (kbd "C-c w C") #'delete-other-windows)
 ;; winner mode
+(winner-mode)
 (global-set-key (kbd "C-c w u") #'winner-undo)
 (global-set-key (kbd "C-c w r") #'winner-redo)
+
 ;; wrap words
 ;; see: https://stackoverflow.com/questions/2951797/wrapping-selecting-text-in-enclosing-characters-in-emacs
-(global-set-key (kbd "M-[") 'insert-pair)
-(global-set-key (kbd "M-{") 'insert-pair)
-(global-set-key (kbd "M-\"") 'insert-pair)
-(global-set-key (kbd "M-(") 'insert-pair)
+;; (global-set-key (kbd "M-[") 'insert-pair)
+;; (global-set-key (kbd "M-{") 'insert-pair)
+;; (global-set-key (kbd "M-\"") 'insert-pair)
+;; (global-set-key (kbd "M-(") 'insert-pair)
+;; 以上代码作废，因为可以直接在 meow 的 keypad 模式中输入 pair
+;; 参考：https://emacs-china.org/t/meow-smartparens/22729/5
 
-
-;; mark
-(global-set-key (kbd "M-k") #'pop-global-mark)
 
 ;;helpful
 (use-package helpful
@@ -38,7 +38,7 @@
 (global-set-key (kbd "C-h v") #'helpful-variable)
 (global-set-key (kbd "C-h k") #'helpful-key)
 (global-set-key (kbd "C-c C-d") #'helpful-at-point)
-(global-set-key (kbd "C-h F") #'helpful-function)
+(global-set-key (kbd "C-h F") #'helpful-functionv)
 (global-set-key (kbd "C-h C") #'helpful-command)
 
 ;; key bindings
@@ -50,10 +50,11 @@
 (defvar-keymap hsk/notetaking-map
   :doc "My key map related to notetaking"
   ;; "f" #'consult-denote
+  "c" #'org-capture
   "f" #'consult-denote-pinyin
   "d" #'denote
-  "t" #'denote-keywords-add
-  "T" #'denote-keywords-remove
+  "r" #'denote-rename-file-using-front-matter
+  "t" #'denote-rename-file-keywords
   "j" #'org-journal-new-entry
   "z" #'olivetti-mode
   "q" #'calibredb
@@ -80,21 +81,6 @@
 (global-set-key (kbd "C-c <RET>") #'consult-bookmark)
 (global-set-key (kbd "C-c b m") #'bookmark-set)
 ;; file
-;; (global-set-key (kbd "C-c f r") #'consult-recent-file)
-;; (global-set-key (kbd "C-c f f") #'find-file)
-;; ;; (global-set-key (kbd "C-c f i") #'consult-imenu)
-;; (global-set-key (kbd "C-c f i") #'hsk/consult-imenu-respect-narrow)
-;; (global-set-key (kbd "C-c f w") #'widen)
-;; (global-set-key (kbd "C-c f n") #'org-narrow-to-subtree)
-;; (global-set-key (kbd "C-c f p") #'project-find-file)
-;; (global-set-key (kbd "C-c f D") #'+delete-this-file)
-;; (global-set-key (kbd "C-c f F") #'find-file-other-window)
-;; (global-set-key (kbd "C-c f R") #'doom/move-this-file)
-;; (global-set-key (kbd "C-c f U") #'doom/sudo-this-file)
-;; (global-set-key (kbd "C-c f c") #'doom/copy-this-file)
-;; (global-set-key (kbd "C-c f m") #'format-all-region-or-buffer)
-;; (global-set-key (kbd "C-c f l") #'+insert-org-link-in-current-directory)
-
 (defvar-keymap hsk/file-opt-map
   :doc "file associated operations"
   "r" #'consult-recent-file
@@ -117,7 +103,6 @@
   "e" #'emoji-search)
 
 (keymap-global-set "C-c q" hsk/quick-utils-map)
-
 (keymap-global-set "C-c h" #'consult-theme)
 
 
@@ -127,6 +112,20 @@
 (global-set-key (kbd "C-SPC") #'set-mark-command)
 
 
+;; (defvar-keymap hsk/avy-line-map
+;;   :doc "quick avy line magic"
+;;   "l" #'avy-goto-line
+;;   "a" #'avy-goto-line-above
+;;   "b" #'avy-goto-line-below
+;;   "m" #'avy-move-line
+;;   "c" #'avy-copy-line
+;;   "k" #'avy-kill-whole-line)
+
+;; (keymap-global-set "M-l" hsk/avy-line-map)
+
+
+
 
 
 (provide 'keymaps)
+

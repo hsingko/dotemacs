@@ -202,9 +202,13 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
 (defun hsk/consult-imenu-respect-narrow ()
   "after consult-imenu, keep org narrowing status"
   (interactive)
-  (if (org-buffer-narrowed-p)
+  (if (buffer-narrowed-p)
       (progn (consult-imenu)
-	     (org-narrow-to-subtree))
+			 (cond ((eq major-mode 'org-mode)
+					(org-narrow-to-subtree))
+				   ((eq major-mode 'markdown-mode)
+					(markdown-narrow-to-subtree))
+				   (t (message "unsupported major mode"))))
     (consult-imenu)))
 
 
@@ -229,12 +233,13 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
 
 
 ;;; consult-denote
+(require 'consult)
 (defun consult-denote-file-prompt-pinyin ()
   (consult--read (mapcar (lambda (fn)
-				      (cons (get-magical-str (file-relative-name fn denote-directory))
-					    fn))
-				    (denote-directory-files))
-			    :lookup #'consult--lookup-cdr))
+			   (cons (get-magical-str (file-relative-name fn denote-directory))
+				 fn))
+			 (denote-directory-files))
+		 :lookup #'consult--lookup-cdr))
 
 
 (defun consult-denote-file-prompt ()
@@ -249,22 +254,22 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
 
 (defun consult-denote-link (file file-type description &optional id-only)
   (interactive
-   (let ((file (consult-denote-file-prompt-pinyin)) ;; <====== Hey, I'm here
-         (type (denote-filetype-heuristics (buffer-file-name))))
-     (list
-      file
-      type
-      (denote--link-get-description file type)
-      current-prefix-arg)))
-  (let* ((beg (point))
-         (identifier-only (or id-only (string-empty-p description))))
-    (insert
-     (denote-format-link
-      file
-      (denote-link--file-type-format file-type identifier-only)
-      description))
+   (let* ((file (consult-denote-file-prompt-pinyin))
+          (file-type (when buffer-file-name
+                       (denote-filetype-heuristics buffer-file-name)))
+          (description (when (file-exists-p file)
+                         (denote--link-get-description file))))
+       (list file file-type description current-prefix-arg)))
+  (unless (and buffer-file-name (denote-file-has-supported-extension-p buffer-file-name))
+    (user-error "The current file type is not recognized by Denote"))
+  (unless (file-exists-p file)
+    (user-error "The linked file does not exist"))
+  (let* ((beg (point)))
+    (denote--delete-active-region-content)
+    (insert (denote-format-link file description file-type id-only))
     (unless (derived-mode-p 'org-mode)
       (make-button beg (point) 'type 'denote-link-button))))
+
 
 
 (defun consult-hugo-blog ()
@@ -343,6 +348,12 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
   (org-next-visible-heading -1)
   (org-narrow-to-subtree)
   (goto-char (point-max)))
+
+
+(defun hsk/rich-paste ()
+  (interactive)
+  (insert (shell-command-to-string
+		   "xclip -o -t text/html | pandoc -f html -t json | pandoc -f json -t org")))
 
 
 (provide 'init-utils)

@@ -9,6 +9,7 @@
   :init
   (setq denote-directory (expand-file-name "notes" org-directory)
         denote-file-type "org"
+	denote-silo-extras-directories (list (expand-file-name "secret/" org-directory))
         denote-dired-directories (list
                                   denote-directory
 				  "~/Pictures/"))
@@ -16,6 +17,7 @@
   ;; :config
   (setq denote-excluded-directories-regexp "archive")
   (denote-rename-buffer-mode 1)
+  (setq denote-save-buffers t)
   (setq denote-rename-no-confirm t)
   (setq denote-rename-buffer-format "[D] %t")
   (setq denote-backlinks-show-context t)
@@ -36,7 +38,9 @@
 		 :link denote-org-link-format
 		 :link-in-context-regexp denote-org-link-in-context-regexp))
   :config
-  (require 'denote-org-dblock))
+  (require 'denote-org-extras)
+  ;; (require 'denote-silo-extras)
+  )
 
 (defun +create-free-writing (title)
   (interactive "sWhat's in your mind? ")

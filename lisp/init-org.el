@@ -7,12 +7,14 @@
 (setq org-log-done 'time)
 ;; org-download configuration
 (setq org-startup-folded 'overview)
+(setq org-special-ctrl-a/e t)
+
 
 
 (setq org-src-preserve-indentation nil
       org-edit-src-content-indentation 0)
 
-;; ?? 
+;; ??
 (setq org-M-RET-may-split-line nil)
 (setq org-insert-heading-respect-content t)
 ;;
@@ -22,27 +24,32 @@
   :ensure nil
   :diminish)
 
+
+(defun +org-journal-narrow-to-today ()
+  (unless (buffer-narrowed-p)
+	(save-excursion
+	  (progn
+		(outline-up-heading 1)
+		(org-narrow-to-subtree)))))
+
 (use-package org-journal
   :after org
   :commands (org-journal-new-entry)
   :config
   (setq org-journal-file-type 'yearly
-	org-journal-file-format "%Y.org.age"
-	org-journal-file-header "#+TITLE: Year %Y Journal"
-	org-journal-date-prefix "* "
-	org-journal-date-format "%a, %Y-%m-%d"
-	org-journal-time-prefix "** "
-	org-journal-encrypt-journal nil
-	org-journal-dir (expand-file-name "journal" org-directory)
-	))
+		org-journal-file-format "%Y.org.age"
+		org-journal-file-header "#+TITLE: Year %Y Journal"
+		org-journal-date-prefix "* "
+		org-journal-date-format "%a, %Y-%m-%d"
+		org-journal-time-prefix "** "
+		org-journal-encrypt-journal nil
+		org-journal-dir (expand-file-name "journal" org-directory)
+		)
+
+  )
 
 (use-package org-download
   :commands (org-download-clipboard org-download-image)
-  :init
-  ;; (dir-locals-set-class-variables 'org-download-hugo-directory
-  ;; 				  '((org-mode . ((org-download-image-dir . "./images")))))
-  ;; (dir-locals-set-directory-class
-  ;;  "~/Documents/Blog/content/" 'org-download-hugo-directory)
   :config
   (setq org-download-display-inline-images nil)
   (setq-default org-download-heading-lvl nil)
@@ -54,7 +61,7 @@
   (defun dummy-org-download-annotate-function (link)
     "")
   (setq org-download-annotate-function
-	#'dummy-org-download-annotate-function)
+		#'dummy-org-download-annotate-function)
   )
 (defun my/org-download-file-path ()
   (interactive)
@@ -63,9 +70,9 @@
   )
 
 (setq org-agenda-files `(
-			 ,(expand-file-name "gtd.org" org-directory)
-			 ,(expand-file-name "capture.org" org-directory)
-			 ))
+						 ,(expand-file-name "gtd.org" org-directory)
+						 ,(expand-file-name "capture.org" org-directory)
+						 ))
 
 (setq org-file-apps-gnu '((remote . emacs)
                           (system . "open %s")
@@ -73,10 +80,10 @@
                           ("eps.gz" . "gv %s")
                           ("dvi" . "xdvi %s")
                           ("fig" . "xfig %s")
-			  ("webm" . "mpv %s")
+						  ("webm" . "mpv %s")
                           (t . "open %s")
                           (".png" . "open %s")
-			  ))
+						  ))
 
 
 
@@ -89,7 +96,8 @@
 ;; Improve org mode looks
 (setq org-startup-indented t
       org-pretty-entities t
-      org-startup-with-inline-images nil)
+      org-startup-with-inline-images t
+      org-image-actual-width 300)
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -171,6 +179,34 @@
                           ("\\cc?\\( \\)?[/+*_=~][^a-zA-Z0-9/+*_=~\n]+?[/+*_=~]\\( \\)\\cc"
                            (2 (prog1 () (compose-region (match-beginning 2) (match-end 2) "")))))
                         'append)
+
+
+;; 用来标注 inline 的关键字
+(font-lock-add-keywords 'org-mode
+						'(("@comment.*$" . font-lock-comment-face)
+						  ("@question.*$" . font-lock-warning-face)
+						  ("@todo.*$" . font-lock-warning-face)
+						  ("@summary.*$" . font-lock-type-face)))
+
+
+
+;; 不使用 _x 形式的下标
+(setq org-use-sub-superscripts nil)
+
+
+(setq org-archive-location (concat org-directory "archive.org::* From %s"))
+
+
+(use-package org-tidy
+  :config
+  (setq org-tidy-properties-inline-symbol "⛮"))
+
+
+(org-babel-do-load-languages 'org-babel-load-languages
+							 '((shell . t)))
+
+(use-package org-novelist
+  :load-path "git/org-novelist")
 
 
 (provide 'init-org)

@@ -27,7 +27,10 @@ org-mode
 (capt "#+CAPTION: ")
 (bash "#+begin_src bash" n> r> n "#+end_src" :post (org-edit-src-code))
 (chess "#+begin_src chess" n> r> n "#+end_src" :post (org-edit-src-code))
-
+(cc "@comment ")
+(cq "@question ")
+(ct "@todo ")
+(cs "@summary ")
 
 markdown-mode
 (kbd "<kbd>" p "</kbd>")
