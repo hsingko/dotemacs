@@ -60,7 +60,7 @@
               '(rime-predicate-current-uppercase-letter-p
                 rime-predicate-space-after-cc-p))
 
-(setq rime-show-candidate 'minibuffer)
+(setq rime-show-candidate 'message)
 (setq rime-posframe-properties nil)
 (setq rime-posframe-style 'horizontal)
 (setq rime-show-preedit t)

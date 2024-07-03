@@ -157,7 +157,7 @@
 
 (use-package spacious-padding
   :config
-  (setq spacious-padding-subtle-mode-line t)
+  ;; (setq spacious-padding-subtle-mode-line t)
   (setq spacious-padding-widths
 		'( :internal-border-width 5
            :header-line-width 4
@@ -165,8 +165,7 @@
            :tab-width 4
            :right-divider-width 30
            :scroll-bar-width 8))
-  (spacious-padding-mode)
-  )
+  (spacious-padding-mode))
 
 (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "»")
                                        ;; ("#+END_SRC" . "«")
@@ -203,8 +202,8 @@
   )
 
 (use-package mixed-pitch
-  ;; :hook
-  ;; (olivetti-mode . mixed-pitch-mode)
+  :hook
+  (olivetti-mode . mixed-pitch-mode)
   :config
   (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-document-info-keyword)
   (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-document-info))
@@ -236,6 +235,23 @@
   :hook
   (dired-mode . all-the-icons-dired-mode))
 
+
+(use-package mini-echo
+  :config
+  ;; set default segments of long/short style
+  (setq mini-echo-default-segments
+        '(:long ("major-mode" "buffer-name" "vcs" "buffer-position"
+                 "buffer-size" "flymake" "process" "selection-info"
+                 "narrow" "macro" "profiler" "meow")
+                :short ("buffer-name-short" "buffer-position" "process"
+                        "profiler" "selection-info" "narrow" "macro" "meow" )))
+  (mini-echo-mode))
+
+;; 由于用了 mini-echo 所以需要这个包来区分 windows
+;; mini-echo 的开发计划里也有这个功能，所以就期待它的更新吧
+(use-package auto-dim-other-buffers
+  :config
+  (auto-dim-other-buffers-mode))
 
 
 (provide 'init-ui)
