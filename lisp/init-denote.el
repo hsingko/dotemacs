@@ -9,10 +9,10 @@
   :init
   (setq denote-directory (expand-file-name "notes" org-directory)
         denote-file-type "org"
-	denote-silo-extras-directories (list (expand-file-name "secret/" org-directory))
+		denote-silo-extras-directories (list (expand-file-name "silos/" org-directory))
         denote-dired-directories (list
                                   denote-directory
-				  "~/Pictures/"))
+								  "~/Pictures/"))
 
   ;; :config
   (setq denote-excluded-directories-regexp "archive")
@@ -25,18 +25,18 @@
   (add-hook 'dired-mode-hook #'my/denote-dired-mode-hook)
   ;; add *.org.age note type, for security
   (add-to-list 'denote-file-types
-	       '(age
-		 :extension ".org.age"
-		 :date-function denote-date-org-timestamp
-		 :front-matter denote-org-front-matter
-		 :title-key-regexp "^#\\+title\\s-*:"
-		 :title-value-function identity
-		 :title-value-reverse-function denote-trim-whitespace
-		 :keywords-key-regexp "^#\\+filetags\\s-*:"
-		 :keywords-value-function denote-format-keywords-for-org-front-matter
-		 :keywords-value-reverse-function denote-extract-keywords-from-front-matter
-		 :link denote-org-link-format
-		 :link-in-context-regexp denote-org-link-in-context-regexp))
+			   '(age
+				 :extension ".org.age"
+				 :date-function denote-date-org-timestamp
+				 :front-matter denote-org-front-matter
+				 :title-key-regexp "^#\\+title\\s-*:"
+				 :title-value-function identity
+				 :title-value-reverse-function denote-trim-whitespace
+				 :keywords-key-regexp "^#\\+filetags\\s-*:"
+				 :keywords-value-function denote-format-keywords-for-org-front-matter
+				 :keywords-value-reverse-function denote-extract-keywords-from-front-matter
+				 :link denote-org-link-format
+				 :link-in-context-regexp denote-org-link-in-context-regexp))
   :config
   (require 'denote-org-extras)
   ;; (require 'denote-silo-extras)

@@ -27,7 +27,7 @@
 
 
 (use-package dired-narrow)
-(use-package dired-subtree)
+;; (use-package dired-subtree)
 
 (use-package casual-dired
   :bind (:map dired-mode-map ("C-o" . #'casual-dired-tmenu)))

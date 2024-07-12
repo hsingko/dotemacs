@@ -6,8 +6,8 @@
 (setq cursor-type 'bar)
 
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "JetBrains Mono"  :size 15 :weight 'light))
-(set-face-attribute 'variable-pitch nil :font (font-spec :family "Literata" :size 15  :weight 'light))
+(set-face-attribute 'default nil :font (font-spec :family "JetBrains Mono"  :size 14 :weight 'regular))
+(set-face-attribute 'variable-pitch nil :font (font-spec :family "Literata" :size 14  :weight 'regular))
 (set-fontset-font t 'han (font-spec :family "LXGW WenKai Mono TC"))
 (set-fontset-font t 'cjk-misc (font-spec :family "LXGW WenKai Mono TC"))
 (set-fontset-font t 'kana "Noto Serif CJK JP")
@@ -62,7 +62,6 @@
   (org-modern-timestamp nil)
   (org-modern-block-name nil)
   ;; (org-modern-fold-stars '(("⮞" . "⮟") ("⮚" . "⮛") ("▶" . "▼") ("▷" . "▽")))
-  ;; (org-modern-fold-stars nil)
   ;; (org-modern-radio-target nil)
   ;; (org-modern-internal-target nil)
   :config
@@ -93,20 +92,8 @@
 (use-package ef-themes
   :config
   (setq ef-themes-mixed-fonts t)
-  (setq ef-themes-variable-pitch-ui t)
-  ;; (setq ef-themes-headings ; read the manual's entry or the doc string
-  ;; 		'(
-  ;; 		  (0 variable-pitch  )
-  ;;         (1 variable-pitch  )
-  ;;         (2 variable-pitch  )
-  ;;         (3 variable-pitch  )
-  ;;         (4 variable-pitch  )
-  ;;         (5 variable-pitch 1.1) ; absence of weight means `bold'
-  ;;         (6 variable-pitch 1.1)
-  ;;         (7 variable-pitch 1.1)
-  ;;         (t variable-pitch 1.1)
-  ;; 		  ))
-  (load-theme 'ef-light t)
+  ;; (setq ef-themes-variable-pitch-ui t)
+  (load-theme 'ef-deuteranopia-dark t)
   (defun custom-ef-looks ()
     (set-face-attribute 'org-quote nil :slant 'italic)
     (set-face-attribute 'org-block nil :height 110)
@@ -157,7 +144,7 @@
 
 (use-package spacious-padding
   :config
-  ;; (setq spacious-padding-subtle-mode-line t)
+  (setq spacious-padding-subtle-mode-line t)
   (setq spacious-padding-widths
 		'( :internal-border-width 5
            :header-line-width 4
@@ -168,9 +155,9 @@
   (spacious-padding-mode))
 
 (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "»")
-                                       ;; ("#+END_SRC" . "«")
-                                       ("#+END_SRC" . "")
+                                       ("#+END_SRC" . "«")
                                        ("#+begin_src" . "»")
+                                       ("#+end_src" . "«")
 									   ("#+begin_comment" . "@")
 									   ("#+end_comment" . "")
                                        ("#+end_src" . "")
@@ -183,11 +170,13 @@
 
 (setq display-buffer-alist '(
 							 ("\\*Async Shell Command\\*"
-							  (display-buffer-no-window))))
+							  (display-buffer-no-window))
+							 ("\\*xeft\\*"
+							  (display-buffer-at-bottom))))
 
 
 ;; 保证光标在跳转之后，完全显示当前行
-(setq scroll-margin 3)
+(setq scroll-margin 1)
 
 (use-package tab-bar
   :config
@@ -202,8 +191,9 @@
   )
 
 (use-package mixed-pitch
-  :hook
-  (olivetti-mode . mixed-pitch-mode)
+  ;; :hook
+  ;; (org-mode . mixed-pitch-mode)
+  ;; (markdown-mode . mixed-pitch-mode)
   :config
   (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-document-info-keyword)
   (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-document-info))
@@ -235,23 +225,15 @@
   :hook
   (dired-mode . all-the-icons-dired-mode))
 
-
-(use-package mini-echo
-  :config
-  ;; set default segments of long/short style
-  (setq mini-echo-default-segments
-        '(:long ("major-mode" "buffer-name" "vcs" "buffer-position"
-                 "buffer-size" "flymake" "process" "selection-info"
-                 "narrow" "macro" "profiler" "meow")
-                :short ("buffer-name-short" "buffer-position" "process"
-                        "profiler" "selection-info" "narrow" "macro" "meow" )))
-  (mini-echo-mode))
-
 ;; 由于用了 mini-echo 所以需要这个包来区分 windows
 ;; mini-echo 的开发计划里也有这个功能，所以就期待它的更新吧
 (use-package auto-dim-other-buffers
   :config
   (auto-dim-other-buffers-mode))
 
+(use-package markdown-mode
+  :mode (("\\.md$" . markdown-mode))
+  :config
+  (set-face-attribute 'markdown-pre-face nil :height 110))
 
 (provide 'init-ui)

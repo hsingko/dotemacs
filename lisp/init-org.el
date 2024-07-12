@@ -9,6 +9,22 @@
 (setq org-startup-folded 'overview)
 (setq org-special-ctrl-a/e t)
 
+(defun +get-short-uid ()
+  (replace-regexp-in-string
+   "\n$" ""
+   (shell-command-to-string "~/.npm-packages/bin/suid -l 6")))
+
+(defun +org-yank-image-suid-filename ()
+  "autogenerate filename with suid"
+  (+get-short-uid))
+
+(use-package org
+  :mode (("\\.org$" . org-mode))
+  :config
+  (setq org-yank-image-save-method"~/Documents/org/images/")
+  (setq org-yank-image-file-name-function #'+org-yank-image-suid-filename)
+  (add-to-list 'org-modules 'org-habit t))
+
 
 
 (setq org-src-preserve-indentation nil
@@ -97,13 +113,15 @@
 (setq org-startup-indented t
       org-pretty-entities t
       org-startup-with-inline-images t
-      org-image-actual-width 300)
+      org-image-actual-width 500)
+
 
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp .t)
    (python . t)
    (scheme . t)
+   (C . t)
    ))
 (setq org-confirm-babel-evaluate nil)
 
@@ -184,6 +202,7 @@
 ;; 用来标注 inline 的关键字
 (font-lock-add-keywords 'org-mode
 						'(("@comment.*$" . font-lock-comment-face)
+						  ("@source.*$" . font-lock-comment-face)
 						  ("@question.*$" . font-lock-warning-face)
 						  ("@todo.*$" . font-lock-warning-face)
 						  ("@summary.*$" . font-lock-type-face)))
@@ -197,9 +216,9 @@
 (setq org-archive-location (concat org-directory "archive.org::* From %s"))
 
 
-(use-package org-tidy
-  :config
-  (setq org-tidy-properties-inline-symbol "⛮"))
+;; (use-package org-tidy
+;;   :config
+;;   (setq org-tidy-properties-inline-symbol "⛮"))
 
 
 (org-babel-do-load-languages 'org-babel-load-languages
@@ -208,5 +227,6 @@
 (use-package org-novelist
   :load-path "git/org-novelist")
 
+(use-package org-habit-stats)
 
 (provide 'init-org)

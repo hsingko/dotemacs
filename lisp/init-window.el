@@ -15,6 +15,7 @@
               '("^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
                 "^\\*shell.*\\*$"  shell-mode  ;shell as a popup
                 "^\\*term.*\\*$"   term-mode   ;term as a popup
+                "^\\*eat.*\\*$"   eat-mode   ;term as a popup
                 )))
   (popper-mode +1)
   (popper-echo-mode +1))

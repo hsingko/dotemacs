@@ -23,8 +23,8 @@
 
 (setq-default frame-title-format '("%b"))
 
-;; (set-frame-parameter nil 'alpha-background 95)
-;; (add-to-list 'default-frame-alist '(alpha-background . 95))
+(set-frame-parameter nil 'alpha-background 95)
+(add-to-list 'default-frame-alist '(alpha-background . 95))
 
 ;;; not sure what it does
 (setq frame-resize-pixelwise t)

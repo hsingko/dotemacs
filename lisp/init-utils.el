@@ -6,7 +6,7 @@
 (defun +delete-this-file()
   "kill this file and buffer with no confirm"
   (interactive)
-  (delete-file (buffer-file-name))
+  (delete-file (buffer-file-name) t)
   (kill-this-buffer))
 
 

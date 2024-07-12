@@ -116,9 +116,10 @@
   ;; (custom-set-faces
   ;;  '(meow-normal-cursor ((t (:background "#DC143C"))))
   ;;  '(meow-insert-cursor ((t (:inherit font-lock-keyword-face)))))
-  (add-hook 'ef-themes-post-load-hook (lambda ()
-					(custom-set-faces
-					 '(meow-insert-cursor ((t (:inherit font-lock-keyword-face))))))))
+  ;; (add-hook 'ef-themes-post-load-hook (lambda ()
+  ;; 					(custom-set-faces
+  ;; 					 '(meow-insert-cursor ((t (:inherit font-lock-keyword-face)))))))
+  )
 
 
 ;; (use-package meow-tree-sitter

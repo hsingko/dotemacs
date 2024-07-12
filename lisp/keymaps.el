@@ -78,7 +78,7 @@
 (keymap-global-set "C-c b" hsk/buffer-opt-map)
 
 ;; bookmark
-(global-set-key (kbd "C-c <RET>") #'consult-bookmark)
+;; (global-set-key (kbd "C-c <RET>") #'consult-bookmark) 
 (global-set-key (kbd "C-c b m") #'bookmark-set)
 ;; file
 (defvar-keymap hsk/file-opt-map

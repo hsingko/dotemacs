@@ -5,9 +5,9 @@
 (defun +rime-predicate-line-begin-with-left-arrow ()
   (and (<= (point) (save-excursion (back-to-indentation) (point)))
        (or
-	(= #x3c rime--current-input-key)
-	(= #x7c rime--current-input-key)
-	(= #x28 rime--current-input-key))))
+		(= #x3c rime--current-input-key)
+		(= #x7c rime--current-input-key)
+		(= #x28 rime--current-input-key))))
 
 (defun +rime-predicates-basic ()
   "The basic necessary predicates combination."
@@ -49,8 +49,8 @@
                 rime-predicate-org-latex-mode-p
                 rime-predicate-punctuation-after-space-cc-p
                 rime-predicate-punctuation-after-ascii-p
-		rime-predicate-after-ascii-char-p ;; 为了使用 abbrev 模式
-		))
+				rime-predicate-after-ascii-char-p ;; 为了使用 abbrev 模式
+				))
 
 (if (featurep 'meow)
     (add-to-list 'rime-disable-predicates '+rime-predicate-meow-mode-p))
@@ -70,8 +70,22 @@
   (default-input-method "rime")
   :config
   ;; (bind-key "C-`" 'rime-send-keybinding rime-mode-map)
+  ;; use message to display predicts, necessary to work with mini-echo
+  ;; unmerged bug fix: https://github.com/DogLooksGood/emacs-rime/pull/218
+  (defun rime--message-display-content (content)
+	"Display CONTENT via message."
+	(if (string-blank-p content)
+		(message "")
+      (let ((inhibit-quit t)
+			(message-log-max nil))
+		(with-temp-message
+			content
+          (sit-for most-positive-fixnum))
+		(when quit-flag
+          (setq quit-flag nil
+				unread-command-events '(7))))))
   (add-hook 'kill-emacs-hook (lambda ()
-			       (ignore-errors (rime-lib-finalize))))
+							   (ignore-errors (rime-lib-finalize))))
   )
 
 ;; 中文断行问题
@@ -98,4 +112,3 @@
 (use-package unicad)
 
 (provide 'init-cn)
-

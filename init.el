@@ -1,11 +1,11 @@
 
 ;; package management
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("elpa" . "https://elpa.gnu.org/packages") t)
-;; (setq package-archives '(("gnu"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-;;                          ("nongnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
-;;                          ("melpa"  . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; (add-to-list 'package-archives '("elpa" . "https://elpa.gnu.org/packages") t)
+(setq package-archives '(("gnu"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("nongnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
+                         ("melpa"  . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
 (package-initialize) ;; You might already have this line
 (unless package-archive-contents
@@ -18,13 +18,15 @@
 (add-to-list 'exec-path "/home/rookie/.cargo/bin")
 (add-to-list 'exec-path "/home/rookie/go/bin")
 (add-to-list 'exec-path "/home/rookie/.local/bin/")
+(add-to-list 'exec-path "/home/rookie/.npm-packages/bin/")
 
 (setq use-package-enable-imenu-support t) ;; this line must placed before import `use-package`
 (require 'use-package)
 (setq use-package-always-ensure t)
 (setq use-package-compute-statistics t)
 
-(fset 'yes-or-no-p 'y-or-n-p)
+(setq use-short-answers t)
+
 (setq custom-file "~/.emacs.d/custom.el")
 
 ;; change auto-save directory
@@ -35,7 +37,7 @@
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'init-ui)
-(require 'init-meow)
+;; (require 'init-meow)
 (require 'init-consult)
 (require 'init-vertico)
 (require 'init-marginalia)
@@ -52,19 +54,20 @@
 (require 'init-rg)
 (require 'init-embark)
 (require 'init-builtin)
-;; (require 'init-window)
+(require 'init-window)
 (require 'init-helper)
 (require 'init-xeft)
 (require 'init-html)
 (require 'init-formater)
 (require 'init-shellcmd)
 (require 'init-corfu)
+(require 'init-eglot)
+;; (require 'init-bridge)
 (require 'init-magit)
 (require 'init-undo)
 (require 'init-phisearch)
-;; (require 'init-bookmark)
 (require 'denote-image)
-;; (require 'init-mpv)
+
 
 (load "consult-buku.el")
 
@@ -85,8 +88,6 @@
   :config
   (unless (server-running-p)
     (server-start)))
-
-
 
 ;; marks
 (setq-default set-mark-command-repeat-pop t)
@@ -120,7 +121,8 @@
 (setq auto-insert-query nil)
 (define-auto-insert "\\.org\\'"
   (lambda ()
-    (unless (file-in-directory-p (buffer-file-name) "~/Documents/org/notes/") ;; 如果使用 denote-directory 来判断则会产生对 denote 加载的依赖
+    (unless (or (file-in-directory-p (buffer-file-name) "~/Documents/org/notes/")
+				(file-in-directory-p (buffer-file-name) "~/Documents/org/silos/")) ;; 如果使用 denote-directory 来判断则会产生对 denote 加载的依赖
       (insert "#+title: " (file-name-base (buffer-file-name)) "\n")
       (insert "#+date: " (format-time-string "%Y-%m-%dT%H:%M:%S%z") "\n" )
       (newline)
@@ -157,11 +159,8 @@
 
 (setq enable-local-variables :safe)
 
-
 ;; suppress native comp warnings
 (setq native-comp-async-report-warnings-errors nil)
-
-
 
 (use-package the-magical-str
   :after consult
@@ -170,10 +169,10 @@
 (defun consult-denote-pinyin ()
   (interactive)
   (find-file (consult--read (mapcar (lambda (fn)
-				      (cons (get-magical-str (file-relative-name fn denote-directory))
-					    fn))
-				    (denote-directory-files))
-			    :lookup #'consult--lookup-cdr)))
+									  (cons (get-magical-str (file-relative-name fn denote-directory))
+											fn))
+									(denote-directory-files))
+							:lookup #'consult--lookup-cdr)))
 
 
 
@@ -213,12 +212,12 @@
   ;; (add-hook 'org-mode-hook #'zhau-abbrev-mode)
   )
 
-
-
-;; (use-package binky
-;;   :config
-;;   (binky-mode)
-;;   (binky-margin-mode))
+(use-package binky
+  :bind
+  (("M-k" . #'binky-binky))
+  :config
+  (binky-mode)
+  (binky-margin-mode))
 
 
 (setq garbage-collection-messages t)
@@ -232,9 +231,9 @@
 (setq ring-bell-function 'ignore)
 
 (setq-default abbrev-mode 1)
-(setq save-abbrevs nil) ;; 不提示保存 abbrev 
+(setq save-abbrevs nil) ;; 不提示保存 abbrev
 
-
+;; generate linear range code
 (use-package tiny
   :config
   (tiny-setup-default))
@@ -242,23 +241,46 @@
 
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
 
-(use-package eglot
-  :ensure nil
-  :defer t
-  :hook (python-ts-mode . eglot-ensure))
-
-(use-package toggle-term
-  :bind (("C-` C-f" . toggle-term-find)
-         ("C-` C-t" . toggle-term-term)
-         ("C-` C-s" . toggle-term-shell)
-         ("C-` C-e" . toggle-term-eshell)
-         ("C-` C-i" . toggle-term-ielm)
-         ("C-` C-o" . toggle-term-toggle))
-  :config
-    (setq toggle-term-size 25)
-    (setq toggle-term-switch-upon-toggle t))
+;; 系统垃圾箱管理器，好用的
+(use-package trashed)
 
 
 (use-package casual-avy
   :bind (("M-p" . #'casual-avy-tmenu)))
 
+
+(use-package orgmdb
+  :config
+  (setq orgmdb-omdb-apikey "48f9c561"))
+
+(use-package expand-region
+  :bind ("C-<tab>" . #'er/expand-region)
+  :config
+  (pending-delete-mode))
+
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+
+
+(use-package terminal-here
+  :config
+  (keymap-set global-map "C-<f5>" #'terminal-here-launch)
+  (keymap-set global-map "C-<f6>" #'terminal-here-project-launch)
+  (setq terminal-here-linux-terminal-command 'foot))
+
+
+(use-package ox-hugo
+  :after ox
+  :config
+  (setq org-hugo-default-static-subdirectory-for-externals "images"))
+
+
+;; (use-package surround
+;;   :config
+;;   (keymap-set global-map "M-'" surround-keymap))
+
+(use-package embrace
+  :config
+  (keymap-set global-map "M-'" #'embrace-commander))
+
+(define-key key-translation-map (kbd "ESC") (kbd "C-g")) ;; test if this method is ok

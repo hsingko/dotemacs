@@ -1,9 +1,9 @@
-;;; init-undo.el ---                                 -*- lexical-binding: t; -*-
+;;; pinyin.el --- go pinyin wrap                     -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2023
+;; Copyright (C) 2024  rookie
 
-;; Author:  <erokit@earth>
-;; Keywords:
+;; Author: rookie <rookie@onionhat>
+;; Keywords: 
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -20,23 +20,17 @@
 
 ;;; Commentary:
 
-;;
+;; 
 
 ;;; Code:
 
-(use-package undo-fu
-  :config
-  (global-unset-key (kbd "C-z"))
-  (global-set-key (kbd "C-z") #'undo-fu-only-undo)
-  (global-set-key (kbd "C-S-z") #'undo-fu-only-redo))
 
-(use-package undo-fu-session
-  :config
-  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
-  (undo-fu-session-global-mode))
+(defun pinyin-get-initial-string (str)
+  (replace-regexp-in-string
+   "[ \t\n]" ""
+   (shell-command-to-string
+    (format "pinyin -s z %s" str))))
 
 
-
-
-(provide 'init-undo)
-;;; init-undo.el ends here
+(provide 'pinyin)
+;;; pinyin.el ends here

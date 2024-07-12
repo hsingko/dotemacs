@@ -1,8 +1,8 @@
-;;; init-undo.el ---                                 -*- lexical-binding: t; -*-
+;;; init-eglot.el ---                                -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2023
+;; Copyright (C) 2024  rookie
 
-;; Author:  <erokit@earth>
+;; Author: rookie <rookie@onionhat>
 ;; Keywords:
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -23,20 +23,23 @@
 ;;
 
 ;;; Code:
+(use-package eglot
+  :ensure nil
+  :defer t
+  :hook
+  (python-ts-mode . eglot-ensure)
+  (c-mode . eglot-ensure)
+  (css-mode . eglot-ensure)
+  (mhtml-mode . eglot-ensure))
 
-(use-package undo-fu
-  :config
-  (global-unset-key (kbd "C-z"))
-  (global-set-key (kbd "C-z") #'undo-fu-only-undo)
-  (global-set-key (kbd "C-S-z") #'undo-fu-only-redo))
+(use-package eldoc-box
+  :hook
+  (eglot-managed-mode . eldoc-box-hover-mode))
 
-(use-package undo-fu-session
-  :config
-  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
-  (undo-fu-session-global-mode))
+(use-package eglot-booster
+  :load-path "git/eglot-booster"
+  :after eglot
+  :config	(eglot-booster-mode))
 
-
-
-
-(provide 'init-undo)
-;;; init-undo.el ends here
+(provide 'init-eglot)
+;;; init-eglot.el ends here
