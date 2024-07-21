@@ -15,7 +15,9 @@
   :config
   (vertico-multiform-mode)
   (setq vertico-multiform-commands
-	'((consult-notes (vertico-sort-function . vertico-sort-history-alpha))))
+		'((consult-notes (vertico-sort-function . vertico-sort-history-alpha))
+		  (consult-denote-pinyin grid)
+		  (consult-denote-link grid)))
   (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy))
 
 (use-package orderless

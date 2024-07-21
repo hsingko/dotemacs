@@ -2,7 +2,7 @@
 ;; (setq gc-cons-threshold most-positive-fixnum)
 ;; (setq gc-cons-threshold 2147483648)
 (setq gc-cons-threshold (* 1024 1024 50)
-      gc-cons-percentage 0.2)
+      gc-cons-percentage 0.6)
 
 (setq use-file-dialog nil)
 (setq use-dialog-box nil)

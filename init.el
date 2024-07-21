@@ -171,9 +171,6 @@
 									(denote-directory-files))
 							:lookup #'consult--lookup-cdr)))
 
-(add-to-list 'vertico-multiform-commands
-      '((consult-denote-pinyin grid)))
-
 ;; substitute
 (use-package substitute
   :bind
@@ -292,4 +289,5 @@
 (use-package multiple-cursors
   :bind
   (("C->" . #'mc/mark-next-like-this)
+   ("C-S-c" . #'mc/edit-lines)
    ("C-<" . #'mc/mark-previous-like-this)))

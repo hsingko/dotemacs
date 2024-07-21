@@ -37,11 +37,11 @@
 
 
 (use-package zoxide
-  :config
+  :init
   (defun +zoxide-cd ()
 	(interactive)
 	(cd (completing-read "path:" (zoxide-query) nil t)))
-  
+  :config
   (defun dired-jump-with-zoxide (&optional other-window)
 	(interactive "P")
 	;; (zoxide-open-with nil (lambda (file) (dired-jump other-window file)) t)

@@ -6,7 +6,7 @@
 (setq cursor-type 'bar)
 
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "iA Writer Duo S"  :size 16 :weight 'regular))
+(set-face-attribute 'default nil :font (font-spec :family "SF Mono"  :size 16 :weight 'regular))
 (set-face-attribute 'variable-pitch nil :font (font-spec :family "Courier Prime" :size 16  :weight 'regular))
 (set-fontset-font t 'han (font-spec :family "LXGW WenKai TC"))
 (set-fontset-font t 'cjk-misc (font-spec :family "LXGW WenKai TC"))
