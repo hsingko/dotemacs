@@ -1,19 +1,21 @@
 ;; unmap default
-(global-unset-key (kbd "M-j")) ;; default-indent-new-line
-(global-unset-key (kbd "M-k")) ;; forward-word
+;; (global-unset-key (kbd "M-j")) ;; default-indent-new-line
+;; (global-unset-key (kbd "M-k")) ;; forward-word
+
 (global-unset-key (kbd "C-SPC"))
 (global-unset-key (kbd "S-<delete>"))
 ;; embrace the power of avy!
 (global-set-key (kbd "M-j") #'avy-goto-char-timer)
 (global-set-key (kbd "M-c") #'avy-goto-char-2)
-(global-unset-key (kbd "C-\\"))
-(global-set-key (kbd "M-m") #'toggle-input-method)
+;; (global-unset-key (kbd "C-\\"))
+;; (global-set-key (kbd "M-m") #'toggle-input-method)
 
 
-(global-set-key (kbd "C-c w h") #'split-window-horizontally)
-(global-set-key (kbd "C-c w v") #'split-window-vertically)
-(global-set-key (kbd "C-c w c") #'delete-window)
-(global-set-key (kbd "C-c w C") #'delete-other-windows)
+;; (global-set-key (kbd "C-c w h") #'split-window-horizontally)
+;; (global-set-key (kbd "C-c w v") #'split-window-vertically)
+;; (global-set-key (kbd "C-c w c") #'delete-window)
+;; (global-set-key (kbd "C-c w C") #'delete-other-windows)
+
 ;; winner mode
 (winner-mode)
 (global-set-key (kbd "C-c w u") #'winner-undo)
@@ -73,7 +75,6 @@
   "n" #'next-buffer
   "k" #'kill-current-buffer
   "s" #'basic-save-buffer
-  "b" #'consult-buffer
   "x" #'scratch-buffer)
 (keymap-global-set "C-c b" hsk/buffer-opt-map)
 
@@ -103,7 +104,6 @@
   "e" #'emoji-search)
 
 (keymap-global-set "C-c q" hsk/quick-utils-map)
-(keymap-global-set "C-c h" #'consult-theme)
 
 
 ;; agenda
@@ -112,20 +112,23 @@
 (global-set-key (kbd "C-SPC") #'set-mark-command)
 
 
-;; (defvar-keymap hsk/avy-line-map
-;;   :doc "quick avy line magic"
-;;   "l" #'avy-goto-line
-;;   "a" #'avy-goto-line-above
-;;   "b" #'avy-goto-line-below
-;;   "m" #'avy-move-line
-;;   "c" #'avy-copy-line
-;;   "k" #'avy-kill-whole-line)
 
-;; (keymap-global-set "M-l" hsk/avy-line-map)
+(keymap-global-set "C-x C-b" #'consult-buffer)
+(keymap-global-set "C-c q t" #'modus-themes-toggle)
+(keymap-global-set "C-c q d" #'+zoxide-cd)
+
+;; org-fc
+(defvar-keymap org-fc-keymap
+  :doc "org-fc keymaps"
+  "r" #'org-fc-review-buffer
+  "R" #'org-fc-review-all
+  "n" #'org-fc-type-normal-init
+  "c" #'org-fc-type-cloze-init)
+(keymap-global-set "C-c h" org-fc-keymap)
 
 
-
-
+(keymap-global-set "C-x C-n" #'next-buffer)
+(keymap-global-set "C-x C-p" #'previous-buffer)
 
 (provide 'keymaps)
 

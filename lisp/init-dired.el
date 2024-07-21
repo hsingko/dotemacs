@@ -2,10 +2,12 @@
   :ensure nil
   :bind
   (:map dired-mode-map
-	("h" . dired-up-directory)
-	("l" . dired-find-file)
-	("N" . dired-narrow)
-	("E" . hsk/add-book-to-calibredb))
+		("h" . dired-up-directory)
+		("j" . dired-next-line)
+		("k" . dired-previous-line)
+		("l" . dired-find-file)
+		("N" . dired-narrow)
+		("E" . hsk/add-book-to-calibredb))
   :config
   (setq dired-bind-man nil)
   (setq dired-listing-switches "-alhv --group-directories-first")
@@ -30,7 +32,24 @@
 ;; (use-package dired-subtree)
 
 (use-package casual-dired
+  :commands dired
   :bind (:map dired-mode-map ("C-o" . #'casual-dired-tmenu)))
+
+
+(use-package zoxide
+  :config
+  (defun +zoxide-cd ()
+	(interactive)
+	(cd (completing-read "path:" (zoxide-query) nil t)))
+  
+  (defun dired-jump-with-zoxide (&optional other-window)
+	(interactive "P")
+	;; (zoxide-open-with nil (lambda (file) (dired-jump other-window file)) t)
+	(zoxide-open-with nil (lambda (file) (dired file)) t)
+	)
+  :bind
+  (:map dired-mode-map
+		("P" . dired-jump-with-zoxide)))
 
 
 (provide 'init-dired)

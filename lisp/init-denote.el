@@ -19,7 +19,7 @@
   (denote-rename-buffer-mode 1)
   (setq denote-save-buffers t)
   (setq denote-rename-no-confirm t)
-  (setq denote-rename-buffer-format "[D] %t")
+  (setq denote-rename-buffer-format "📝 %t")
   (setq denote-backlinks-show-context t)
   (setq xref-search-program 'ugrep)
   (add-hook 'dired-mode-hook #'my/denote-dired-mode-hook)

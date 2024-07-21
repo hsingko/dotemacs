@@ -1,5 +1,9 @@
 (use-package calibredb
   :commands (calibredb)
+  :bind
+  (:map calibredb-search-mode-map
+		("C-v" . calibredb-search-next-page)
+		("M-v" . calibredb-search-previous-page))
   :config
   (setq calibredb-preferred-format 'epub)
   (setq calibredb-root-dir "~/Documents/CalibreBooks/")

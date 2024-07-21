@@ -18,7 +18,8 @@
       (corfu-mode 1)))
   (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
   :init
-  (add-hook 'prog-mode-hook #'corfu-mode))
+  (add-hook 'prog-mode-hook #'corfu-mode)
+  (add-hook 'inferior-python-mode-hook #'corfu-mode))
 
 (use-package cape
   :init
@@ -29,6 +30,8 @@
   (add-to-list 'completion-at-point-functions #'cape-keyword)
   (add-to-list 'completion-at-point-functions #'cape-abbrev))
 
+
+;;; 似乎需要执行一次 kind-icon-preview-all 之后才能下载图标并正常显示
 (use-package kind-icon
   :after corfu
   :custom

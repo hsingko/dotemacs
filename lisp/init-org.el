@@ -23,7 +23,15 @@
   :config
   (setq org-yank-image-save-method"~/Documents/org/images/")
   (setq org-yank-image-file-name-function #'+org-yank-image-suid-filename)
-  (add-to-list 'org-modules 'org-habit t))
+  (add-to-list 'org-modules 'org-habit t)
+  (set-face-attribute 'org-quote nil :slant 'italic)
+  (set-face-attribute 'org-block nil :height 110)
+  ;; (set-face-attribute 'org-link nil :height 110)
+  (set-face-attribute 'org-tag nil :height 100)
+  (setq org-display-remote-inline-images 'cache)
+  (setq org-image-align 'center)
+  (setq org-agenda-tags-column 0)
+  (define-key org-mode-map (kbd "C-,") nil))
 
 
 
@@ -225,8 +233,16 @@
 							 '((shell . t)))
 
 (use-package org-novelist
+  :defer t
   :load-path "git/org-novelist")
 
-(use-package org-habit-stats)
+(use-package org-habit-stats
+  :commands org-agenda)
+
+(use-package verb
+  :after org)
+
+
 
 (provide 'init-org)
+

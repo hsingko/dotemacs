@@ -6,10 +6,10 @@
 (setq cursor-type 'bar)
 
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "JetBrains Mono"  :size 14 :weight 'regular))
-(set-face-attribute 'variable-pitch nil :font (font-spec :family "Literata" :size 14  :weight 'regular))
-(set-fontset-font t 'han (font-spec :family "LXGW WenKai Mono TC"))
-(set-fontset-font t 'cjk-misc (font-spec :family "LXGW WenKai Mono TC"))
+(set-face-attribute 'default nil :font (font-spec :family "iA Writer Duo S"  :size 16 :weight 'regular))
+(set-face-attribute 'variable-pitch nil :font (font-spec :family "Courier Prime" :size 16  :weight 'regular))
+(set-fontset-font t 'han (font-spec :family "LXGW WenKai TC"))
+(set-fontset-font t 'cjk-misc (font-spec :family "LXGW WenKai TC"))
 (set-fontset-font t 'kana "Noto Serif CJK JP")
 
 (use-package org
@@ -81,42 +81,36 @@
   (org-mode . olivetti-mode)
   (markdown-mode . olivetti-mode)
   :config
+  (setq olivetti-style 'fancy)
   (add-hook 'olivetti-mode-on-hook #'(lambda ()
 									   (text-scale-increase 1)
 									   (setq-local line-spacing 0.2)))
   (add-hook 'olivetti-mode-off-hook #'(lambda ()
 										(text-scale-decrease 1)
 										(setq-local line-spacing nil)))
-  (setq-default olivetti-body-width 65))
+  (setq-default olivetti-body-width 70))
 
-(use-package ef-themes
+
+(use-package emacs
+  :ensure nil
   :config
-  (setq ef-themes-mixed-fonts t)
-  ;; (setq ef-themes-variable-pitch-ui t)
-  (load-theme 'ef-deuteranopia-dark t)
-  (defun custom-ef-looks ()
-    (set-face-attribute 'org-quote nil :slant 'italic)
-    (set-face-attribute 'org-block nil :height 110)
-    (set-face-attribute 'org-link nil :height 110)
-    (set-face-attribute 'org-tag nil :height 100)
-    ;; (set-face-attribute 'org-meta-line nil :family "Iosevka Comfy" )
-    ;; (set-face-attribute 'org-document-info nil :family "Iosevka Comfy")
-    (set-face-attribute 'org-block-begin-line nil :height 110 :background nil)
-    (set-face-attribute 'mode-line-inactive nil :height 110)
-    (set-face-attribute 'mode-line nil :height 110)
-    ;; (custom-set-faces
-    ;;  '(mode-line ((t (:height 0.9)))))
-    (set-face-attribute 'org-block-end-line nil :height 110 :background nil))
-  (custom-ef-looks)
-  (add-hook 'ef-themes-post-load-hook 'custom-ef-looks))
-
+  (require-theme 'modus-themes)
+  (setq modus-themes-to-toggle '(modus-operandi-deuteranopia modus-vivendi-tinted))
+  (setq modus-themes-italic-constructs t
+		modus-themes-bold-constructs nil)
+  (setq modus-themes-mixed-fonts t)
+  (setq modus-themes-variable-pitch-ui t)
+  (setq modus-themes-prompts '(italic bold))
+  (setq modus-themes-completions
+      '((matches . (extrabold underline))
+        (selection . (semibold italic))))
+  (load-theme 'modus-operandi-deuteranopia :noconfirm))
 
 (use-package ace-window
   :bind
   (("M-o" . ace-window))
   :config
   (add-to-list 'aw-ignored-buffers "*shell*"))
-
 
 ;; pixel scroll
 (setq scroll-conservatively 100) ;; when next-line/previous-line move point out of screen, move by 1 line stead of scroll half screen and center the pointer
@@ -191,9 +185,10 @@
   )
 
 (use-package mixed-pitch
-  ;; :hook
-  ;; (org-mode . mixed-pitch-mode)
-  ;; (markdown-mode . mixed-pitch-mode)
+  :hook
+  (org-mode . mixed-pitch-mode)
+  (markdown-mode . mixed-pitch-mode)
+  (dired-mode . mixed-pitch-mode)
   :config
   (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-document-info-keyword)
   (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-document-info))
@@ -227,13 +222,14 @@
 
 ;; 由于用了 mini-echo 所以需要这个包来区分 windows
 ;; mini-echo 的开发计划里也有这个功能，所以就期待它的更新吧
-(use-package auto-dim-other-buffers
-  :config
-  (auto-dim-other-buffers-mode))
+;; (use-package auto-dim-other-buffers
+;;   :config
+;;   (auto-dim-other-buffers-mode))
 
 (use-package markdown-mode
   :mode (("\\.md$" . markdown-mode))
   :config
   (set-face-attribute 'markdown-pre-face nil :height 110))
+
 
 (provide 'init-ui)

@@ -1,8 +1,5 @@
-
 ;; package management
 (require 'package)
-;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;; (add-to-list 'package-archives '("elpa" . "https://elpa.gnu.org/packages") t)
 (setq package-archives '(("gnu"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("nongnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
                          ("melpa"  . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
@@ -66,8 +63,9 @@
 (require 'init-magit)
 (require 'init-undo)
 (require 'init-phisearch)
-(require 'denote-image)
-
+;; (require 'denote-image)
+(require 'init-treesit)
+(require 'init-fc)
 
 (load "consult-buku.el")
 
@@ -117,7 +115,7 @@
 (put 'narrow-to-page 'disabled nil)
 
 
-(auto-insert-mode t)
+;; (auto-insert-mode nil)
 (setq auto-insert-query nil)
 (define-auto-insert "\\.org\\'"
   (lambda ()
@@ -163,7 +161,6 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 (use-package the-magical-str
-  :after consult
   :load-path "~/Repo/the-magical-str.el/")
 
 (defun consult-denote-pinyin ()
@@ -174,7 +171,8 @@
 									(denote-directory-files))
 							:lookup #'consult--lookup-cdr)))
 
-
+(add-to-list 'vertico-multiform-commands
+      '((consult-denote-pinyin grid)))
 
 ;; substitute
 (use-package substitute
@@ -284,3 +282,14 @@
   (keymap-set global-map "M-'" #'embrace-commander))
 
 (define-key key-translation-map (kbd "ESC") (kbd "C-g")) ;; test if this method is ok
+
+
+(use-package casual-re-builder
+  :bind (:map reb-mode-map
+			  ("C-o" . casual-re-builder-tmenu)))
+
+
+(use-package multiple-cursors
+  :bind
+  (("C->" . #'mc/mark-next-like-this)
+   ("C-<" . #'mc/mark-previous-like-this)))

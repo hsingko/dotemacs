@@ -32,9 +32,9 @@
   (css-mode . eglot-ensure)
   (mhtml-mode . eglot-ensure))
 
-(use-package eldoc-box
-  :hook
-  (eglot-managed-mode . eldoc-box-hover-mode))
+;; (use-package eldoc-box
+;;   :hook
+;;   (eglot-managed-mode . eldoc-box-hover-mode))
 
 (use-package eglot-booster
   :load-path "git/eglot-booster"

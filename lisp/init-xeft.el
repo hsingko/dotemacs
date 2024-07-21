@@ -3,6 +3,7 @@
   (setq xeft-directory (expand-file-name "wiki" org-directory)
 	xeft-recursive t)
   (setq xeft-default-extension "org")
+  (setq xeft-ignore-extension (list "png" "jpg" "jpeg"))
   (defun my/xeft-create-note ()
     (interactive)
     (let* ((search-phrase (xeft--get-search-phrase))

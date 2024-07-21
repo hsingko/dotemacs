@@ -8,6 +8,7 @@
           "Output\\*$"
           ;; "\\*Async Shell Command\\*"
           help-mode
+		  "^\\*Warnings\\*$"
 	  denote-backlinks-mode
           compilation-mode))
   (setq popper-reference-buffers
@@ -16,6 +17,8 @@
                 "^\\*shell.*\\*$"  shell-mode  ;shell as a popup
                 "^\\*term.*\\*$"   term-mode   ;term as a popup
                 "^\\*eat.*\\*$"   eat-mode   ;term as a popup
+				"^\\*Python\\*$" inferior-python-mode
+				
                 )))
   (popper-mode +1)
   (popper-echo-mode +1))

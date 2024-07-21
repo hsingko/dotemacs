@@ -50,8 +50,8 @@
 (use-package csv-mode)
 
 ;; disable html mode keybindings, it's useless, and conflicts with ace-window
-(with-eval-after-load 'mhtml-mode
-  (define-key mhtml-mode-map (kbd "M-o") nil))
+;; (with-eval-after-load 'mhtml-mode
+;;   (define-key mhtml-mode-map (kbd "M-o") nil))
 
 (use-package systemd)
 

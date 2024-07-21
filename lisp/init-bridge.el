@@ -11,6 +11,9 @@
   (lsp-bridge-enable-completion-in-minibuffer t)
   (lsp-bridge-enable-hover-diagnostic t)
   (lsp-bridge-org-babel t)
+  :config
+  (add-to-list 'lsp-bridge-single-lang-server-mode-list
+			 '(inferior-python-mode . lsp-bridge-python-lsp-server))
   :hook
   (prog-mode . lsp-bridge-mode))
 

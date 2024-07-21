@@ -3,7 +3,8 @@
   :load-path "git/org-fc"
   :custom (org-fc-directories '("~/Documents/org"))
   :config
-  (require 'org-fc-hydra))
+  ;; (require 'org-fc-hydra)
+  )
 
 
 (provide 'init-fc)

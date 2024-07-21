@@ -5,7 +5,9 @@
          :map dired-mode-map
          ([remap dired-do-async-shell-command] . dwim-shell-command)
          ([remap dired-do-shell-command] . dwim-shell-command)
-         ([remap dired-smart-shell-command] . dwim-shell-command))
+         ([remap dired-smart-shell-command] . dwim-shell-command)
+		 ("z" . dwim-shell-commands-unzip)
+		 ("Z" . dwim-shell-commands-zip))
   :config
   (require 'dwim-shell-commands)
   (setq dwim-shell-command-default-command "")
