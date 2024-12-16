@@ -9,7 +9,12 @@
   :init
   (setq denote-directory (expand-file-name "notes" org-directory)
         denote-file-type "org"
-		denote-silo-extras-directories (list (expand-file-name "silos/" org-directory))
+		denote-silo-extras-directories (list (expand-file-name "silos/" org-directory)
+											 (expand-file-name "books/" org-directory)
+											 (expand-file-name "webcapture/" org-directory)
+											 (expand-file-name "music/" org-directory)
+											 (expand-file-name "films/" org-directory)
+											 (expand-file-name "quotes/" org-directory))
         denote-dired-directories (list
                                   denote-directory
 								  "~/Pictures/"))
@@ -19,7 +24,7 @@
   (denote-rename-buffer-mode 1)
   (setq denote-save-buffers t)
   (setq denote-rename-no-confirm t)
-  (setq denote-rename-buffer-format "📝 %t")
+  (setq denote-rename-buffer-format "%t")
   (setq denote-backlinks-show-context t)
   (setq xref-search-program 'ugrep)
   (add-hook 'dired-mode-hook #'my/denote-dired-mode-hook)

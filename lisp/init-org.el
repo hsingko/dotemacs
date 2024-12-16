@@ -6,7 +6,7 @@
 ;; log time after DONE, necessory ox-hugo
 (setq org-log-done 'time)
 ;; org-download configuration
-(setq org-startup-folded 'overview)
+(setq org-startup-folded 'content)
 (setq org-special-ctrl-a/e t)
 
 (defun +get-short-uid ()
@@ -21,6 +21,17 @@
 (use-package org
   :mode (("\\.org$" . org-mode))
   :config
+  (setq org-tags-column 0)
+  (add-to-list 'org-emphasis-alist
+			   '("+" (
+					  :foreground "dark grey"
+					  :strike-through t)))
+  (add-to-list 'org-emphasis-alist
+			   '("~" (:box (
+							:line-width 1
+							:color "grey75"
+							:style released-button))))
+
   (setq org-yank-image-save-method"~/Documents/org/images/")
   (setq org-yank-image-file-name-function #'+org-yank-image-suid-filename)
   (add-to-list 'org-modules 'org-habit t)
@@ -28,9 +39,12 @@
   (set-face-attribute 'org-block nil :height 110)
   ;; (set-face-attribute 'org-link nil :height 110)
   (set-face-attribute 'org-tag nil :height 100)
+  ;; (set-face-attribute 'org-meta-line nil :height 90)
   (setq org-display-remote-inline-images 'cache)
   (setq org-image-align 'center)
   (setq org-agenda-tags-column 0)
+
+  (add-to-list 'org-src-lang-modes '("lua" . lua-ts-mode))
   (define-key org-mode-map (kbd "C-,") nil))
 
 
@@ -68,9 +82,7 @@
 		org-journal-time-prefix "** "
 		org-journal-encrypt-journal nil
 		org-journal-dir (expand-file-name "journal" org-directory)
-		)
-
-  )
+		))
 
 (use-package org-download
   :commands (org-download-clipboard org-download-image)
@@ -178,7 +190,19 @@
 
 
 ;; org-capture
-(setq org-capture-templates nil)
+(setq org-capture-templates
+	  '(("w" "New Word" entry
+		 (file "~/Documents/org/fc/words.org")
+		 "* %?")
+		("t" "My Thoughts" entry
+		 (file "~/Documents/org/thoughts.org")
+		 "* TODO %?")
+		("g" "New Grammar" entry
+		 (file "~/Documents/org/fc/grammar.org")
+		 "* %?")
+		("r" "Inc Read Notes" entry
+		 (file "~/Documents/org/inc-read.org")
+		 "* %?")))
 
 
 (eval-after-load 'org
@@ -220,29 +244,24 @@
 ;; 不使用 _x 形式的下标
 (setq org-use-sub-superscripts nil)
 
-
 (setq org-archive-location (concat org-directory "archive.org::* From %s"))
 
-
-;; (use-package org-tidy
-;;   :config
-;;   (setq org-tidy-properties-inline-symbol "⛮"))
-
-
-(org-babel-do-load-languages 'org-babel-load-languages
-							 '((shell . t)))
-
 (use-package org-novelist
+  :ensure nil
   :defer t
   :load-path "git/org-novelist")
 
 (use-package org-habit-stats
   :commands org-agenda)
 
-(use-package verb
+
+(use-package org-transclusion
+  :after org)
+
+(use-package org-yt
+  :load-path "git/org-yt"
   :after org)
 
 
 
 (provide 'init-org)
-

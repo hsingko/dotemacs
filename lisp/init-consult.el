@@ -117,6 +117,17 @@
 
 (use-package consult-dir
   :ensure t
+  :config
+  (defvar consult-dir--source-zoxide
+	`(:name "Zoxide"
+			:narrow ?z
+			:category file
+			:face consult-file
+			:history file-name-history
+			:enabled ,(lambda () (featurep 'zoxide))
+			:items ,#'zoxide-query)
+	"zoxide directory source")
+  (add-to-list 'consult-dir-sources 'consult-dir--source-zoxide t)
   :bind (("C-x C-d" . consult-dir)
          :map minibuffer-local-completion-map
          ("C-x C-d" . consult-dir)

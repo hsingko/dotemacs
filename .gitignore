@@ -25,3 +25,4 @@ transient/
 eln-cache/
 history
 persist/
+undo-fu-session/

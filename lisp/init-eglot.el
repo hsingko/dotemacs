@@ -28,18 +28,29 @@
   :defer t
   :hook
   (python-ts-mode . eglot-ensure)
-  (c-mode . eglot-ensure)
+  ;; (c-mode . eglot-ensure)
   (css-mode . eglot-ensure)
+  (lua-ts-mode . eglot-ensure)
   (mhtml-mode . eglot-ensure))
 
 ;; (use-package eldoc-box
 ;;   :hook
 ;;   (eglot-managed-mode . eldoc-box-hover-mode))
 
-(use-package eglot-booster
-  :load-path "git/eglot-booster"
-  :after eglot
-  :config	(eglot-booster-mode))
+;; (use-package eglot-booster
+;;   :load-path "git/eglot-booster"
+;;   :after eglot
+;;   :config	(eglot-booster-mode))
+
+
+(use-package eglot-ltex
+  :load-path "git/eglot-ltex"
+  ;; :hook (text-mode . (lambda ()
+  ;;                      (require 'eglot-ltex)
+  ;;                      (eglot-ensure)))
+  :init
+  (setq eglot-ltex-server-path "~/.emacs.d/ltex-ls-16.0.0/"
+        eglot-ltex-communication-channel 'stdio))         ; 'stdio or 'tcp
 
 (provide 'init-eglot)
 ;;; init-eglot.el ends here

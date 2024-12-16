@@ -12,14 +12,12 @@
 (defun +rime-predicates-basic ()
   "The basic necessary predicates combination."
   (or
-   ;; (+rime-predicate-meow-mode-p)
    (rime-predicate-ace-window-p)
    (rime-predicate-hydra-p)
    (+rime-predicate-button-at-point-p)
    ;; 行首切换 ascii-mode 在写中文文章的时候不好用，因为会遇到双引号开头段落的情况
    ;; (rime-predicate-punctuation-line-begin-p)
-   (+rime-predicate-line-begin-with-left-arrow)
-   ))
+   (+rime-predicate-line-begin-with-left-arrow)))
 
 (defun +rime-predicate-button-at-point-p ()
   "Detect whether the point is a button.
@@ -45,7 +43,7 @@
 
 (setq-default rime-disable-predicates
               '(+rime-predicates-basic
-                ;; rime-predicate-org-in-src-block-p
+                rime-predicate-org-in-src-block-p
                 rime-predicate-org-latex-mode-p
                 rime-predicate-punctuation-after-space-cc-p
                 rime-predicate-punctuation-after-ascii-p
@@ -60,7 +58,7 @@
               '(rime-predicate-current-uppercase-letter-p
                 rime-predicate-space-after-cc-p))
 
-(setq rime-show-candidate 'message)
+(setq rime-show-candidate 'minibuffer)
 (setq rime-posframe-properties nil)
 (setq rime-posframe-style 'horizontal)
 (setq rime-show-preedit t)
@@ -72,21 +70,8 @@
   ;; (bind-key "C-`" 'rime-send-keybinding rime-mode-map)
   ;; use message to display predicts, necessary to work with mini-echo
   ;; unmerged bug fix: https://github.com/DogLooksGood/emacs-rime/pull/218
-  (defun rime--message-display-content (content)
-	"Display CONTENT via message."
-	(if (string-blank-p content)
-		(message "")
-      (let ((inhibit-quit t)
-			(message-log-max nil))
-		(with-temp-message
-			content
-          (sit-for most-positive-fixnum))
-		(when quit-flag
-          (setq quit-flag nil
-				unread-command-events '(7))))))
   (add-hook 'kill-emacs-hook (lambda ()
-							   (ignore-errors (rime-lib-finalize))))
-  )
+							   (ignore-errors (rime-lib-finalize)))))
 
 ;; 中文断行问题
 (setq word-wrap-by-category t)
@@ -108,7 +93,5 @@
   (setq cns-dict-directory (expand-file-name "cns/dict" user-emacs-directory))
   :hook
   (text-mode . cns-mode))
-
-(use-package unicad)
 
 (provide 'init-cn)

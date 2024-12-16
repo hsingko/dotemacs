@@ -4,6 +4,8 @@
                          ("nongnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")
                          ("melpa"  . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
+
+
 (package-initialize) ;; You might already have this line
 (unless package-archive-contents
   (package-refresh-contents))
@@ -34,7 +36,6 @@
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'init-ui)
-;; (require 'init-meow)
 (require 'init-consult)
 (require 'init-vertico)
 (require 'init-marginalia)
@@ -59,16 +60,14 @@
 (require 'init-shellcmd)
 (require 'init-corfu)
 (require 'init-eglot)
-;; (require 'init-bridge)
+;(require 'init-bridge)					
 (require 'init-magit)
 (require 'init-undo)
 (require 'init-phisearch)
-;; (require 'denote-image)
 (require 'init-treesit)
 (require 'init-fc)
 
 (load "consult-buku.el")
-
 
 (put 'erase-buffer 'disabled nil)
 ;; isearch(incremental search)
@@ -108,14 +107,15 @@
   "Move to the next subtree at same level, and narrow to it."
   (interactive)
   (widen)
-  (forward-page 1)
-  (narrow-to-page))
+  (org-next-visible-heading 1)
+  (org-narrow-to-subtree)
+  (org-cycle))
 (global-set-key (kbd "C-x n f") #'my/org-narrow-forward)
 
 (put 'narrow-to-page 'disabled nil)
 
 
-;; (auto-insert-mode nil)
+(auto-insert-mode t)
 (setq auto-insert-query nil)
 (define-auto-insert "\\.org\\'"
   (lambda ()
@@ -136,6 +136,8 @@
     (insert "Type=Application\n")
     (insert "Icon=" (file-truename (read-file-name "Icon file location: ")) "\n")
     (insert "Categories=Utility")))
+
+
 
 ;; set minibuffer
 (setq enable-recursive-minibuffers t)
@@ -161,6 +163,7 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 (use-package the-magical-str
+  :ensure nil
   :load-path "~/Repo/the-magical-str.el/")
 
 (defun consult-denote-pinyin ()
@@ -237,7 +240,8 @@
 (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
 
 ;; 系统垃圾箱管理器，好用的
-(use-package trashed)
+(use-package trashed
+  :commands (trashed))
 
 
 (use-package casual-avy
@@ -251,7 +255,19 @@
 (use-package expand-region
   :bind ("C-<tab>" . #'er/expand-region)
   :config
-  (pending-delete-mode))
+  (defvar-keymap expand-region-keymap
+	:doc "expand-region keymap"
+	"s" #'er/mark-inside-quotes
+	"S" #'er/mark-outside-quotes
+	"p" #'er/mark-inside-pairs
+	"P" #'er/mark-outside-quotes
+	"b" #'er/mark-symbol
+	"a" #'er/mark-paragraph)
+  (pending-delete-mode)
+  )
+
+;; (use-package expreg
+;;   :bind ("C-<tab>" . #'expreg-expand))
 
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
@@ -268,11 +284,6 @@
   :after ox
   :config
   (setq org-hugo-default-static-subdirectory-for-externals "images"))
-
-
-;; (use-package surround
-;;   :config
-;;   (keymap-set global-map "M-'" surround-keymap))
 
 (use-package embrace
   :config
@@ -291,3 +302,27 @@
   (("C->" . #'mc/mark-next-like-this)
    ("C-S-c" . #'mc/edit-lines)
    ("C-<" . #'mc/mark-previous-like-this)))
+
+
+(defun url-decode-region (start end)
+  "Replace a region with the same contents, only URL decoded."
+  (interactive "r")
+  (let ((text (decode-coding-string (url-unhex-string (buffer-substring start end)) 'utf-8)))
+    (delete-region start end)
+    (insert text)))
+
+
+;; (use-package ready-player
+;;   :config
+;;   (setq ready-player-autoplay nil)
+;;   (ready-player-mode t))
+
+
+
+;;; 优化大文件处理
+;;; https://emacs-china.org/t/topic/25811/9
+(setq-default bidi-display-reordering nil)
+(setq bidi-inhibit-bpa t
+      long-line-threshold 1000
+      large-hscroll-threshold 1000
+      syntax-wholeline-max 1000)

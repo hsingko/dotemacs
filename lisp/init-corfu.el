@@ -16,6 +16,7 @@
       (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
                   corfu-popupinfo-delay nil)
       (corfu-mode 1)))
+  (corfu-history-mode)
   (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
   :init
   (add-hook 'prog-mode-hook #'corfu-mode)
@@ -30,14 +31,10 @@
   (add-to-list 'completion-at-point-functions #'cape-keyword)
   (add-to-list 'completion-at-point-functions #'cape-abbrev))
 
-
-;;; 似乎需要执行一次 kind-icon-preview-all 之后才能下载图标并正常显示
-(use-package kind-icon
-  :after corfu
-  :custom
-  (kind-icon-default-face 'corfu-default)
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+;; (use-package nerd-icons-corfu
+;;   :after corfu
+;;   :config
+;;   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 
 (provide 'init-corfu)

@@ -31,6 +31,10 @@ org-mode
 (cq "@question ")
 (ct "@todo ")
 (cs "@summary ")
+(yt "[[yt:" (p "youtube-id") "]]")
+(jsdb "|上月电表| 本月电表 | 用量 | 单价 | 总计 |" n> "|-|-|-|-|" n> "|" (p "previous") "|" (p "current") "| |1.2 | |" n>
+	  "#+TBLFM: @2$3=$2-$1::@2$5=$3*$4;%.1f" q)
+
 
 markdown-mode
 (kbd "<kbd>" p "</kbd>")

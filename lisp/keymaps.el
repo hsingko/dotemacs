@@ -84,8 +84,8 @@
 ;; file
 (defvar-keymap hsk/file-opt-map
   :doc "file associated operations"
-  "r" #'consult-recent-file
-  "f" #'find-file
+  ;; "r" #'consult-recent-file
+  ;; "f" #'find-file
   "U" #'doom/sudo-this-file
   "i" #'hsk/consult-imenu-respect-narrow
   "w" #'widen
@@ -129,6 +129,10 @@
 
 (keymap-global-set "C-x C-n" #'next-buffer)
 (keymap-global-set "C-x C-p" #'previous-buffer)
+
+(keymap-unset emacs-lisp-mode-map "C-c C-f")
+
+(keymap-global-set "M-s p" #'consult-recent-file)
 
 (provide 'keymaps)
 

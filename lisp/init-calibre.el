@@ -5,6 +5,7 @@
 		("C-v" . calibredb-search-next-page)
 		("M-v" . calibredb-search-previous-page))
   :config
+  (setq calibredb-search-page-max-rows 39)
   (setq calibredb-preferred-format 'epub)
   (setq calibredb-root-dir "~/Documents/CalibreBooks/")
   (setq calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))

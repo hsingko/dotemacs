@@ -6,31 +6,10 @@
 (setq cursor-type 'bar)
 
 ;; font family
-(set-face-attribute 'default nil :font (font-spec :family "SF Mono"  :size 16 :weight 'regular))
-(set-face-attribute 'variable-pitch nil :font (font-spec :family "Courier Prime" :size 16  :weight 'regular))
-(set-fontset-font t 'han (font-spec :family "LXGW WenKai TC"))
-(set-fontset-font t 'cjk-misc (font-spec :family "LXGW WenKai TC"))
-(set-fontset-font t 'kana "Noto Serif CJK JP")
-
-(use-package org
-  :ensure nil
-  :config
-  ;; link: https://emacs-china.org/t/org/19458/2
-  ;; (add-to-list 'org-emphasis-alist
-  ;; 	       '("=" (
-  ;; 		      :background "#00405f"
-  ;; 				  :foreground "#ffffff")))
-  (setq org-tags-column 0)
-  (add-to-list 'org-emphasis-alist
-			   '("+" (
-					  :foreground "dark grey"
-					  :strike-through t)))
-  (add-to-list 'org-emphasis-alist
-			   '("~" (:box (
-							:line-width 1
-							:color "grey75"
-							:style released-button)))))
-
+(set-face-attribute 'default nil :family "SF Mono" :height 110 :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font (font-spec :family "Literata" :size 15  :weight 'regular))
+(set-fontset-font t 'han (font-spec :family "IBM Plex Sans SC"))
+(set-fontset-font t 'cjk-misc (font-spec :family "Noto Serif CJK SC"))
 
 ;;https://www.reddit.com/r/emacs/comments/wpr2n2/comment/ikj2vn1/?utm_source=share&utm_medium=web2x&context=3
 (customize-set-variable 'org-blank-before-new-entry'((heading . nil)(plain-list-item . nil)))(setq org-cycle-separator-lines 1)
@@ -61,9 +40,6 @@
   (org-modern-tag nil)
   (org-modern-timestamp nil)
   (org-modern-block-name nil)
-  ;; (org-modern-fold-stars '(("⮞" . "⮟") ("⮚" . "⮛") ("▶" . "▼") ("▷" . "▽")))
-  ;; (org-modern-radio-target nil)
-  ;; (org-modern-internal-target nil)
   :config
   (set-face-attribute 'org-modern-radio-target nil :height 120)
   :hook
@@ -78,6 +54,7 @@
   :commands olivetti-mode
   :diminish
   :hook
+  (txt-mode . olivetti-mode)
   (org-mode . olivetti-mode)
   (markdown-mode . olivetti-mode)
   :config
@@ -88,22 +65,24 @@
   (add-hook 'olivetti-mode-off-hook #'(lambda ()
 										(text-scale-decrease 1)
 										(setq-local line-spacing nil)))
-  (setq-default olivetti-body-width 70))
+  (setq-default olivetti-body-width 60))
 
 
-(use-package emacs
-  :ensure nil
+(use-package modus-themes
   :config
   (require-theme 'modus-themes)
   (setq modus-themes-to-toggle '(modus-operandi-deuteranopia modus-vivendi-tinted))
   (setq modus-themes-italic-constructs t
 		modus-themes-bold-constructs nil)
-  (setq modus-themes-mixed-fonts t)
-  (setq modus-themes-variable-pitch-ui t)
+  (setq modus-themes-mixed-fonts nil)
+  ;; (setq modus-themes-variable-pitch-ui t)
+  (setq modus-themes-common-palette-overrides
+		'((fg-heading-1 red-warmer)
+		  (fg-heading-2 blue-warmer)))
   (setq modus-themes-prompts '(italic bold))
   (setq modus-themes-completions
-      '((matches . (extrabold underline))
-        (selection . (semibold italic))))
+		'((matches . (extrabold underline))
+          (selection . (semibold))))
   (load-theme 'modus-operandi-deuteranopia :noconfirm))
 
 (use-package ace-window
@@ -185,17 +164,18 @@
   )
 
 (use-package mixed-pitch
-  :hook
-  (org-mode . mixed-pitch-mode)
-  (markdown-mode . mixed-pitch-mode)
-  (dired-mode . mixed-pitch-mode)
+  ;; :hook
+  ;; (dired-mode . mixed-pitch-mode)
+  ;; (org-mode . mixed-pitch-mode)
+  ;; (markdown-mode . mixed-pitch-mode)
   :config
   (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-document-info-keyword)
-  (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-document-info))
+  (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-document-info)
+  (setq mixed-pitch-set-height t))
 
-(use-package valign
-  :hook
-  (org-mode . valign-mode))
+;; (use-package valign
+;;   :hook
+;;   (org-mode . valign-mode))
 
 
 ;;; 默认的 ediff 会弹出一个新 frame ，非常别扭，这里采用了 prot 的配置
@@ -230,6 +210,11 @@
   :mode (("\\.md$" . markdown-mode))
   :config
   (set-face-attribute 'markdown-pre-face nil :height 110))
+
+(use-package pulsar
+  :config
+  (pulsar-global-mode))
+
 
 
 (provide 'init-ui)
